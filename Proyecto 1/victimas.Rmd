@@ -1,0 +1,99 @@
+---
+title: "Víctimas en carpetas de investigación FGJ"
+subtitle: "Estadística Aplicada 1 - Proyecto 1"
+author: "Fernando Lango - 181055"
+email: "flangoba@itam.mx"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+name: "Proyecto 1"
+toc-title: Contenido  
+indent: True
+#bibliography: citations.bib
+#csl: apa.csl 
+#nocite: '@*'
+#link-citations: True
+output: 
+  prettydoc::html_pretty:
+    theme: cayman
+    toc: True
+    highlight: github
+    number_sections: True
+    fig_caption: True
+    #pandoc_args: [ "--output=index.html"]
+    #includes:
+      #in_header: "Icono/icono.html"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introducción
+
+Insertar intro de lo que se va a hacer.
+
+## Ambiente de R
+
+Para el análisis de los datos se utilizaron las librerías que se muestran a continuación:
+
+- `tidyverse` -> manipulación de las tablas y gráficas.
+- `lubridate` -> manejo de fechas.
+- `readxl` -> carga a R archivos de excel.
+- `kableExtra` -> diseño de tablas.
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(kableExtra)
+```
+
+## Conjunto de datos
+
+Los conjuntos de datos utilizados en el presente análisis se pueden descargar en [Víctimas en carpetas de investigación](https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv) y [Diccionario de víctimas](https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/10235569-f4a9-4876-9465-9780887df8e2/download/diccionario-de-victimas-actualizado.xlsx) dentro del [Portal de Datos Abiertos de la CDMX](https://datos.cdmx.gob.mx/). Para mayor información del conjunto de datos se puede consultar en [Víctimas en carpetas de investigación FGJ](https://datos.cdmx.gob.mx/dataset/victimas-en-carpetas-de-investigacion-fgj).
+
+La base contiene la información de las víctimas de diversos delitos que cuentan con una carpeta de investigación en la [Fiscalía General de Justicia (FGJ) de la Ciudad de México](https://www.fgjcdmx.gob.mx/) a partir de enero del año 2019.
+
+### Descarga
+
+```{r, cache=TRUE, message=FALSE}
+data_url <- "https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv"
+download.file(data_url, "data/victimas.csv",
+              method = "curl", cacheOK = T)
+dicc_url <- "https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/10235569-f4a9-4876-9465-9780887df8e2/download/diccionario-de-victimas-actualizado.xlsx"
+download.file(dicc_url, "data/diccionario.xlsx",
+              method = "curl", cacheOK = T)
+```
+
+### Carga
+
+```{r, cache=TRUE, message=FALSE}
+dict <- read_xlsx("data/diccionario.xlsx", sheet = 1)
+vict <- read_csv("data/victimas.csv")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
