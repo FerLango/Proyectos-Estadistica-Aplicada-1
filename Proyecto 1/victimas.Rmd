@@ -58,14 +58,38 @@ La base contiene la información de las víctimas de diversos delitos que cuenta
 ```{r, cache=TRUE, message=FALSE}
 data_url <- "https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv"
 
-victimas <- read_csv(data_url)
+victimas <- read_csv(data_url, show_col_types = FALSE)
 
 dicc_url <- "https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/10235569-f4a9-4876-9465-9780887df8e2/download/diccionario-de-victimas-actualizado.xlsx"
 
 diccionario <- read.xlsx(dicc_url, sheet =1)
 ```
 
+### Formato de columnas
 
+```{r}
+victimas$Mes_inicio <- as.factor(victimas$Mes_inicio)
+victimas$FechaInicio <- dmy(victimas$FechaInicio)
+victimas$Delito <- as.factor(victimas$Delito)
+victimas$Categoria <- as.factor(victimas$Categoria)
+victimas$Sexo <- as.factor(victimas$Sexo)
+victimas$TipoPersona <- as.factor(victimas$TipoPersona)
+victimas$CalidadJuridica <- as.factor(victimas$CalidadJuridica)
+victimas$competencia <- as.factor(victimas$competencia)
+victimas$Mes_hecho <- as.factor(victimas$Mes_hecho)
+victimas$FechaHecho <- dmy(victimas$FechaHecho)
+victimas$AlcaldiaHechos <- as.factor(victimas$AlcaldiaHechos)
+```
+
+### Descripción de las variables
+
+```{r}
+diccionario[,1:2] %>%
+  kable()
+```
+
+
+# Referencias
 
 
 

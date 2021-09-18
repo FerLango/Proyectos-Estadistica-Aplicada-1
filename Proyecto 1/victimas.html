@@ -131,7 +131,7 @@ a.sourceLine {
 <h1 class="title toc-ignore project-name">Víctimas en carpetas de investigación FGJ</h1>
 <h3 class="subtitle project-tagline">Estadística Aplicada 1 - Proyecto 1</h3>
 <h4 class="author project-author">Fernando Lango - 181055</h4>
-<h4 class="date project-date">17/09/2021</h4>
+<h4 class="date project-date">18/09/2021</h4>
 </section>
 
 
@@ -145,8 +145,11 @@ a.sourceLine {
 <li><a href="#conjunto-de-datos"><span class="toc-section-number">1.2</span> Conjunto de datos</a>
 <ul>
 <li><a href="#descarga"><span class="toc-section-number">1.2.1</span> Descarga</a></li>
+<li><a href="#formato-de-columnas"><span class="toc-section-number">1.2.2</span> Formato de columnas</a></li>
+<li><a href="#descripción-de-las-variables"><span class="toc-section-number">1.2.3</span> Descripción de las variables</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#referencias"><span class="toc-section-number">2</span> Referencias</a></li>
 </ul>
 </div>
 </div>
@@ -177,13 +180,225 @@ a.sourceLine {
 <h3 number="1.2.1"><span class="header-section-number">1.2.1</span> Descarga</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_url <span class="ot">&lt;-</span> <span class="st">&quot;https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv&quot;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>victimas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(data_url)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>victimas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(data_url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dicc_url <span class="ot">&lt;-</span> <span class="st">&quot;https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/10235569-f4a9-4876-9465-9780887df8e2/download/diccionario-de-victimas-actualizado.xlsx&quot;</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>diccionario <span class="ot">&lt;-</span> <span class="fu">read.xlsx</span>(dicc_url, <span class="at">sheet =</span><span class="dv">1</span>)</span></code></pre></div>
 </div>
+<div id="formato-de-columnas" class="section level3" number="1.2.2">
+<h3 number="1.2.2"><span class="header-section-number">1.2.2</span> Formato de columnas</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>Mes_inicio <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(victimas<span class="sc">$</span>Mes_inicio)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>FechaInicio <span class="ot">&lt;-</span> <span class="fu">dmy</span>(victimas<span class="sc">$</span>FechaInicio)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>Delito <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(victimas<span class="sc">$</span>Delito)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>Categoria <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(victimas<span class="sc">$</span>Categoria)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>Sexo <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(victimas<span class="sc">$</span>Sexo)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>TipoPersona <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(victimas<span class="sc">$</span>TipoPersona)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>CalidadJuridica <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(victimas<span class="sc">$</span>CalidadJuridica)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>competencia <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(victimas<span class="sc">$</span>competencia)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>Mes_hecho <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(victimas<span class="sc">$</span>Mes_hecho)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>FechaHecho <span class="ot">&lt;-</span> <span class="fu">dmy</span>(victimas<span class="sc">$</span>FechaHecho)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>victimas<span class="sc">$</span>AlcaldiaHechos <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(victimas<span class="sc">$</span>AlcaldiaHechos)</span></code></pre></div>
 </div>
+<div id="descripción-de-las-variables" class="section level3" number="1.2.3">
+<h3 number="1.2.3"><span class="header-section-number">1.2.3</span> Descripción de las variables</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>diccionario[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Nombre.de.variable
+</th>
+<th style="text-align:left;">
+Definición
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+idCarpeta
+</td>
+<td style="text-align:left;">
+Número entero que representa el identificador único usado por PGJ asociado a cada carpeta de investigación dentro de su sistema.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Delito
+</td>
+<td style="text-align:left;">
+Es la conducta, acción u omisión típica (descrita por la ley), antijurídica (contraria a la ley) y culpable, a la que le corresponde una sanción.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Categoria
+</td>
+<td style="text-align:left;">
+Las carpetas de investigación se clasifican en función del tipo de delito cometido, los cuales se dividen en 16 tipos.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FechaHecho
+</td>
+<td style="text-align:left;">
+Día y hora en que se cometió el delito, según el reporte de la víctima.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HoraHecho
+</td>
+<td style="text-align:left;">
+Hora y minuto en que se cometió el delito, según el reporte de la víctima.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FechaInicio
+</td>
+<td style="text-align:left;">
+Día y hora en que se hizo la denuncia para iniciar la carpeta de investigación.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HoraInicio
+</td>
+<td style="text-align:left;">
+Hora y minuto en que se hizo la denuncia para iniciar la carpeta de investigación.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Año_hecho
+</td>
+<td style="text-align:left;">
+Año en que se cometió el delito, según el reporte de la víctima.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mes_hecho
+</td>
+<td style="text-align:left;">
+Mes en que se cometió el delito, según el reporte de la víctima.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Año_inicio
+</td>
+<td style="text-align:left;">
+Año en que se hizo la denuncia para inciar la carpeta de investigación.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mes_inicio
+</td>
+<td style="text-align:left;">
+Mes en que se hizo la denuncia para inciar la carpeta de investigación.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sexo
+</td>
+<td style="text-align:left;">
+Sexo de la víctima del delito reportado.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Edad
+</td>
+<td style="text-align:left;">
+Edad de la víctima del delito reportado en la carpeta de investigación.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TipoPersona
+</td>
+<td style="text-align:left;">
+Cómo se reconoce a el o los denunciantes al ser sujetos de obligaciones y derechos salvaguardados legislación penal vigente.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CalidadJuridica
+</td>
+<td style="text-align:left;">
+Título con el que se registra y se identifica a la persona, física o moral, en la carpeta de investigación.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Competencia
+</td>
+<td style="text-align:left;">
+Variable categórica a través de la cuál se clasifican los hechos según su naturaleza. Hechos no delictivos corresponde a aquellos que son denunciados a la PGJ pero no constituyen un delito en sí mismos como por ejemplo un suicidio. Incompetencias son aquellos hechos delictivos que suceden fuera de la Ciudad de México y son denunciados a la PGJ de la Ciudad de México, por lo que no se deben tomar en cuenta como incidencia delictiva propia de la ciudad. Fuero común son los delitos que ocurren y se denuncian dentro de la Ciudad de México.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lon
+</td>
+<td style="text-align:left;">
+Longitud de la geolocalización, uno de dos elemento que componen la referencia angular que permite localizar el lugar donde se cometió el delito. WGS84
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lat
+</td>
+<td style="text-align:left;">
+Latitud de la geolocalización, uno de dos elemento que componen la referencia angular que permite localizar el lugar donde se cometió el delito. WGS84
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AlcaldiaHechos
+</td>
+<td style="text-align:left;">
+Alcaldía en que se cometió el delito, según el reporte de la víctima. Notar que puede ser fuera de la CDMX.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ColoniaHechos
+</td>
+<td style="text-align:left;">
+Colonia en que se cometió el delito, según el reporte de la víctima. Notar que puede ser fuera de la CDMX.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Calle_hechos
+</td>
+<td style="text-align:left;">
+Calle en que se cometió el delito, según el reporte de la víctima.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Calle_hechos2
+</td>
+<td style="text-align:left;">
+Calle secundaria en que se cometió el delito, según el reporte de la víctima.
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="referencias" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Referencias</h1>
 </div>
 </section>
 
