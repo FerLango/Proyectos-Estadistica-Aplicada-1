@@ -12,7 +12,6 @@
 
 <meta name="author" content="Fernando Lango - 181055" />
 
-<meta name="date" content="2021-07-09" />
 
 <title>Víctimas en carpetas de investigación FGJ</title>
 
@@ -132,7 +131,7 @@ a.sourceLine {
 <h1 class="title toc-ignore project-name">Víctimas en carpetas de investigación FGJ</h1>
 <h3 class="subtitle project-tagline">Estadística Aplicada 1 - Proyecto 1</h3>
 <h4 class="author project-author">Fernando Lango - 181055</h4>
-<h4 class="date project-date">07/09/2021</h4>
+<h4 class="date project-date">17/09/2021</h4>
 </section>
 
 
@@ -146,7 +145,6 @@ a.sourceLine {
 <li><a href="#conjunto-de-datos"><span class="toc-section-number">1.2</span> Conjunto de datos</a>
 <ul>
 <li><a href="#descarga"><span class="toc-section-number">1.2.1</span> Descarga</a></li>
-<li><a href="#carga"><span class="toc-section-number">1.2.2</span> Carga</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -161,14 +159,14 @@ a.sourceLine {
 <h2 number="1.1"><span class="header-section-number">1.1</span> Ambiente de R</h2>
 <p>Para el análisis de los datos se utilizaron las librerías que se muestran a continuación:</p>
 <ul>
-<li><code>tidyverse</code> -&gt; manipulación de las tablas y gráficas.</li>
+<li><code>tidyverse</code> -&gt; carga de archivos csv, creación de gráficas y manipulación de tablas.</li>
 <li><code>lubridate</code> -&gt; manejo de fechas.</li>
-<li><code>readxl</code> -&gt; carga a R archivos de excel.</li>
+<li><code>openxlsx</code> -&gt; carga de archivos de excel.</li>
 <li><code>kableExtra</code> -&gt; diseño de tablas.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code></pre></div>
 </div>
 <div id="conjunto-de-datos" class="section level2" number="1.2">
@@ -178,16 +176,12 @@ a.sourceLine {
 <div id="descarga" class="section level3" number="1.2.1">
 <h3 number="1.2.1"><span class="header-section-number">1.2.1</span> Descarga</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_url <span class="ot">&lt;-</span> <span class="st">&quot;https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(data_url, <span class="st">&quot;data/victimas.csv&quot;</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">&quot;curl&quot;</span>, <span class="at">cacheOK =</span> T)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dicc_url <span class="ot">&lt;-</span> <span class="st">&quot;https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/10235569-f4a9-4876-9465-9780887df8e2/download/diccionario-de-victimas-actualizado.xlsx&quot;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(dicc_url, <span class="st">&quot;data/diccionario.xlsx&quot;</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">&quot;curl&quot;</span>, <span class="at">cacheOK =</span> T)</span></code></pre></div>
-</div>
-<div id="carga" class="section level3" number="1.2.2">
-<h3 number="1.2.2"><span class="header-section-number">1.2.2</span> Carga</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dict <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">&quot;data/diccionario.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>vict <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/victimas.csv&quot;</span>)</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>victimas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(data_url)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dicc_url <span class="ot">&lt;-</span> <span class="st">&quot;https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/10235569-f4a9-4876-9465-9780887df8e2/download/diccionario-de-victimas-actualizado.xlsx&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>diccionario <span class="ot">&lt;-</span> <span class="fu">read.xlsx</span>(dicc_url, <span class="at">sheet =</span><span class="dv">1</span>)</span></code></pre></div>
 </div>
 </div>
 </div>

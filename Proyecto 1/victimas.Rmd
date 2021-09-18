@@ -35,15 +35,15 @@ Insertar intro de lo que se va a hacer.
 
 Para el análisis de los datos se utilizaron las librerías que se muestran a continuación:
 
-- `tidyverse` -> manipulación de las tablas y gráficas.
+- `tidyverse` -> carga de archivos csv, creación de gráficas y manipulación de tablas.
 - `lubridate` -> manejo de fechas.
-- `readxl` -> carga a R archivos de excel.
+- `openxlsx` -> carga de archivos de excel.
 - `kableExtra` -> diseño de tablas.
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(lubridate)
-library(readxl)
+library(openxlsx)
 library(kableExtra)
 ```
 
@@ -57,19 +57,14 @@ La base contiene la información de las víctimas de diversos delitos que cuenta
 
 ```{r, cache=TRUE, message=FALSE}
 data_url <- "https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv"
-download.file(data_url, "data/victimas.csv",
-              method = "curl", cacheOK = T)
+
+victimas <- read_csv(data_url)
+
 dicc_url <- "https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/10235569-f4a9-4876-9465-9780887df8e2/download/diccionario-de-victimas-actualizado.xlsx"
-download.file(dicc_url, "data/diccionario.xlsx",
-              method = "curl", cacheOK = T)
+
+diccionario <- read.xlsx(dicc_url, sheet =1)
 ```
 
-### Carga
-
-```{r, cache=TRUE, message=FALSE}
-dict <- read_xlsx("data/diccionario.xlsx", sheet = 1)
-vict <- read_csv("data/victimas.csv")
-```
 
 
 
