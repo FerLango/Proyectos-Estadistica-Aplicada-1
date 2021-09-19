@@ -18,7 +18,7 @@ output:
     highlight: github
     number_sections: True
     fig_caption: True
-    #pandoc_args: [ "--output=index.html"]
+    pandoc_args: [ "--output=index.html"]
     #includes:
       #in_header: "Icono/icono.html"
 ---
@@ -26,7 +26,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, 
                       message = FALSE, fig.align = "center",
-                      cache = TRUE)
+                      cache = FALSE)
 ```
 
 # Introducción
@@ -42,10 +42,10 @@ Para el análisis de los datos se utilizaron las librerías que se muestran a co
 - `lubridate` -> manejo de fechas.
 - `openxlsx` -> carga de archivos de excel.
 - `kableExtra` -> diseño de tablas.
-- `sf` -> leer archivos shp.
+- `sf` -> leer archivos shp para el mapa.
 - `moments` -> asimetría y curtosis.
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 library(plotly)
 library(tidyverse)
 library(lubridate)
@@ -65,7 +65,7 @@ La base contiene la información de las víctimas de diversos delitos que cuenta
 
 ### Descarga
 
-```{r}
+```{r, cache=TRUE}
 data_url <- "https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv"
 
 victimas <- read_csv(data_url, show_col_types = FALSE)
@@ -124,7 +124,7 @@ victimas %>%
 
 ### Mapa
 
-```{r}
+```{r, cache=TRUE}
 if (!dir.exists("datos_mapa")) {
   map_url <- "https://github.com/prestevez/covid-19-mx-map/raw/master/datos_covid/01_32_mun.zip"
   download.file(map_url, destfile = "datos_mapa.zip")
