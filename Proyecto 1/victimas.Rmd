@@ -54,6 +54,7 @@ library(kableExtra)
 library(sf)
 library(moments)
 library(gganimate)
+library(gridExtra)
 ```
 
 ## Conjunto de datos
@@ -261,7 +262,7 @@ ggplotly(heat)
 
 ### Densidad
 
-```{r, cache=FALSE}
+```{r}
 dens <- 
   victimas %>%
   select(Edad) %>%
@@ -270,6 +271,53 @@ dens <-
   geom_density(fill="#69b3a2", color="darkgreen", alpha=0.8, size=1)
 ggplotly(dens)
 ```
+### Pie
+
+```{r}
+pie1 <- 
+  victimas %>%
+  select(CalidadJuridica) %>%
+  group_by(CalidadJuridica) %>%
+  tally() %>%
+  na.omit() %>%
+  plot_ly(labels = ~CalidadJuridica, values = ~n, type = 'pie')
+
+pie1
+
+pie2 <- 
+  victimas %>%
+  select(competencia) %>%
+  group_by(competencia) %>%
+  tally() %>%
+  na.omit() %>%
+  plot_ly(labels = ~competencia, values = ~n, type = 'pie')
+
+pie2
+
+pie3 <- 
+  victimas %>%
+  select(TipoPersona) %>%
+  group_by(TipoPersona) %>%
+  tally() %>%
+  na.omit() %>%
+  plot_ly(labels = ~TipoPersona, values = ~n, type = 'pie')
+
+pie3
+
+pie4 <- 
+  victimas %>%
+  select(Sexo) %>%
+  group_by(Sexo) %>%
+  tally() %>%
+  na.omit() %>%
+  plot_ly(labels = ~Sexo, values = ~n, type = 'pie')
+
+pie4
+```
+
+### 9
+
+### 10
 
 
 # Referencias
