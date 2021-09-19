@@ -54,7 +54,7 @@ library(kableExtra)
 library(sf)
 library(moments)
 library(gganimate)
-library(gridExtra)
+library(wordcloud2)
 ```
 
 ## Conjunto de datos
@@ -315,7 +315,18 @@ pie4 <-
 pie4
 ```
 
-### 9
+### Wordcloud
+
+```{r}
+victimas %>%
+  select(Delito) %>%
+  group_by(Delito) %>%
+  tally() %>%
+  na.omit() %>%
+  wordcloud2(size=3, color='random-light',
+             backgroundColor="#189c54", shape = "circle")
+```
+
 
 ### 10
 
