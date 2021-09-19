@@ -35,10 +35,13 @@ Insertar intro de lo que se va a hacer.
 
 Para el análisis de los datos se utilizaron las librerías que se muestran a continuación:
 
+- `plotly` -> animación de gráficas.
 - `tidyverse` -> carga de archivos csv, creación de gráficas y manipulación de tablas.
 - `lubridate` -> manejo de fechas.
 - `openxlsx` -> carga de archivos de excel.
 - `kableExtra` -> diseño de tablas.
+- `sf` -> leer archivos shp.
+- `moments` -> asimetría y curtosis.
 
 ```{r, message=FALSE, warning=FALSE}
 library(plotly)
@@ -47,6 +50,7 @@ library(lubridate)
 library(openxlsx)
 library(kableExtra)
 library(sf)
+library(moments)
 ```
 
 ## Conjunto de datos
@@ -94,12 +98,30 @@ diccionario[,1:2] %>%
 
 ## Estadísticos
 
+```{r, warning=FALSE, message=FALSE}
+victimas %>%
+  select(Año_inicio, Sexo, Edad) %>%
+  rename('Año inicio'=Año_inicio) %>%
+  filter(!is.na(Edad), !is.na(Sexo), Edad>0, Edad<150) %>%
+  group_by(`Año inicio`, Sexo) %>%
+  summarise(Media = round(mean(Edad),2),
+            SD = round(sd(Edad),2),
+            Mediana = median(Edad),
+            Asimetría = round(skewness(Edad),2),
+            Curtosis = round(kurtosis(Edad),2),
+            IQR = IQR(Edad),
+            Mínimo = min(Edad),
+            Máximo = max(Edad)) %>%
+  kable()
+```
 
 
 ## Gráficas
 
-```{r, warning=FALSE, cache=FALSE, message=FALSE}
-if (!file.exists("datos_mapa.zip")) {
+### Mapa
+
+```{r, warning=FALSE, message=FALSE}
+if (!dir.exists("datos_mapa")) {
   map_url <- "https://github.com/prestevez/covid-19-mx-map/raw/master/datos_covid/01_32_mun.zip"
   download.file(map_url, destfile = "datos_mapa.zip")
   unzip("datos_mapa.zip", exdir = "datos_mapa")
@@ -107,7 +129,7 @@ if (!file.exists("datos_mapa.zip")) {
 }
 
 mex_map <- 
-  st_read("datos_mapa/01_32_mun.shp") %>% 
+  st_read("datos_mapa/01_32_mun.shp", quiet = TRUE) %>% 
   st_set_crs("+proj=lcc +lat_1=17.5 +lat_2=29.5 +lat_0=12 +lon_0=-102 +x_0=2500000 +y_0=0 +ellps=GRS80 +units=m +no_defs") %>%
   filter(CVE_ENT == "09") %>%
   rename(Alcaldia = NOMGEO)
