@@ -254,11 +254,22 @@ heat <-
   geom_tile() +
   theme(legend.position = "none") +
   scale_y_discrete(labels=
-                     substr(unique(sort(victimas$Categoria)),0,20)) +
+                     substr(unique(sort(victimas$Categoria)),0,20)) + 
   scale_fill_gradient(low = "yellow", high = "red")
 ggplotly(heat)
 ```
 
+### Densidad
+
+```{r, cache=FALSE}
+dens <- 
+  victimas %>%
+  select(Edad) %>%
+  filter(Edad < 150, Edad>0) %>%
+  ggplot(aes(x=Edad)) +
+  geom_density(fill="#69b3a2", color="darkgreen", alpha=0.8, size=1)
+ggplotly(dens)
+```
 
 
 # Referencias
