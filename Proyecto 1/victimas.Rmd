@@ -169,6 +169,77 @@ ggplotly(map, tooltip = c("Delitos","Alcaldia"))
 
 ```
 
+### Boxplot
+
+```{r}
+victimas %>%
+  filter(Edad<150) %>%
+  ggplot() + 
+  geom_boxplot(aes(x = factor(Año_inicio),y = Edad, 
+                   color = factor(Año_inicio)))
+```
+
+### Histograma
+
+```{r, warning=FALSE}
+victimas %>%
+  filter(!is.na(Sexo), !is.na(CalidadJuridica)) %>%
+  ggplot() +
+  geom_histogram(aes(CalidadJuridica, fill = Sexo), 
+                 stat = "count") +
+  facet_grid(Año_inicio~.) +
+  coord_flip()
+```
+
+### Gráfica de barras
+
+```{r, warning=FALSE, message=FALSE}
+bar <-
+  victimas %>%
+  mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
+                                   units = "days")) %>%
+  group_by(Categoria) %>%
+  summarise(inicio_vs_hecho = mean(inicio_vs_hecho, 
+                                   na.rm = TRUE)) %>%
+  arrange(Categoria) %>%
+  ggplot() +
+  geom_bar(aes(x=Categoria, y=inicio_vs_hecho, fill = Categoria),
+           stat = "identity") +
+  coord_flip() +
+  theme(legend.position = "none")+
+  scale_x_discrete(labels=
+                     substr(unique(sort(victimas$Categoria)),0,20))
+ggplotly(bar)
+  
+```
+
+
+### Gráfica de línea
+
+```{r}
+
+```
+
+
+### Scatter
+
+```{r}
+
+  
+```
+
+
+### Doughnut
+
+
+
+### Radar
+
+### Densidad
+
+### Tree
+
+### Waffle
 
 # Referencias
 
