@@ -45,7 +45,7 @@ Para el análisis de los datos se utilizaron las librerías que se muestran a co
 - `sf` -> leer archivos shp para el mapa.
 - `moments` -> asimetría y curtosis.
 
-```{r}
+```{r lib}
 library(plotly)
 library(tidyverse)
 library(lubridate)
@@ -65,7 +65,7 @@ La base contiene la información de las víctimas de diversos delitos que cuenta
 
 ### Descarga
 
-```{r, cache=TRUE}
+```{r data, cache=TRUE}
 data_url <- "https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv"
 
 victimas <- read_csv(data_url, show_col_types = FALSE)
@@ -77,7 +77,7 @@ diccionario <- read.xlsx(dicc_url, sheet =1)
 
 ### Formato de columnas
 
-```{r}
+```{r format}
 victimas$Mes_inicio <- as.factor(victimas$Mes_inicio)
 victimas$FechaInicio <- dmy(victimas$FechaInicio)
 victimas$Delito <- as.factor(victimas$Delito)
@@ -93,7 +93,7 @@ victimas$AlcaldiaHechos <- as.factor(victimas$AlcaldiaHechos)
 
 ### Descripción de las variables
 
-```{r}
+```{r variables}
 diccionario[,1:2] %>%
   kable()
 ```
@@ -102,7 +102,7 @@ diccionario[,1:2] %>%
 
 ## Estadísticos
 
-```{r}
+```{r estad}
 victimas %>%
   select(Año_inicio, Sexo, Edad) %>%
   rename('Año inicio'=Año_inicio) %>%
@@ -124,7 +124,7 @@ victimas %>%
 
 ### Mapa
 
-```{r, cache=TRUE}
+```{r map, cache=TRUE}
 if (!dir.exists("datos_mapa")) {
   map_url <- "https://github.com/prestevez/covid-19-mx-map/raw/master/datos_covid/01_32_mun.zip"
   download.file(map_url, destfile = "datos_mapa.zip")
@@ -158,6 +158,9 @@ mex_map_del <-
   left_join(mex_map, map_filt, 
             by = c("Alcaldia" = "AlcaldiaHechos"))
 
+rm(mex_map)
+rm(map_filt)
+
 map <- 
   ggplot() +
   geom_sf(data = mex_map_del, 
@@ -175,29 +178,36 @@ ggplotly(map, tooltip = c("Delitos","Alcaldia"))
 
 ### Boxplot
 
-```{r}
-victimas %>%
+```{r box}
+box <- 
+  victimas %>%
   filter(Edad<150) %>%
   ggplot() + 
   geom_boxplot(aes(x = factor(Año_inicio),y = Edad, 
                    color = factor(Año_inicio)))
+
+ggplotly(box)
+
 ```
 
 ### Histograma
 
-```{r}
-victimas %>%
+```{r histo}
+histo <- 
+  victimas %>%
   filter(!is.na(Sexo), !is.na(CalidadJuridica)) %>%
   ggplot() +
   geom_histogram(aes(CalidadJuridica, fill = Sexo), 
                  stat = "count") +
   facet_grid(Año_inicio~.) +
   coord_flip()
+
+ggplotly(histo)
 ```
 
 ### Gráfica de barras
 
-```{r}
+```{r bar}
 bar <-
   victimas %>%
   mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
@@ -219,7 +229,7 @@ ggplotly(bar)
 
 ### Scatter
 
-```{r}
+```{r scatter}
 scat <-
   victimas %>%
   mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
@@ -232,12 +242,13 @@ scat <-
   ylim(0,5000) + 
   transition_time(FechaInicio) +
   ease_aes('linear')
+
 animate(scat, duration = 40)
 ```
 
 ### Heatmap
 
-```{r}
+```{r heat}
 heat <- 
   victimas %>%
   select(Mes_hecho, Categoria) %>%
@@ -257,23 +268,25 @@ heat <-
   scale_y_discrete(labels=
                      substr(unique(sort(victimas$Categoria)),0,20)) + 
   scale_fill_gradient(low = "yellow", high = "red")
+
 ggplotly(heat)
 ```
 
 ### Densidad
 
-```{r}
+```{r dens}
 dens <- 
   victimas %>%
   select(Edad) %>%
   filter(Edad < 150, Edad>0) %>%
   ggplot(aes(x=Edad)) +
   geom_density(fill="#69b3a2", color="darkgreen", alpha=0.8, size=1)
+
 ggplotly(dens)
 ```
 ### Pie
 
-```{r}
+```{r pie}
 pie1 <- 
   victimas %>%
   select(CalidadJuridica) %>%
@@ -317,20 +330,23 @@ pie4
 
 ### Wordcloud
 
-```{r}
-victimas %>%
+```{r cloud}
+cloud <- 
+  victimas %>%
   select(Delito) %>%
   group_by(Delito) %>%
   tally() %>%
   na.omit() %>%
-  wordcloud2(size=3, color='random-dark',
+  wordcloud2(size=2, color='random-dark',
              backgroundColor="white", shape = "circle")
+
+cloud
 ```
 
 
 ### Lollipop
 
-```{r}
+```{r lolli}
 loli <- 
   data.frame(dia = as.character(wday(victimas$FechaHecho, 
                                label = TRUE, abbr = FALSE))) %>%
@@ -341,6 +357,7 @@ loli <-
   geom_segment(aes(xend=dia, yend=0)) +
   geom_point(size=4, color= "#189c54") +
   theme_bw()
+
 ggplotly(loli)
 ```
 
