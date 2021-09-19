@@ -323,12 +323,26 @@ victimas %>%
   group_by(Delito) %>%
   tally() %>%
   na.omit() %>%
-  wordcloud2(size=3, color='random-light',
-             backgroundColor="#189c54", shape = "circle")
+  wordcloud2(size=3, color='random-dark',
+             backgroundColor="white", shape = "circle")
 ```
 
 
-### 10
+### Lollipop
+
+```{r}
+loli <- 
+  data.frame(dia = as.character(wday(victimas$FechaHecho, 
+                               label = TRUE, abbr = FALSE))) %>%
+  group_by(dia) %>%
+  tally() %>%
+  na.omit() %>%
+  ggplot(aes(x=dia, y=n)) +
+  geom_segment(aes(xend=dia, yend=0)) +
+  geom_point(size=4, color= "#189c54") +
+  theme_bw()
+ggplotly(loli)
+```
 
 
 # Referencias
