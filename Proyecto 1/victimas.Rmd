@@ -20,7 +20,7 @@ output:
     fig_caption: True
     pandoc_args: [ "--output=index.html"]
     includes:
-      in_header: icono.html
+      in_header: "../icono.html"
 ---
 
 ```{r setup, include=FALSE}
@@ -138,7 +138,6 @@ cloud <-
              backgroundColor="white", shape = "circle")
 
 cloud
-
 ```
 
 ### Mapa
@@ -194,9 +193,9 @@ map <-
                       high = "red", low = "yellow") +
   theme(legend.position = "none")
 
-ggplotly(map, tooltip = c("Delitos","Alcaldía"))
+ggplotly(map, tooltip = c("Delitos","Alcaldía"),
+         dynamicTicks = TRUE)
 ```
-
 Como en cualquier ciudad del mundo, hay zonas que son más peligrosas y presentan una mayor cantidad de delitos. Para el caso de la CDMX, las tres alcaldías más peligrosas son:
 
 1. `r map_filt$AlcaldiaHechos[1]` con `r map_filt$Delitos[1]` delitos registrados. 
@@ -227,7 +226,6 @@ loli <-
        y = "total de delitos")
 
 ggplotly(loli)
-
 ```
 
 
@@ -261,9 +259,7 @@ heat <-
        y = "tipo de delito") 
   
 
-ggplotly(heat)
-
-
+ggplotly(heat, dynamicTicks = TRUE)
 ```
 
 ## Víctimas
@@ -286,7 +282,8 @@ dens <-
        fill = "Año",
        color = "")
 
-ggplotly(dens, tooltip = c("count", "Edad")) %>%
+ggplotly(dens, tooltip = c("count", "Edad"),
+         dynamicTicks = TRUE) %>%
   highlight(on = "plotly_hover")
 ```
 
@@ -304,7 +301,7 @@ box <-
        y = "edad") +
   theme(legend.position = "none")
   
-ggplotly(box)
+ggplotly(box, dynamicTicks = TRUE)
 ```
 
 ### Histograma
@@ -401,8 +398,6 @@ pie4
 
 ### Gráfica de barras
 
-El delito que tarda más tiempo en denunciarse desde que ocurrió es: `r bar_data %>% arrange(desc(tiempo)) %>% select(Categoria) %>% head(1)`
-
 ```{r bar}
 bar_data <-
   victimas %>%
@@ -411,6 +406,7 @@ bar_data <-
   group_by(Categoria) %>%
   summarise(tiempo = mean(tiempo, na.rm = TRUE)) %>%
   arrange(Categoria)
+
 bar <- 
   bar_data %>%
   ggplot() +
@@ -424,9 +420,9 @@ bar <-
   scale_x_discrete(labels=
                      substr(unique(sort(victimas$Categoria)),0,20))
 
-ggplotly(bar, tooltip = c("tiempo"))
+ggplotly(bar, tooltip = c("tiempo"), dynamicTicks = TRUE)
 ```
-
+El delito que tarda más tiempo en denunciarse desde que ocurrió es: `r bar_data %>% arrange(desc(tiempo)) %>% select(Categoria) %>% head(1)`
 
 ### Scatter
 
