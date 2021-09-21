@@ -18,9 +18,10 @@ output:
     highlight: github
     number_sections: True
     fig_caption: True
-    pandoc_args: [ "--output=index.html"]
+    #pandoc_args: [ "--output=index.html"]
     includes:
       in_header: "icono.html"
+    self_contained: true
 ---
 
 ```{r setup, include=FALSE}
@@ -124,25 +125,26 @@ victimas %>%
 
 ### Wordcloud
 
-Los delitos en la Ciudad de México que se denuncian con una mayor frecuencia se muestran a continuación con el tamaño de letra más grande. 
+Los delitos en la Ciudad de México que se denuncian con una mayor frecuencia se muestran a continuación con el tamaño de letra más grande.
 
 
-```{r cloud}
-cloud <- 
-  victimas %>%
-  select(Delito) %>%
-  group_by(Delito) %>%
-  tally() %>%
-  na.omit() %>%
-  wordcloud2(size=5, color='random-dark',
-             backgroundColor="white", shape = "circle")
+<!-- ```{r cloud} -->
+<!-- cloud <- -->
+<!--   victimas %>% -->
+<!--   select(Delito) %>% -->
+<!--   group_by(Delito) %>% -->
+<!--   tally() %>% -->
+<!--   na.omit() %>% -->
+<!--   wordcloud2(size=5, color='random-dark', -->
+<!--              backgroundColor="white", shape = "circle") -->
 
-cloud
-```
+<!-- cloud -->
+
+<!-- ``` -->
 
 ### Mapa
 
-```{r map, cache=FALSE}
+```{r map}
 if (!dir.exists("datos_mapa")) {
   map_url <- "https://github.com/prestevez/covid-19-mx-map/raw/master/datos_covid/01_32_mun.zip"
   download.file(map_url, destfile = "datos_mapa.zip")
@@ -193,23 +195,24 @@ map <-
                       high = "red", low = "yellow") +
   theme(legend.position = "none")
 
-# ggplotly(map, tooltip = c("Delitos","Alcaldía"),
-#                 dynamicTicks = TRUE)
-map
+ggplotly(map, tooltip = c("Delitos","Alcaldía"),
+                dynamicTicks = TRUE)
+
 ```
+
 Como en cualquier ciudad del mundo, hay zonas que son más peligrosas y presentan una mayor cantidad de delitos. Para el caso de la CDMX, las tres alcaldías más peligrosas son:
 
-1. `r map_filt$AlcaldiaHechos[1]` con `r map_filt$Delitos[1]` delitos registrados. 
-2. `r map_filt$AlcaldiaHechos[2]` con `r map_filt$Delitos[2]` delitos registrados. 
-3. `r map_filt$AlcaldiaHechos[3]` con `r map_filt$Delitos[3]` delitos registrados. 
+1. `r map_filt$AlcaldiaHechos[1]` con `r map_filt$Delitos[1]` delitos registrados.
+2. `r map_filt$AlcaldiaHechos[2]` con `r map_filt$Delitos[2]` delitos registrados.
+3. `r map_filt$AlcaldiaHechos[3]` con `r map_filt$Delitos[3]` delitos registrados.
 
 ### Lollipop
 
 Como es de esperarse, los días que presentan una menor cantidad de delitos son durante el fin de semana.
 
 ```{r lolli}
-loli_data <- 
-  data.frame(día = as.character(wday(victimas$FechaHecho, 
+loli_data <-
+  data.frame(día = as.character(wday(victimas$FechaHecho,
                                label = TRUE, abbr = FALSE))) %>%
   group_by(día) %>%
   tally() %>%
@@ -226,8 +229,8 @@ loli <-
        x = "día de la semana",
        y = "total de delitos")
 
-# ggplotly(loli)
-loli
+ggplotly(loli)
+
 ```
 
 
@@ -236,33 +239,33 @@ loli
 A pesar de que el mes parece no representar una gran influencia dentro del tipo de delito, podemos apreciar que los primeros meses del año tienen un ligero aumento respecto a los demás.
 
 ```{r heat}
-heat <- 
+heat <-
   victimas %>%
   select(Mes_hecho, Categoria) %>%
   filter(!is.na(Mes_hecho)) %>%
   group_by(Mes_hecho, Categoria) %>%
   tally() %>%
-  arrange(Categoria) %>% 
-  ggplot(aes(x=factor(Mes_hecho, 
+  arrange(Categoria) %>%
+  ggplot(aes(x=factor(Mes_hecho,
                       levels = c("Enero","Febrero","Marzo",
                                  "Abril","Mayo","Junio",
                                  "Julio","Agosto","Septiembre",
                                  "Octubre","Noviembre",
-                                 "Diciembre")), 
+                                 "Diciembre")),
              y=Categoria, fill=n)) +
   geom_tile() +
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 45)) +
   scale_y_discrete(labels=
-                     substr(unique(sort(victimas$Categoria)),0,20)) + 
+                     substr(unique(sort(victimas$Categoria)),0,20)) +
   scale_fill_gradient(low = "yellow", high = "red") +
   labs(title = "Tipo de delito respecto a cada mes",
        x = "mes",
-       y = "tipo de delito") 
-  
+       y = "tipo de delito")
 
-# ggplotly(heat, dynamicTicks = TRUE)
-heat
+
+ggplotly(heat, dynamicTicks = TRUE)
+
 ```
 
 ## Víctimas
@@ -272,12 +275,12 @@ heat
 Podemos observar que la mayoría de las personas que son víctimas de delitos se encuentran entre las edades `r victimas %>% filter(Edad<150, Edad>0) %>% select(Edad) %>% quantile(probs = .25, na.rm = TRUE, names = FALSE)` y `r victimas %>% filter(Edad<150, Edad>0) %>% select(Edad) %>% quantile(probs = .75, na.rm = TRUE, names = FALSE)`.
 
 ```{r dens}
-dens <- 
+dens <-
   victimas %>%
   filter(Edad < 150, Edad>0) %>%
   ggplot() +
   geom_density(aes(x=Edad,fill=factor(Año_inicio),
-                   color=factor(Año_inicio)), 
+                   color=factor(Año_inicio)),
                alpha=0.5, size=1, stat = "count") +
   labs(title = "Densidad de la edad por año",
        x = "edad",
@@ -285,37 +288,37 @@ dens <-
        fill = "Año",
        color = "")
 
-# ggplotly(dens, tooltip = c("count", "Edad"),
-#          dynamicTicks = TRUE)
-dens
+ggplotly(dens, tooltip = c("count", "Edad"),
+         dynamicTicks = TRUE)
+
 ```
 
 ### Boxplot
 
-```{r box, cache=TRUE}
-box <- 
+```{r box}
+box <-
   victimas %>%
   filter(Edad<150) %>%
-  ggplot() + 
-  geom_boxplot(aes(x = factor(Año_inicio),y = Edad, 
+  ggplot() +
+  geom_boxplot(aes(x = factor(Año_inicio),y = Edad,
                    color = factor(Año_inicio))) +
   labs(title = "Distribución de la edad en cada año",
        x = "año de la carpeta",
        y = "edad") +
   theme(legend.position = "none")
-  
-# ggplotly(box, dynamicTicks = TRUE)
-box
+
+ggplotly(box, dynamicTicks = TRUE)
+
 ```
 
 ### Histograma
 
 ```{r histo}
-histo <- 
+histo <-
   victimas %>%
   filter(!is.na(Sexo), !is.na(CalidadJuridica)) %>%
   ggplot() +
-  geom_histogram(aes(CalidadJuridica, fill = Sexo), 
+  geom_histogram(aes(CalidadJuridica, fill = Sexo),
                  stat = "count") +
   facet_grid(Año_inicio~.) +
   coord_flip() +
@@ -323,8 +326,8 @@ histo <-
        x = "calidad jurídica",
        y = "cantidad de delitos")
 
-# ggplotly(histo)
-histo
+ggplotly(histo)
+
 ```
 
 Podemos apreciar que la cantidad de delitos disminuyeron del 2019 al 2020 y que la mayoría de las personas que denuncian tienen calidad jurídica de `r victimas %>% group_by(CalidadJuridica) %>% tally() %>% arrange(desc(n)) %>% select(CalidadJuridica) %>% head(1)`.
@@ -334,7 +337,7 @@ Podemos apreciar que la cantidad de delitos disminuyeron del 2019 al 2020 y que 
 Veamos cómo se comportan los delitos a través del tiempo de acuerdo con cada categoría.
 
 ```{r line}
-line<- 
+line<-
   victimas %>%
   group_by(Categoria, FechaInicio) %>%
   tally() %>%
@@ -345,8 +348,8 @@ line<-
        x = "fecha",
        y = "cantidad de delitos")
 
-# ggplotly(line, dynamicTicks = TRUE)
-line
+ggplotly(line, dynamicTicks = TRUE)
+
 ```
 
 ### Pie
@@ -354,7 +357,7 @@ line
 A continuación se muestra la proporción de distintas variables categóricas con información de las víctimas.
 
 ```{r pie}
-pie1 <- 
+pie1 <-
   victimas %>%
   select(CalidadJuridica) %>%
   group_by(CalidadJuridica) %>%
@@ -365,7 +368,7 @@ pie1 <-
 
 pie1
 
-pie2 <- 
+pie2 <-
   victimas %>%
   select(competencia) %>%
   group_by(competencia) %>%
@@ -376,7 +379,7 @@ pie2 <-
 
 pie2
 
-pie3 <- 
+pie3 <-
   victimas %>%
   select(TipoPersona) %>%
   group_by(TipoPersona) %>%
@@ -387,7 +390,7 @@ pie3 <-
 
 pie3
 
-pie4 <- 
+pie4 <-
   victimas %>%
   select(Sexo) %>%
   group_by(Sexo) %>%
@@ -413,7 +416,7 @@ bar_data <-
   summarise(tiempo = mean(tiempo, na.rm = TRUE)) %>%
   arrange(Categoria)
 
-bar <- 
+bar <-
   bar_data %>%
   ggplot() +
   geom_bar(aes(x=Categoria, y=tiempo, fill = Categoria),
@@ -426,16 +429,17 @@ bar <-
   scale_x_discrete(labels=
                      substr(unique(sort(victimas$Categoria)),0,20))
 
-# ggplotly(bar, tooltip = c("tiempo"), dynamicTicks = TRUE)
-bar
+ggplotly(bar, tooltip = c("tiempo"), dynamicTicks = TRUE)
+
 ```
+
 El delito que tarda más tiempo en denunciarse desde que ocurrió es: `r bar_data %>% arrange(desc(tiempo)) %>% select(Categoria) %>% head(1)`
 
 ### Scatter
 
-Podemos observar que conforme avanza el tiempo se presenta una mayor cantidad de delitos con una mayor separación entre el momento que ocurrió el hecho y el momento de la denuncia. 
+Podemos observar que conforme avanza el tiempo se presenta una mayor cantidad de delitos con una mayor separación entre el momento que ocurrió el hecho y el momento de la denuncia.
 
-```{r scatter, cache=FALSE}
+```{r scatter}
 scat <-
   victimas %>%
   mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
@@ -448,7 +452,7 @@ scat <-
        subtitle = 'Fecha: {frame_time}',
        x = "edad",
        y = "días desde que ocurre el hecho hasta que se denuncia") +
-  ylim(0,5000) + 
+  ylim(0,5000) +
   transition_time(FechaInicio) +
   ease_aes('linear')
 
