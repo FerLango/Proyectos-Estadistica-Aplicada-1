@@ -1,1 +1,0 @@
-# Proyectos-Estadistica-Aplicada-1
