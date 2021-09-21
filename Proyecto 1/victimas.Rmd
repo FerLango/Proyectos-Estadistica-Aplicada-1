@@ -452,6 +452,8 @@ scat <-
 animate(scat, duration = 40)
 ```
 
+A pesar de que aparentemente el tiempo en que se denuncia un delito se ha encontrado en aumento a través del tiempo, no necesariamente se debe a que a las personas les importa menos levantar una denuncia. Al contrario, más gente se está sumando a emitir su denuncia por delitos que ocurrieron hace mucho tiempo para poder reclamar justicia.
+
 # Referencias
 
 
