@@ -123,7 +123,7 @@ victimas %>%
 
 ## Delitos
 
-### Wordcloud
+### Nube de palabras
 
 Los delitos en la Ciudad de México que se denuncian con una mayor frecuencia se muestran a continuación con el tamaño de letra más grande.
 
@@ -206,7 +206,7 @@ Como en cualquier ciudad del mundo, hay zonas que son más peligrosas y presenta
 2. `r map_filt$AlcaldiaHechos[2]` con `r map_filt$Delitos[2]` delitos registrados.
 3. `r map_filt$AlcaldiaHechos[3]` con `r map_filt$Delitos[3]` delitos registrados.
 
-### Lollipop
+### Paleta
 
 Como es de esperarse, los días que presentan una menor cantidad de delitos son durante el fin de semana.
 
@@ -234,7 +234,7 @@ ggplotly(loli, width = 800)
 ```
 
 
-### Heatmap
+### Mapa de calor
 
 A pesar de que el mes parece no representar una gran influencia dentro del tipo de delito, podemos apreciar que los primeros meses del año tienen un ligero aumento respecto a los demás.
 
@@ -293,7 +293,7 @@ ggplotly(dens, tooltip = c("count", "Edad"),
 
 ```
 
-### Boxplot
+### Cajas y bigotes
 
 ```{r box, cache=TRUE}
 box <-
@@ -337,7 +337,7 @@ ggplotly(histo, width = 800) %>%
 
 Podemos apreciar que la cantidad de delitos han disminuido a lo largo del tiempo y que la mayoría de las personas que denuncian tienen calidad jurídica de `r victimas %>% group_by(CalidadJuridica) %>% tally() %>% arrange(desc(n)) %>% select(CalidadJuridica) %>% head(1)`. Además, cada vez hay más paridad de género entre entre los delitos denunciados.
 
-### Line
+### Línea
 
 Veamos cómo se comportan los delitos a través del tiempo de acuerdo con cada categoría.
 
@@ -359,7 +359,7 @@ ggplotly(line, dynamicTicks = TRUE, width = 800) %>%
 
 ```
 
-### Pie
+### Pastel
 
 A continuación se muestra la proporción de distintas variables categóricas con información de las víctimas.
 
@@ -416,7 +416,7 @@ pie4
 
 ## Denuncia
 
-### Gráfica de barras
+### Barras
 
 ```{r bar}
 bar_data <-
@@ -447,7 +447,7 @@ ggplotly(bar, tooltip = c("tiempo"), dynamicTicks = TRUE,
 
 El delito que tarda más tiempo en denunciarse desde que ocurrió es: `r bar_data %>% arrange(desc(tiempo)) %>% select(Categoria) %>% head(1)`
 
-### Scatter
+### Dispersión
 
 Podemos observar que conforme avanza el tiempo se presenta una mayor cantidad de delitos con una mayor separación entre el momento que ocurrió el hecho y el momento de la denuncia.
 
