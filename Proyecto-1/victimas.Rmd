@@ -115,7 +115,7 @@ victimas %>%
             Mediana = median(Edad),
             Asimetría = round(skewness(Edad),2),
             Curtosis = round(kurtosis(Edad),2),
-            IQR = IQR(Edad),
+            #IQR = IQR(Edad),
             Mínimo = min(Edad),
             Máximo = max(Edad)) %>%
   kable()
@@ -195,8 +195,8 @@ map <-
                       high = "red", low = "yellow") +
   theme(legend.position = "none")
 
-ggplotly(map, tooltip = c("Delitos","Alcaldía"),
-                dynamicTicks = TRUE)
+ggplotly(map, tooltip = c("Delitos","Alcaldía"), 
+         dynamicTicks = TRUE, width = 800)
 
 ```
 
@@ -229,7 +229,7 @@ loli <-
        x = "día de la semana",
        y = "total de delitos")
 
-ggplotly(loli)
+ggplotly(loli, width = 800)
 
 ```
 
@@ -264,7 +264,7 @@ heat <-
        y = "tipo de delito")
 
 
-ggplotly(heat, dynamicTicks = TRUE)
+ggplotly(heat, dynamicTicks = TRUE, width = 800)
 
 ```
 
@@ -289,13 +289,13 @@ dens <-
        color = "")
 
 ggplotly(dens, tooltip = c("count", "Edad"),
-         dynamicTicks = TRUE)
+         dynamicTicks = TRUE, width = 800)
 
 ```
 
 ### Boxplot
 
-```{r box}
+```{r box, cache=TRUE}
 box <-
   victimas %>%
   filter(Edad<150) %>%
@@ -307,7 +307,7 @@ box <-
        y = "edad") +
   theme(legend.position = "none")
 
-ggplotly(box, dynamicTicks = TRUE)
+ggplotly(box, dynamicTicks = TRUE, width = 800)
 
 ```
 
@@ -317,20 +317,25 @@ ggplotly(box, dynamicTicks = TRUE)
 histo <-
   victimas %>%
   filter(!is.na(Sexo), !is.na(CalidadJuridica)) %>%
+  arrange(CalidadJuridica) %>%
   ggplot() +
-  geom_histogram(aes(CalidadJuridica, fill = Sexo),
+  geom_histogram(aes(Sexo, fill = CalidadJuridica),
                  stat = "count") +
   facet_grid(Año_inicio~.) +
   coord_flip() +
   labs(title = "Calidad jurídica de las víctimas",
        x = "calidad jurídica",
-       y = "cantidad de delitos")
+       y = "cantidad de delitos",
+       fill = "") +
+  theme(axis.text.y = element_text(angle = 70))
 
-ggplotly(histo)
+ggplotly(histo, width = 800) %>%
+  layout(legend = list(x = 1.05, 
+                       title =list(text= "Calidad jurídica")))
 
 ```
 
-Podemos apreciar que la cantidad de delitos disminuyeron del 2019 al 2020 y que la mayoría de las personas que denuncian tienen calidad jurídica de `r victimas %>% group_by(CalidadJuridica) %>% tally() %>% arrange(desc(n)) %>% select(CalidadJuridica) %>% head(1)`.
+Podemos apreciar que la cantidad de delitos han disminuido a lo largo del tiempo y que la mayoría de las personas que denuncian tienen calidad jurídica de `r victimas %>% group_by(CalidadJuridica) %>% tally() %>% arrange(desc(n)) %>% select(CalidadJuridica) %>% head(1)`. Además, cada vez hay más paridad de género entre entre los delitos denunciados.
 
 ### Line
 
@@ -343,12 +348,14 @@ line<-
   tally() %>%
   ggplot() +
   geom_line(aes(x = FechaInicio, y = n, color=Categoria)) +
-  theme(legend.position = "left") +
+  #theme(legend.position = "bottom") +
   labs(title = "Delitos a través del tiempo",
        x = "fecha",
        y = "cantidad de delitos")
 
-ggplotly(line, dynamicTicks = TRUE)
+ggplotly(line, dynamicTicks = TRUE, width = 800) %>%
+  layout(legend = list(x = 1, y = 1, 
+                       font = list(size = 8)))
 
 ```
 
@@ -363,7 +370,8 @@ pie1 <-
   group_by(CalidadJuridica) %>%
   tally() %>%
   na.omit() %>%
-  plot_ly(labels = ~CalidadJuridica, values = ~n, type = 'pie') %>%
+  plot_ly(labels = ~CalidadJuridica, values = ~n, type = 'pie',
+          width = 800) %>%
   layout(title = "Proporción de la calidad jurídica de las personas")
 
 pie1
@@ -374,7 +382,8 @@ pie2 <-
   group_by(competencia) %>%
   tally() %>%
   na.omit() %>%
-  plot_ly(labels = ~competencia, values = ~n, type = 'pie') %>%
+  plot_ly(labels = ~competencia, values = ~n, type = 'pie', 
+          width = 800) %>%
   layout(title = "Proporción de la clasificación de los hechos")
 
 pie2
@@ -385,7 +394,8 @@ pie3 <-
   group_by(TipoPersona) %>%
   tally() %>%
   na.omit() %>%
-  plot_ly(labels = ~TipoPersona, values = ~n, type = 'pie') %>%
+  plot_ly(labels = ~TipoPersona, values = ~n, type = 'pie', 
+          width = 800) %>%
   layout(title = "Proporción del tipo de persona")
 
 pie3
@@ -396,7 +406,8 @@ pie4 <-
   group_by(Sexo) %>%
   tally() %>%
   na.omit() %>%
-  plot_ly(labels = ~Sexo, values = ~n, type = 'pie') %>%
+  plot_ly(labels = ~Sexo, values = ~n, type = 'pie', 
+          width = 800) %>%
   layout(title = "Proporción del sexo de las víctimas")
 
 pie4
@@ -429,7 +440,8 @@ bar <-
   scale_x_discrete(labels=
                      substr(unique(sort(victimas$Categoria)),0,20))
 
-ggplotly(bar, tooltip = c("tiempo"), dynamicTicks = TRUE)
+ggplotly(bar, tooltip = c("tiempo"), dynamicTicks = TRUE, 
+         width = 800)
 
 ```
 
@@ -439,7 +451,7 @@ El delito que tarda más tiempo en denunciarse desde que ocurrió es: `r bar_dat
 
 Podemos observar que conforme avanza el tiempo se presenta una mayor cantidad de delitos con una mayor separación entre el momento que ocurrió el hecho y el momento de la denuncia.
 
-```{r scatter}
+```{r scatter, cache=TRUE}
 scat <-
   victimas %>%
   mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
@@ -456,7 +468,7 @@ scat <-
   transition_time(FechaInicio) +
   ease_aes('linear')
 
-animate(scat, duration = 40)
+animate(scat, duration = 40, width = 800)
 ```
 
 A pesar de que aparentemente el tiempo en que se denuncia un delito se ha encontrado en aumento a través del tiempo, no necesariamente se debe a que a las personas les importa menos levantar una denuncia. Al contrario, más gente se está sumando a emitir su denuncia por delitos que ocurrieron hace mucho tiempo para poder reclamar justicia.
