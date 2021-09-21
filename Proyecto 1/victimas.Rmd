@@ -7,10 +7,10 @@ date: "`r format(Sys.time(), '%d/%m/%Y')`"
 name: "Proyecto 1"
 toc-title: Contenido  
 indent: True
-#bibliography: citations.bib
-#csl: apa.csl 
-#nocite: '@*'
-#link-citations: True
+bibliography: citations.bib
+csl: apa.csl 
+nocite: '@*'
+link-citations: True
 output: 
   prettydoc::html_pretty:
     theme: cayman
@@ -19,19 +19,18 @@ output:
     number_sections: True
     fig_caption: True
     pandoc_args: [ "--output=index.html"]
-    #includes:
-      #in_header: "Icono/icono.html"
+    includes:
+      in_header: icono.html
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, 
-                      message = FALSE, fig.align = "center",
-                      cache = FALSE)
+                      message = FALSE, fig.align = "center")
 ```
 
 # Introducción
 
-Insertar intro de lo que se va a hacer.
+La delincuencia en la Ciudad México siempre ha representado un gran problema y fuente de desconfianza para todos los capitalinos. Desafortunadamente, no todos los delitos son denunciados y por consecuencia no se cuenta con carpeta de investigación ni registro alguno del mismo. A pesar de los esfuerzos de las autoridades para facilitar medios para presentar [denuncias de manera digital](https://denunciadigital.cdmx.gob.mx/), se estima que alrededor del 94% de los delitos no se denuncian (Zepeda, 2017). El objetivo del presente trabajo es analizar las víctimas que cuentan con una carpeta de investigación de la Ciudad de México para determinar las características de estos delitos.
 
 ## Ambiente de R
 
@@ -44,6 +43,8 @@ Para el análisis de los datos se utilizaron las librerías que se muestran a co
 - `kableExtra` -> diseño de tablas.
 - `sf` -> leer archivos shp para el mapa.
 - `moments` -> asimetría y curtosis.
+- `gganimate` -> gráficas animadas con el tiempo.
+- `wordcloud` -> nube de palabras.
 
 ```{r lib}
 library(plotly)
@@ -119,8 +120,26 @@ victimas %>%
   kable()
 ```
 
+## Delitos
 
-## Gráficas
+### Wordcloud
+
+Los delitos en la Ciudad de México que se denuncian con una mayor frecuencia se muestran a continuación con el tamaño de letra más grande. 
+
+
+```{r cloud}
+cloud <- 
+  victimas %>%
+  select(Delito) %>%
+  group_by(Delito) %>%
+  tally() %>%
+  na.omit() %>%
+  wordcloud2(size=5, color='random-dark',
+             backgroundColor="white", shape = "circle")
+
+cloud
+
+```
 
 ### Mapa
 
@@ -147,7 +166,8 @@ map_filt <-
   select(AlcaldiaHechos) %>%
   group_by(AlcaldiaHechos) %>%
   tally(name = "Delitos") %>%
-  na.omit()
+  na.omit() %>%
+  arrange(desc(Delitos))
 
 map_filt$AlcaldiaHechos <- 
   str_replace(map_filt$AlcaldiaHechos,
@@ -156,27 +176,121 @@ map_filt$AlcaldiaHechos <-
 
 mex_map_del <- 
   left_join(mex_map, map_filt, 
-            by = c("Alcaldia" = "AlcaldiaHechos"))
+            by = c("Alcaldia" = "AlcaldiaHechos")) %>%
+  rename(Alcaldía = Alcaldia)
 
 rm(mex_map)
-rm(map_filt)
 
 map <- 
   ggplot() +
   geom_sf(data = mex_map_del, 
-          aes(fill = Delitos, shape = Alcaldia),
+          aes(fill = Delitos, shape = Alcaldía),
           colour = "grey75", size = 0.1) +
-  labs(title = "Cantidad de delitos por alcaldía") +
+  labs(title = "Cantidad de delitos por alcaldía en la CDMX",
+       x = "longitud",
+       y = "latitud") +
   theme_bw() + 
   scale_fill_gradient("Total de delitos", 
                       high = "red", low = "yellow") +
   theme(legend.position = "none")
 
-ggplotly(map, tooltip = c("Delitos","Alcaldia"))
+ggplotly(map, tooltip = c("Delitos","Alcaldía"))
+```
+
+Como en cualquier ciudad del mundo, hay zonas que son más peligrosas y presentan una mayor cantidad de delitos. Para el caso de la CDMX, las tres alcaldías más peligrosas son:
+
+1. `r map_filt$AlcaldiaHechos[1]` con `r map_filt$Delitos[1]` delitos registrados. 
+2. `r map_filt$AlcaldiaHechos[2]` con `r map_filt$Delitos[2]` delitos registrados. 
+3. `r map_filt$AlcaldiaHechos[3]` con `r map_filt$Delitos[3]` delitos registrados. 
+
+### Lollipop
+
+Como es de esperarse, los días que presentan una menor cantidad de delitos son durante el fin de semana.
+
+```{r lolli}
+loli_data <- 
+  data.frame(día = as.character(wday(victimas$FechaHecho, 
+                               label = TRUE, abbr = FALSE))) %>%
+  group_by(día) %>%
+  tally() %>%
+  na.omit() %>%
+  rename(delitos = n)
+
+loli <-
+  loli_data %>%
+  ggplot(aes(x=día, y=delitos)) +
+  geom_segment(aes(xend=día, yend=0)) +
+  geom_point(size=4, color= "#189c54") +
+  theme_bw() +
+  labs(title = "Total de delitos por día de la semana",
+       x = "día de la semana",
+       y = "total de delitos")
+
+ggplotly(loli)
 
 ```
 
-### Boxplot
+
+### Heatmap
+
+A pesar de que el mes parece no representar una gran influencia dentro del tipo de delito, podemos apreciar que los primeros meses del año tienen un ligero aumento respecto a los demás.
+
+```{r heat}
+heat <- 
+  victimas %>%
+  select(Mes_hecho, Categoria) %>%
+  filter(!is.na(Mes_hecho)) %>%
+  group_by(Mes_hecho, Categoria) %>%
+  tally() %>%
+  arrange(Categoria) %>% 
+  ggplot(aes(x=factor(Mes_hecho, 
+                      levels = c("Enero","Febrero","Marzo",
+                                 "Abril","Mayo","Junio",
+                                 "Julio","Agosto","Septiembre",
+                                 "Octubre","Noviembre",
+                                 "Diciembre")), 
+             y=Categoria, fill=n)) +
+  geom_tile() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45)) +
+  scale_y_discrete(labels=
+                     substr(unique(sort(victimas$Categoria)),0,20)) + 
+  scale_fill_gradient(low = "yellow", high = "red") +
+  labs(title = "Tipo de delito respecto a cada mes",
+       x = "mes",
+       y = "tipo de delito") 
+  
+
+ggplotly(heat)
+
+
+```
+
+## Víctimas
+
+### Densidad
+
+Podemos observar que la mayoría de las personas que son víctimas de delitos se encuentran entre las edades
+
+```{r dens}
+dens <- 
+  victimas %>%
+  filter(Edad < 150, Edad>0) %>%
+  ggplot() +
+  geom_density(aes(x=Edad,fill=factor(Año_inicio),
+                   color=factor(Año_inicio)), 
+               alpha=0.5, size=1, stat = "count") +
+  labs(title = "Densidad de la edad por año",
+       x = "edad",
+       y = "cantidad de personas",
+       fill = "Año",
+       color = "")
+
+ggplotly(dens)
+
+```
+
+#### Boxplot
 
 ```{r box}
 box <- 
@@ -184,13 +298,17 @@ box <-
   filter(Edad<150) %>%
   ggplot() + 
   geom_boxplot(aes(x = factor(Año_inicio),y = Edad, 
-                   color = factor(Año_inicio)))
-
+                   color = factor(Año_inicio))) +
+  labs(title = "Distribución de la edad en cada año",
+       x = "año de la carpeta",
+       y = "edad") +
+  theme(legend.position = "none")
+  
 ggplotly(box)
 
 ```
 
-### Histograma
+#### Histograma
 
 ```{r histo}
 histo <- 
@@ -203,88 +321,13 @@ histo <-
   coord_flip()
 
 ggplotly(histo)
+
 ```
 
-### Gráfica de barras
 
-```{r bar}
-bar <-
-  victimas %>%
-  mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
-                                   units = "days")) %>%
-  group_by(Categoria) %>%
-  summarise(inicio_vs_hecho = mean(inicio_vs_hecho, 
-                                   na.rm = TRUE)) %>%
-  arrange(Categoria) %>%
-  ggplot() +
-  geom_bar(aes(x=Categoria, y=inicio_vs_hecho, fill = Categoria),
-           stat = "identity") +
-  coord_flip() +
-  theme(legend.position = "none")+
-  scale_x_discrete(labels=
-                     substr(unique(sort(victimas$Categoria)),0,20))
-ggplotly(bar)
-  
-```
 
-### Scatter
 
-```{r scatter}
-scat <-
-  victimas %>%
-  mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
-                                   units = "days")) %>%
-  filter(Edad<150, Edad>0, Categoria == "VIOLACIÓN",
-         !is.na(Sexo)) %>%
-  ggplot() +
-  geom_point(aes(x=Edad, y=inicio_vs_hecho, color = Sexo)) +
-  labs(subtitle = 'Fecha: {frame_time}') +
-  ylim(0,5000) + 
-  transition_time(FechaInicio) +
-  ease_aes('linear')
-
-animate(scat, duration = 40)
-```
-
-### Heatmap
-
-```{r heat}
-heat <- 
-  victimas %>%
-  select(Mes_hecho, Categoria) %>%
-  filter(!is.na(Mes_hecho), Categoria != "DELITO DE BAJO IMPACTO") %>%
-  group_by(Mes_hecho, Categoria) %>%
-  tally() %>%
-  arrange(Categoria) %>% 
-  ggplot(aes(x=factor(Mes_hecho, 
-                      levels = c("Enero","Febrero","Marzo",
-                                 "Abril","Mayo","Junio",
-                                 "Julio","Agosto","Septiembre",
-                                 "Octubre","Noviembre",
-                                 "Diciembre")), 
-             y=Categoria, fill=n)) +
-  geom_tile() +
-  theme(legend.position = "none") +
-  scale_y_discrete(labels=
-                     substr(unique(sort(victimas$Categoria)),0,20)) + 
-  scale_fill_gradient(low = "yellow", high = "red")
-
-ggplotly(heat)
-```
-
-### Densidad
-
-```{r dens}
-dens <- 
-  victimas %>%
-  select(Edad) %>%
-  filter(Edad < 150, Edad>0) %>%
-  ggplot(aes(x=Edad)) +
-  geom_density(fill="#69b3a2", color="darkgreen", alpha=0.8, size=1)
-
-ggplotly(dens)
-```
-### Pie
+#### Pie
 
 ```{r pie}
 pie1 <- 
@@ -303,7 +346,7 @@ pie2 <-
   group_by(competencia) %>%
   tally() %>%
   na.omit() %>%
-  plot_ly(labels = ~competencia, values = ~n, type = 'pie')
+  plot_ly(labels = ~competencia, values = ~n, type = 'pie') 
 
 pie2
 
@@ -326,39 +369,73 @@ pie4 <-
   plot_ly(labels = ~Sexo, values = ~n, type = 'pie')
 
 pie4
+
 ```
 
-### Wordcloud
 
-```{r cloud}
-cloud <- 
+
+
+
+#### Line
+
+
+```{r line}
+line<- 
   victimas %>%
-  select(Delito) %>%
-  group_by(Delito) %>%
+  group_by(Categoria, FechaInicio) %>%
   tally() %>%
-  na.omit() %>%
-  wordcloud2(size=2, color='random-dark',
-             backgroundColor="white", shape = "circle")
+  ggplot() +
+  geom_line(aes(x = FechaInicio, y = n, color = Categoria)) +
+  theme(legend.position = "left")
 
-cloud
+ggplotly(line)
 ```
 
 
-### Lollipop
+## Denuncia
 
-```{r lolli}
-loli <- 
-  data.frame(dia = as.character(wday(victimas$FechaHecho, 
-                               label = TRUE, abbr = FALSE))) %>%
-  group_by(dia) %>%
-  tally() %>%
-  na.omit() %>%
-  ggplot(aes(x=dia, y=n)) +
-  geom_segment(aes(xend=dia, yend=0)) +
-  geom_point(size=4, color= "#189c54") +
-  theme_bw()
+#### Gráfica de barras
 
-ggplotly(loli)
+
+```{r bar}
+bar <-
+  victimas %>%
+  mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
+                                   units = "days")) %>%
+  group_by(Categoria) %>%
+  summarise(inicio_vs_hecho = mean(inicio_vs_hecho, 
+                                   na.rm = TRUE)) %>%
+  arrange(Categoria) %>%
+  ggplot() +
+  geom_bar(aes(x=Categoria, y=inicio_vs_hecho, fill = Categoria),
+           stat = "identity") +
+  coord_flip() +
+  theme(legend.position = "none")+
+  scale_x_discrete(labels=
+                     substr(unique(sort(victimas$Categoria)),0,20))
+ggplotly(bar)
+  
+```
+
+
+#### Scatter
+
+
+```{r scatter, cache=TRUE}
+scat <-
+  victimas %>%
+  mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
+                                   units = "days")) %>%
+  filter(Edad<150, Edad>0, Categoria == "VIOLACIÓN",
+         !is.na(Sexo)) %>%
+  ggplot() +
+  geom_point(aes(x=Edad, y=inicio_vs_hecho, color = Sexo)) +
+  labs(subtitle = 'Fecha: {frame_time}') +
+  ylim(0,5000) + 
+  transition_time(FechaInicio) +
+  ease_aes('linear')
+
+animate(scat, duration = 40)
 ```
 
 
