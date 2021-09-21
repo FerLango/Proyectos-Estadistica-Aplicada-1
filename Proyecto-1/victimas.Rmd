@@ -13,15 +13,15 @@ nocite: '@*'
 link-citations: True
 output: 
   prettydoc::html_pretty:
-    theme: cayman
+    theme: architect
     toc: True
     highlight: github
     number_sections: True
     fig_caption: True
-    #pandoc_args: [ "--output=index.html"]
+    self_contained: false
+    pandoc_args: [ "--output=index.html"]
     includes:
       in_header: "icono.html"
-    self_contained: true
 ---
 
 ```{r setup, include=FALSE}
@@ -56,7 +56,7 @@ library(kableExtra)
 library(sf)
 library(moments)
 library(gganimate)
-library(wordcloud2)
+library(wordcloud)
 ```
 
 ## Conjunto de datos
@@ -125,22 +125,21 @@ victimas %>%
 
 ### Nube de palabras
 
-Los delitos en la Ciudad de México que se denuncian con una mayor frecuencia se muestran a continuación con el tamaño de letra más grande.
+Los delitos que se denuncian en la Ciudad de México se muestran a continuación.
 
+```{r cloud}
+cloud <-
+  victimas %>%
+  select(Delito) %>%
+  group_by(Delito) %>%
+  tally() %>%
+  na.omit() %>%
+  arrange(desc(n))
 
-<!-- ```{r cloud} -->
-<!-- cloud <- -->
-<!--   victimas %>% -->
-<!--   select(Delito) %>% -->
-<!--   group_by(Delito) %>% -->
-<!--   tally() %>% -->
-<!--   na.omit() %>% -->
-<!--   wordcloud2(size=5, color='random-dark', -->
-<!--              backgroundColor="white", shape = "circle") -->
-
-<!-- cloud -->
-
-<!-- ``` -->
+wordcloud(words = cloud$Delito, freq = cloud$n, random.color = TRUE,
+          max.words=200, random.order=FALSE, rot.per=.20, 
+          colors=colorRamps::primary.colors(50))
+```
 
 ### Mapa
 
@@ -191,12 +190,12 @@ map <-
        x = "longitud",
        y = "latitud") +
   theme_bw() + 
-  scale_fill_gradient("Total de delitos", 
-                      high = "red", low = "yellow") +
-  theme(legend.position = "none")
+  scale_fill_gradient(high = "red", low = "yellow", name = NULL,
+                      labels = NULL, breaks = NULL) +
+  theme(legend.position = "right")
 
 ggplotly(map, tooltip = c("Delitos","Alcaldía"), 
-         dynamicTicks = TRUE, width = 800)
+         width = 800)
 
 ```
 
@@ -474,6 +473,10 @@ animate(scat, duration = 40, width = 800)
 A pesar de que aparentemente el tiempo en que se denuncia un delito se ha encontrado en aumento a través del tiempo, no necesariamente se debe a que a las personas les importa menos levantar una denuncia. Al contrario, más gente se está sumando a emitir su denuncia por delitos que ocurrieron hace mucho tiempo para poder reclamar justicia.
 
 # Referencias
+
+```{r clean, include=FALSE}
+rm(list = ls()[!(ls() %in% c("victimas", "diccionario"))])
+```
 
 
 

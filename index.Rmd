@@ -1,0 +1,31 @@
+---
+title: "Proyectos Estadística Aplicada 1"
+subtitle: "Otoño 2021"
+author: "Fernando Lango - 181055"
+email: "flangoba@itam.mx"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+toc-title: Contenido  
+indent: True
+#bibliography: citations.bib
+#csl: apa.csl 
+#nocite: '@*'
+link-citations: True
+output: 
+  prettydoc::html_pretty:
+    theme: architect
+    toc: False
+    highlight: github
+    number_sections: True
+    fig_caption: True
+    self_contained: false
+    #pandoc_args: [ "--output=index.html"]
+    includes:
+      in_header: "icono.html"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, 
+                      message = FALSE, fig.align = "center")
+```
+
+# [Víctimas en carpetas de investigación FGJ]("/Proyecto-1")
