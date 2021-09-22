@@ -31,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
 
 # Introducción
 
-La delincuencia en la Ciudad México siempre ha representado un gran problema y fuente de desconfianza para todos los capitalinos. Desafortunadamente, no todos los delitos son denunciados y por consecuencia no se cuenta con carpeta de investigación ni registro alguno del mismo. A pesar de los esfuerzos de las autoridades para facilitar medios para presentar [denuncias de manera digital](https://denunciadigital.cdmx.gob.mx/), se estima que alrededor del 94% de los delitos no se denuncian (Zepeda, 2017). El objetivo del presente trabajo es analizar las víctimas que cuentan con una carpeta de investigación de la Ciudad de México para determinar las características de estos delitos.
+La delincuencia en la Ciudad México siempre ha representado un gran problema y fuente de desconfianza para todos los capitalinos. Desafortunadamente, no todos los delitos son denunciados y por consecuencia no se cuenta con carpeta de investigación ni registro alguno del mismo. A pesar de los esfuerzos de las autoridades para facilitar medios para presentar [denuncias de manera digital](https://denunciadigital.cdmx.gob.mx/), se estima que alrededor del 94% de los delitos no se denuncian (Zepeda, 2017). El objetivo del presente trabajo es analizar las víctimas que cuentan con una carpeta de investigación en la Ciudad de México para determinar las características de estos delitos.
 
 ## Ambiente de R
 
@@ -138,7 +138,7 @@ cloud <-
 
 wordcloud(words = cloud$Delito, freq = cloud$n, random.color = TRUE,
           max.words=200, random.order=FALSE, rot.per=.20, 
-          colors=colorRamps::primary.colors(50))
+          colors=colorRamps::blue2green(200))
 ```
 
 ### Mapa
@@ -334,7 +334,7 @@ ggplotly(histo, width = 800) %>%
 
 ```
 
-Podemos apreciar que la cantidad de delitos han disminuido a lo largo del tiempo y que la mayoría de las personas que denuncian tienen calidad jurídica de `r victimas %>% group_by(CalidadJuridica) %>% tally() %>% arrange(desc(n)) %>% select(CalidadJuridica) %>% head(1)`. Además, cada vez hay más paridad de género entre entre los delitos denunciados.
+Podemos apreciar que la cantidad de delitos han disminuido a lo largo del tiempo y que la mayoría de las personas que denuncian tienen calidad jurídica de `r victimas %>% group_by(CalidadJuridica) %>% tally() %>% arrange(desc(n)) %>% select(CalidadJuridica) %>% head(1)`. Además, cada vez hay más paridad de género entre los delitos denunciados.
 
 ### Línea
 
