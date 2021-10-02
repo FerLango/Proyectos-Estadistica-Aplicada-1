@@ -18,3 +18,5 @@ moments
 gganimate
 gridExtra
 wordcloud2
+RColorBrewer
+wordcloud
