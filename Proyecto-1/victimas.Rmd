@@ -378,8 +378,6 @@ histo
 ggplotly(histo, width = 800) %>%
   layout(legend = list(x = 1.05,
                       title =list(text= "Calidad jurídica")))
-
-
 ```
 
 Podemos apreciar que la cantidad de delitos denunciados han disminuido a lo largo del tiempo y que la mayoría de las personas que se encuentran en las carpetas de investigación tienen calidad jurídica de VÍCTIMA Y DENUNCIANTE. Además, se ha disminuido la brecha entre la cantidad de personas de sexo masculino y femenino al momento de registrar el delito.
