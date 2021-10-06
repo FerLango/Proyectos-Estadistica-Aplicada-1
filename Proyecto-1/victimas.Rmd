@@ -215,7 +215,7 @@ Como en cualquier ciudad del mundo, hay zonas que son más peligrosas y presenta
 2. `r map_filt$AlcaldiaHechos[2]` con `r map_filt$Delitos[2]` delitos registrados.
 3. `r map_filt$AlcaldiaHechos[3]` con `r map_filt$Delitos[3]` delitos registrados.
 
-Cabe aclarar que no podemos delimitar estas alcaldías como las más peligrosas porque no tenemos una medida real sobre el total de delitos porque no todos son denunciados y procesados a través de una carpeta de investigación de la PGJ.
+Cabe aclarar que no podemos delimitar estas alcaldías como las más peligrosas porque no tenemos una medida real sobre el total de delitos porque no todos son denunciados y procesados a través de una carpeta de investigación de la PGJ. Además, sabemos que la cantidad de habitantes en cada alcaldía varía. 
 
 ### Paleta
 
@@ -373,9 +373,12 @@ histo <-
        fill = "") +
   theme(axis.text.y = element_text(angle = 70))
 
+histo
+
 ggplotly(histo, width = 800) %>%
-  layout(legend = list(x = 1.05, 
-                       title =list(text= "Calidad jurídica")))
+  layout(legend = list(x = 1.05,
+                      title =list(text= "Calidad jurídica")))
+
 
 ```
 
@@ -401,7 +404,6 @@ line<-
 ggplotly(line, dynamicTicks = T, width = 800) %>%
   layout(legend = list(x = 1, y = 1, 
                        font = list(size = 8)))
-
 ```
 
 ### Pastel
