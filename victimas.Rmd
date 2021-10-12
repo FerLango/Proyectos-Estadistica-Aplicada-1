@@ -1,0 +1,551 @@
+---
+title: "Víctimas en carpetas de investigación FGJ"
+subtitle: "Estadística Aplicada 1 - Proyecto 1"
+author: "Fernando Lango - 181055"
+email: "flangoba@itam.mx"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+name: "Proyecto 1"
+toc-title: Contenido  
+indent: True
+bibliography: citations.bib
+csl: apa.csl 
+nocite: '@*'
+link-citations: True
+output: 
+  prettydoc::html_pretty:
+    theme: architect
+    toc: True
+    highlight: github
+    number_sections: True
+    fig_caption: True
+    self_contained: false
+    pandoc_args: [ "--output=index.html"]
+    includes:
+      in_header: "icono.html"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, 
+                      message = FALSE, fig.align = "center")
+```
+
+# Introducción
+
+La delincuencia en la Ciudad México siempre ha representado un gran problema y fuente de desconfianza para todos los capitalinos. Desafortunadamente, no todos los delitos son denunciados y por consecuencia no se cuenta con carpeta de investigación ni registro alguno del mismo. A pesar de los esfuerzos de las autoridades para facilitar medios para presentar [denuncias de manera digital](https://denunciadigital.cdmx.gob.mx/), se estima que alrededor del 94% de los delitos no se denuncian (Zepeda, 2017). El objetivo del presente trabajo es analizar las víctimas que cuentan con una carpeta de investigación en la Ciudad de México para determinar las características de estos delitos.
+
+## Ambiente de R
+
+Para el análisis de los datos se utilizaron las librerías que se muestran a continuación:
+
+- `plotly` -> animación de gráficas.
+- `tidyverse` -> carga de archivos csv, creación de gráficas y manipulación de tablas.
+- `lubridate` -> manejo de fechas.
+- `openxlsx` -> carga de archivos de excel.
+- `kableExtra` -> diseño de tablas.
+- `sf` -> leer archivos shp para el mapa.
+- `moments` -> asimetría y curtosis.
+- `gganimate` -> gráficas animadas con el tiempo.
+- `wordcloud` -> nube de palabras.
+- `stringr` -> manejo de textos.
+
+```{r lib}
+library(plotly)
+library(tidyverse)
+library(lubridate)
+library(openxlsx)
+library(kableExtra)
+library(sf)
+library(moments)
+library(gganimate)
+library(wordcloud)
+library(stringr)
+```
+
+## Conjunto de datos
+
+Los conjuntos de datos utilizados en el presente análisis se pueden descargar en [Víctimas en carpetas de investigación](https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv) y [Diccionario de víctimas](https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/10235569-f4a9-4876-9465-9780887df8e2/download/diccionario-de-victimas-actualizado.xlsx) dentro del [Portal de Datos Abiertos de la CDMX](https://datos.cdmx.gob.mx/). Para mayor información del conjunto de datos se puede consultar en [Víctimas en carpetas de investigación FGJ](https://datos.cdmx.gob.mx/dataset/victimas-en-carpetas-de-investigacion-fgj).
+
+La base contiene la información de las víctimas de diversos delitos que cuentan con una carpeta de investigación en la [Fiscalía General de Justicia (FGJ) de la Ciudad de México](https://www.fgjcdmx.gob.mx/) a partir de enero del año 2019.
+
+### Descarga y carga de los datos
+
+```{r data, cache=TRUE}
+data_url <- "https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/victimas-en-carpetas-de-investigacion-fgj/victimas_completa_julio_2021.csv"
+
+victimas <- read_csv(data_url, show_col_types = FALSE)
+
+dicc_url <- "https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/10235569-f4a9-4876-9465-9780887df8e2/download/diccionario-de-victimas-actualizado.xlsx"
+
+diccionario <- read.xlsx(dicc_url, sheet =1)
+```
+
+### Formato de columnas
+
+```{r format}
+victimas$Mes_inicio <- as.factor(victimas$Mes_inicio)
+victimas$FechaInicio <- dmy(victimas$FechaInicio)
+victimas$Delito <- as.factor(victimas$Delito)
+victimas$Categoria <- as.factor(victimas$Categoria)
+victimas$Sexo <- as.factor(victimas$Sexo)
+victimas$TipoPersona <- as.factor(victimas$TipoPersona)
+victimas$CalidadJuridica <- as.factor(victimas$CalidadJuridica)
+victimas$competencia <- as.factor(victimas$competencia)
+victimas$FechaHecho <- dmy(victimas$FechaHecho)
+victimas$AlcaldiaHechos <- as.factor(victimas$AlcaldiaHechos)
+victimas$Mes_hecho <- factor(victimas$Mes_hecho,
+                             levels = c("Enero","Febrero","Marzo",
+                                        "Abril","Mayo","Junio",
+                                        "Julio","Agosto",
+                                        "Septiembre","Octubre",   
+                                        "Noviembre","Diciembre"))
+```
+
+### Descripción de las variables
+
+```{r variables}
+diccionario[,1:2] %>%
+  rename(Variable = Nombre.de.variable) %>%
+  kable()
+```
+
+# Análisis exploratorio
+
+## Estadísticos
+
+```{r estad}
+victimas %>%
+  select(Año_inicio, Sexo, Edad) %>%
+  rename('Año inicio'=Año_inicio) %>%
+  filter(!is.na(Edad), !is.na(Sexo)) %>%
+  group_by(`Año inicio`, Sexo) %>%
+  summarise(Media = round(mean(Edad),2),
+            SD = round(sd(Edad),2),
+            Mediana = median(Edad),
+            Asimetría = round(skewness(Edad),2),
+            Curtosis = round(kurtosis(Edad),2),
+            #IQR = IQR(Edad),
+            Mínimo = min(Edad),
+            Máximo = max(Edad)) %>%
+  kable()
+```
+Resulta llamativo que sin importar el año, el sexo masculino tiene un promedio de edad de 38 y para el sexo femenino un promedio de edad de 36. A pesar de que todos prestan una edad mínima de 0, esto probablemente representa que no se contaba con la edad de la víctima al momento del registro y decidieron colocar el 0 como un campo vacío. La edad máxima del sexo masculino en el año 2019 es de 369, lo cual representa claramente un error al capturar los datos. Todas las curtosis se encuentran sobre 2.94, lo que indica que las colas de la distribución no son tan pesadas. Los coeficiente de asimetría mayores a 0 nos dejan ver que la mayor cantidad de víctimas tienen una edad por debajo del promedio o media. La desviación estándar que tenemos en general es alrededor de 16 años, así que la edad de las víctimas se encuentran concentradas principalmente entre 22 y 54 años de edad.
+
+## Delitos
+
+### Nube de palabras
+
+Algunos de los delitos que se denuncian en la Ciudad de México se muestran a continuación en la nube de palabras.
+
+```{r cloud}
+cloud <-
+  victimas %>%
+  select(Delito) %>%
+  group_by(Delito) %>%
+  tally() %>%
+  na.omit() %>%
+  arrange(desc(n))
+
+wordcloud(words = cloud$Delito, freq = cloud$n, random.color = T,
+          max.words=200, random.order=FALSE, rot.per=.20,
+          colors=colorRamps::blue2green(200))
+
+```
+
+### Mapa
+
+```{r map}
+if (!dir.exists("datos_mapa")) {
+  map_url <- "https://github.com/prestevez/covid-19-mx-map/raw/master/datos_covid/01_32_mun.zip"
+  download.file(map_url, destfile = "datos_mapa.zip")
+  unzip("datos_mapa.zip", exdir = "datos_mapa")
+  file.remove("datos_mapa.zip")
+}
+
+mex_map <- 
+  st_read("datos_mapa/01_32_mun.shp", quiet = TRUE) %>% 
+  st_set_crs("+proj=lcc +lat_1=17.5 +lat_2=29.5 +lat_0=12 +lon_0=-102 +x_0=2500000 +y_0=0 +ellps=GRS80 +units=m +no_defs") %>%
+  filter(CVE_ENT == "09") %>%
+  rename(Alcaldia = NOMGEO)
+
+
+mex_map$Alcaldia <- chartr("ÁÉÍÓÚ", "AEIOU", 
+                         toupper(mex_map$Alcaldia))
+
+map_filt <- 
+  victimas %>% 
+  select(AlcaldiaHechos) %>%
+  group_by(AlcaldiaHechos) %>%
+  tally(name = "Delitos") %>%
+  na.omit() %>%
+  arrange(desc(Delitos))
+
+map_filt$AlcaldiaHechos <- 
+  str_replace(map_filt$AlcaldiaHechos,
+              "GUSTAVO A MADERO", "GUSTAVO A. MADERO")
+
+
+mex_map_del <- 
+  left_join(mex_map, map_filt, 
+            by = c("Alcaldia" = "AlcaldiaHechos")) %>%
+  rename(Alcaldía = Alcaldia)
+
+rm(mex_map)
+
+map <- 
+  ggplot() +
+  geom_sf(data = mex_map_del, 
+          aes(fill = Delitos, shape = Alcaldía),
+          colour = "grey75", size = 0.1) +
+  labs(title = "Cantidad de delitos por alcaldía en la CDMX",
+       x = "Longitud",
+       y = "Latitud") +
+  theme_bw() + 
+  scale_fill_gradient(high = "red", low = "yellow", name = NULL,
+                      labels = NULL, breaks = NULL) +
+  theme(legend.position = "right")
+
+ggplotly(map, tooltip = c("Delitos","Alcaldía"), 
+         width = 800)
+
+```
+
+Como en cualquier ciudad del mundo, hay zonas que son más peligrosas y presentan una mayor cantidad de delitos. Para el caso de la CDMX, las tres alcaldías en las que se registran la mayor cantidad de delitos son:
+
+1. `r map_filt$AlcaldiaHechos[1]` con `r map_filt$Delitos[1]` delitos registrados.
+2. `r map_filt$AlcaldiaHechos[2]` con `r map_filt$Delitos[2]` delitos registrados.
+3. `r map_filt$AlcaldiaHechos[3]` con `r map_filt$Delitos[3]` delitos registrados.
+
+Cabe aclarar que no podemos delimitar estas alcaldías como las más peligrosas porque no tenemos una medida real sobre el total de delitos porque no todos son denunciados y procesados a través de una carpeta de investigación de la PGJ. Además, sabemos que la cantidad de habitantes en cada alcaldía varía. 
+
+### Paleta
+
+Como es de esperarse, los días que presentan una menor cantidad de delitos son durante el fin de semana. Esto puede ocurrir porque la mayoría de la gente se encuentra en sus casas descansando durante estos día. En general, hay menos movimiento dentro de la CDMX los días sábado y domingo; por consecuente una menor cantidad de personas que se exponen ante un posible delito.
+
+```{r lolli}
+loli_data <-
+  data.frame(día = as.character(wday(victimas$FechaHecho,
+                               label = TRUE, abbr = FALSE))) %>%
+  group_by(día) %>%
+  tally() %>%
+  na.omit() %>%
+  rename(delitos = n)
+loli_data$día <- factor(loli_data$día, 
+                        levels = c("lunes","martes", 
+                                   "miércoles","jueves",
+                                   "viernes","sábado", "domingo"))
+
+loli <-
+  loli_data %>%
+  ggplot(aes(x=día, y=delitos)) +
+  geom_segment(aes(xend=día, yend=0)) +
+  geom_point(size=4, color= "#189c54") +
+  theme_bw() +
+  labs(title = "Total de delitos por día de la semana",
+       x = "Día de la semana",
+       y = "Total de delitos")
+
+ggplotly(loli, width = 800)
+
+```
+
+
+### Mapa de calor
+
+A pesar de que el mes parece no representar una gran influencia dentro del tipo de delito, podemos apreciar que los primeros meses del año tienen un ligero aumento en los delitos registrados respecto a los demás. Una de las posibles causas es que debido a las fiestas de fin de año solemos relajarnos y prestamos menos atención a actitudes sospechosas. 
+
+```{r heat}
+heat_data <-
+  victimas %>%
+  select(Mes_hecho, Categoria) %>%
+  filter(!is.na(Mes_hecho)) %>%
+  group_by(Mes_hecho, Categoria) %>%
+  tally() %>%
+  arrange(Categoria) %>%
+  rename(Categoría = Categoria, Mes = Mes_hecho, Delitos=n)
+heat <- 
+  heat_data %>%
+  ggplot(aes(x=Mes, y=Categoría, fill=log(Delitos),
+             size=Delitos)) +
+  geom_tile() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45)) +
+  scale_y_discrete(labels=
+                     substr(unique(sort(victimas$Categoria)),
+                            0,35)) +
+  scale_fill_gradient2(low="green", mid="yellow", high="red",
+                       midpoint = mean(log(heat_data$Delitos))) +
+  labs(title = "Tipo de delito respecto a cada mes",
+       x = "Mes",
+       y = "Tipo de delito")
+
+
+ggplotly(heat, dynamicTicks = TRUE, width = 800,
+         tooltip = c("Categoría", "Mes", "Delitos"))
+
+# matrix(heat_data$Delitos, nrow = 16, byrow = T, 
+#        dimnames = list(substr(unique(heat_data$Categoría),0,10),
+#                        unique(heat_data$Mes))) %>%
+# kable()
+
+```
+
+Notemos que utilizamos la escala logarítmica sobre el total de delitos por categoría y mes, ya que existe una gran diferencia entre la cantidad de delitos en la categoría de *Delito de bajo impacto*. 
+
+## Víctimas
+
+### Densidad
+
+Podemos observar que la mayoría de las personas que son víctimas de delitos se encuentran entre las edades `r victimas %>% filter(Edad<150, Edad>0) %>% select(Edad) %>% quantile(probs = .25, na.rm = TRUE, names = FALSE)` y `r victimas %>% filter(Edad<150, Edad>0) %>% select(Edad) %>% quantile(probs = .75, na.rm = TRUE, names = FALSE)`. Además, confirmando lo analizado en los *Estadísticos*, la distribución se encuentra ligeramente sesgada hacia la izquierda.
+
+```{r dens}
+dens <-
+  victimas %>%
+  filter(Edad < 150, Edad>0) %>%
+  ggplot() +
+  geom_density(aes(x=Edad,fill=factor(Año_inicio),
+                   color=factor(Año_inicio)),
+               alpha=0.5, size=1, stat = "count") +
+  labs(title = "Densidad de la edad por año",
+       x = "Edad",
+       y = "Cantidad de personas",
+       fill = "Año",
+       color = "")
+
+ggplotly(dens, tooltip = c("count", "Edad"),
+         dynamicTicks = TRUE, width = 800)
+
+```
+
+Tal como se explicó en el apartado de *Estadísticos*, tuvimos que omitir aquellas personas con edad menor o igual a 0 y mayores a 150 años porque evidentemente forman parte de un problema en el registro.
+
+### Cajas y bigotes
+
+```{r box, cache=TRUE}
+box <-
+  victimas %>%
+  filter(Edad<150) %>%
+  ggplot() +
+  geom_boxplot(aes(x = factor(Año_inicio),y = Edad,
+                   color = factor(Año_inicio))) +
+  labs(title = "Distribución de la edad en cada año",
+       x = "Año de la carpeta",
+       y = "Edad") +
+  theme(legend.position = "none")
+
+ggplotly(box, dynamicTicks = TRUE, width = 800)
+
+```
+
+Es sumamente raro encontrar a una persona con una edad de 120 años, ¿es una persona muy longeva o un error en el registro del 2021?
+
+```{r outlier}
+out <-victimas %>%
+  select(FechaInicio, Delito, Categoria, Sexo, Edad, TipoPersona,
+         CalidadJuridica) %>%
+  filter(Edad == 120) %>%
+  rename(Fecha = FechaInicio, Categoría = Categoria,
+         CalidadJurídica = CalidadJuridica)
+out$TipoPersona <- str_replace(out$TipoPersona, "FISICA", "FÍSICA")
+out$CalidadJurídica <- 
+  str_replace(out$CalidadJurídica, "VICTIMA", "VÍCTIMA")
+
+out %>%
+  kable()
+```
+
+No tenemos una manera certera para identificar si este registro corresponde correctamente a una persona de 120 años. Sin embargo, es importante analizar este tipo de valores atípicos.
+
+### Histograma
+
+```{r histo}
+histo <-
+  victimas %>%
+  filter(!is.na(Sexo), !is.na(CalidadJuridica)) %>%
+  arrange(CalidadJuridica) %>%
+  ggplot() +
+  geom_histogram(aes(Sexo, fill = CalidadJuridica),
+                 stat = "count") +
+  facet_grid(Año_inicio~.) +
+  coord_flip() +
+  labs(title = "Calidad jurídica de las víctimas",
+       x = "Calidad jurídica",
+       y = "Cantidad de delitos",
+       fill = "") +
+  theme(axis.text.y = element_text(angle = 70))
+
+histo
+
+ggplotly(histo, width = 800) %>%
+  layout(legend = list(x = 1.05,
+                      title =list(text= "Calidad jurídica")))
+```
+
+Podemos apreciar que la cantidad de delitos denunciados han disminuido a lo largo del tiempo y que la mayoría de las personas que se encuentran en las carpetas de investigación tienen calidad jurídica de VÍCTIMA Y DENUNCIANTE. Además, se ha disminuido la brecha entre la cantidad de personas de sexo masculino y femenino al momento de registrar el delito.
+
+### Línea
+
+Veamos cómo se comportan los delitos a través del tiempo de acuerdo con cada categoría.
+
+```{r line}
+line<-
+  victimas %>%
+  group_by(Categoria, FechaInicio) %>%
+  tally() %>%
+  rename(Categoría = Categoria) %>%
+  ggplot() +
+  geom_line(aes(x = FechaInicio, y = n, color=Categoría)) +
+  #theme(legend.position = "bottom") +
+  labs(title = "Delitos a través del tiempo",
+       x = "Fecha",
+       y = "Cantidad de delitos")
+
+ggplotly(line, dynamicTicks = T, width = 800) %>%
+  layout(legend = list(x = 1, y = 1, 
+                       font = list(size = 8)))
+```
+
+### Pastel
+
+A continuación se muestra la proporción de distintas variables categóricas con información de las víctimas.
+
+```{r pie}
+pie2 <-
+  victimas %>%
+  select(competencia) %>%
+  group_by(competencia) %>%
+  tally() %>%
+  na.omit()
+pie2$competencia <- str_replace(pie2$competencia, "COMUN", "COMÚN")
+  
+pie2 <- pie2 %>%
+  plot_ly(labels = ~competencia, values = ~n, type = 'pie', 
+          width = 800, rotation = 90) %>%
+  layout(title = "Proporción de la clasificación de los hechos")
+
+pie2
+
+pie3 <-
+  victimas %>%
+  select(TipoPersona) %>%
+  group_by(TipoPersona) %>%
+  tally() %>%
+  na.omit()
+pie3$TipoPersona <- str_replace(pie3$TipoPersona, 
+                                "FISICA","FÍSICA")
+pie3<- pie3 %>%
+  plot_ly(labels = ~TipoPersona, values = ~n, type = 'pie', 
+          width = 800) %>%
+  layout(title = "Proporción del tipo de persona")
+
+pie3
+
+pie4 <-
+  victimas %>%
+  select(Sexo) %>%
+  group_by(Sexo) %>%
+  tally() %>%
+  na.omit() %>%
+  plot_ly(labels = ~Sexo, values = ~n, type = 'pie', 
+          width = 800) %>%
+  layout(title = "Proporción del sexo de las víctimas")
+
+pie4
+
+```
+
+## Denuncia
+
+### Barras
+
+```{r bar}
+bar_data <-
+  victimas %>%
+  mutate(tiempo = difftime(FechaInicio, FechaHecho,
+                                   units = "days")) %>%
+  group_by(Categoria) %>%
+  summarise(tiempo = mean(tiempo, na.rm = TRUE)) %>%
+  arrange(Categoria)
+
+bar <-
+  bar_data %>%
+  ggplot() +
+  geom_bar(aes(x=Categoria, y=tiempo, fill = Categoria),
+           stat = "identity") +
+  coord_flip() +
+  labs(title = "Promedio del tiempo en días entre hecho y denuncia por tipo de delito",
+       x = "Tipo de delito",
+       y = "Días promedio entre el delito y la denuncia") +
+  theme(legend.position = "none")+
+  scale_x_discrete(labels=
+                     substr(unique(sort(victimas$Categoria)),0,20))
+
+ggplotly(bar, tooltip = c("tiempo"), dynamicTicks = TRUE, 
+         width = 800)
+
+```
+
+El delito que tarda más tiempo en denunciarse desde que ocurrió es: `r bar_data %>% arrange(desc(tiempo)) %>% select(Categoria) %>% head(1)`. Es considerable la diferencia que existe en este tiempo respecto a los otros tipos de delitos. Afortunadamente, no importan cuánto tiempo pase desde que ocurrió el delito, siempre se puede hacer justicia.
+
+### Dispersión
+
+Podemos observar que conforme avanza el tiempo se presenta una mayor cantidad de delitos con una mayor separación entre el momento que ocurrió el hecho y el momento de la denuncia.
+
+```{r scatter, cache=TRUE}
+scat <-
+  victimas %>%
+  mutate(inicio_vs_hecho = difftime(FechaInicio, FechaHecho,
+                                   units = "days")) %>%
+  filter(Edad<150, Edad>0, Categoria == "VIOLACIÓN",
+         !is.na(Sexo)) %>%
+  ggplot() +
+  geom_point(aes(x=Edad, y=inicio_vs_hecho, color = Sexo)) +
+  labs(title = "Días desde el hecho a la denuncia por edad",
+       subtitle = 'Fecha: {frame_time}',
+       x = "Edad",
+       y = "Días desde que ocurre el hecho hasta que se denuncia") +
+  ylim(0,5000) +
+  transition_time(FechaInicio) +
+  ease_aes('linear')
+
+animate(scat, duration = 40, width = 800)
+```
+
+A pesar de que aparentemente el tiempo en que se denuncia un delito se ha encontrado en aumento a través del tiempo, no necesariamente se debe a que a las personas les importa menos levantar una denuncia. Al contrario, más gente se está sumando a emitir su denuncia por delitos que ocurrieron hace mucho tiempo para poder reclamar justicia.
+
+# Conclusión
+
+Contar con este tipo de información nos brinda una idea de la situación de inseguridad que se vive en México. El hecho de que no todos los delitos que ocurren sean denunciados representa un grave problema para las autoridades. No es posible buscar una solución certera a un problema del que no se tiene una idea precisa de su magnitud. 
+
+Denunciar usualmente es un proceso largo y burocrático que dificulta las intenciones de la víctima por buscar hacer justicia. Las herramientas que se han implementado para facilitar el levantamiento de una denuncia han sido favorables. Aún hay un gran trabajo por realizar para hacer de México un lugar más seguro. La forma en la que podemos apoyar con nuestro granito de arena es informando a las autoridades correspondientes cuando se esté cometiendo un delito y denunciar de manera oportuna.
+
+# Referencias
+
+```{r clean, include=FALSE}
+rm(list = ls()[!(ls() %in% c("victimas", "diccionario"))])
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

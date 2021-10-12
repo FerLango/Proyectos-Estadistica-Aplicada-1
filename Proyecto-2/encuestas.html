@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Fernando Lango - 181055" />
+
+<meta name="date" content="2021-12-10" />
+
+<title>Encuestas censuradas</title>
+
+<script src="encuestas_files/header-attrs-2.11/header-attrs.js"></script>
+<link rel="shortcut icon" href="icono.ico">
+
+
+
+
+
+<link rel="stylesheet" href="encuestas_files/style.css" type="text/css" />
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<header>
+<div class="inner">
+<h1 class="title toc-ignore">Encuestas censuradas</h1>
+<h2 class="subtitle">Estadística Aplicada 1 - Proyecto 2</h2>
+<h3 class="author">Fernando Lango - 181055</h3>
+<h3 class="date">12/10/2021</h3>
+</div>
+</header>
+
+
+<div id="TOC" class="toc">
+<div class="inner">
+<h2 id="toc-title" class="toc-title">Contenido</h2>
+<ul>
+<li><a href="#planteamiento-del-problema"><span class="toc-section-number">1</span> Planteamiento del problema</a>
+<ul>
+<li><a href="#problema"><span class="toc-section-number">1.1</span> Problema</a></li>
+<li><a href="#descripción"><span class="toc-section-number">1.2</span> Descripción</a></li>
+<li><a href="#proyecto"><span class="toc-section-number">1.3</span> Proyecto</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="content-wrapper">
+  <div class="inner clearfix">
+    <section id="main-content">
+<div id="planteamiento-del-problema" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Planteamiento del problema</h1>
+<div id="problema" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Problema</h2>
+<p>Interesa cuantificar el tiempo de sobreviva de un paciente a partir de su diagnóstico con una enfermedad. Se sabe que dicha enfermedad reduce el tiempo de vida de las personas (respecto a la media de los no enfermos) e interesa determinar cuánto tiempo vivirá después de su diagnóstico. Finalmente suponemos que todas las personas eventualmente mueren (independientemente de la causa).</p>
+</div>
+<div id="descripción" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Descripción</h2>
+<p>Considera una población finita de pacientes <span class="math inline">\(x_{i}\)</span> los cuales tienen asociados su tiempo de sobrevida (<span class="math inline">\(i.e.\)</span> cuánto tiempo tardan en fallecer a partir del momento de diagnóstico)</p>
+<p><span class="math display">\[
+U = \{(x_{1}, t_{1}),(x_{2}, t_{2}),...,(x_{N}, t_{N})\}
+\]</span></p>
+<p>De esta población se obtiene una muestra aleatoria <span class="math inline">\(S\)</span> mediante muestreo simple con <span class="math inline">\(\pi_{k} = \mathbb{P}((x_{k},t_{k}) \in S)\)</span>. Estas personas son los recién diagnosticados. Cada día se les llama a los cuidadores de los pacientes para ver cómo han evolucionado en su enfermedad. En el caso de que se reporte que el paciente <span class="math inline">\(i\)</span> haya fallecido se registra <span class="math inline">\(t_{i} = \tau_{i}\)</span> el día en el que falleció (medido a partir del tiempo <span class="math inline">\(t_{0}\)</span> de diagnóstico). Por ejemplo, si un paciente fue diagnosticado hace veinte días y en la llamada de hoy nos dicen que murió, entonces su <span class="math inline">\(t_{i}\)</span> es <span class="math inline">\(20\)</span>. En teoría obtendríamos la muestra conjunta de los pacientes y el tiempo que tardaron en fallecer.</p>
+<p><span class="math display">\[
+S = \{(x_{1}, t_{1}),(x_{2}, t_{2}),...,(x_{n}, t_{n})\}
+\]</span></p>
+<p>donde un ejemplo sería <span class="math inline">\(x_{i} = \text Fer\)</span> y <span class="math inline">\(t_{i} = 10\)</span> si el paciente <em>Fer</em> se murió a los <span class="math inline">\(10\)</span> días de su diagnóstico.</p>
+<p>En particular, cada día los cuidadores tienen una probabilidad <span class="math inline">\(p \in [0,1)\)</span> (constante desconocida) de dejar de contestar el teléfono para siempre incluso antes de que el paciente muera por lo que para <span class="math inline">\(n - \ell\)</span> pacientes no se registra el momento en el que murieron, sino el último momento en el que se supo que estaban vivos antes de que el cuidador dejara de contestar el teléfono. En este escenario representamos la muestra como:</p>
+<p><span class="math display">\[
+S = \{(x_{1}, t_{1}),(x_{2}, t_{2}),...,(x_{\ell}, t_{\ell}), (x_{\ell+1}, \nu_{\ell+1}), (x_{\ell+2}, \nu_{\ell+2}), ... , (x_{n}, \nu_{n}) \}
+\]</span></p>
+<p>donde <span class="math inline">\(\nu_{j}\)</span> representa el último momento en el que se contactó al cuidador del paciente (y se sabe que <span class="math inline">\(t_{j} &gt; \nu_{j}\)</span>).</p>
+<ol style="list-style-type: decimal">
+<li><p>Una opción para estimar el tiempo de sobrevida de los pacientes (definido como <span class="math inline">\(\mu = \frac{1}{N}\sum\limits_{i=1}^{N} t_{i}\)</span>) es quitar a los que se les perdió en el seguimiento y estimar la media sólo con los que sí se registraron completos: <span class="math display">\[
+\hat{\mu} = \frac{1}{n}\sum_{i=1}^{\ell} t_{i}
+\]</span> (recordemos que <span class="math inline">\(\ell\)</span> es aleatorio pues depende de <span class="math inline">\(p\)</span>). Determina su error cuadrático medio, sesgo y varianza, así como su consistencia. Recordemos que van a depender de <span class="math inline">\(p\)</span> y no de <span class="math inline">\(\ell\)</span>.</p></li>
+<li><p>Se construye la función de supervivencia empírica dada por: <span class="math display">\[
+S_{n}(t) = 1 - F_{n}(t)
+\]</span> donde <span class="math display">\[
+F_{n}(t) = \frac{1}{n}\sum_{i=1}^{n} \mathbb{I}_{[\tau_{i},\infty)}(t)
+\]</span> con <span class="math inline">\(\tau_{i} = {t_i}\)</span> ó <span class="math inline">\(\tau_{i} = \nu_{i}\)</span> según el que se haya medido. Verificar la consistencia (Fisher), sesgo y varianza de <span class="math inline">\(S_{n}(t)\)</span>.</p></li>
+<li><p>Finalmente, utilizar que a partir de la función <span class="math inline">\(S_{n}(t)\)</span> se puede calcular la media (recordar que hay formas de usar la distribución acumulada para calcular la media sin derivar porque esto no se puede derivar en todo su dominio y en donde sí es cero) para construir un estimador de <span class="math inline">\(\mu\)</span>.</p></li>
+</ol>
+</div>
+<div id="proyecto" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Proyecto</h2>
+<p>Construir los estimadores para <span class="math inline">\(\mu\)</span> y determina cuál es el mejor usando como criterios: funciones de pérdida, varianza, consistencia (de Fisher), sesgo ya sea de manera directa o mediante experimentos numéricos. Genera sus intervalos de confianza (bootstrap). Finalmente, construye una función de R para realizar la estimación. La base de datos que se le pasaría sería así donde no haya dato en <code>Tiempo de fallecimiento</code> significa que se perdió durante el seguimiento.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Persona</th>
+<th align="center">Tiempo de fallecimiento (días)</th>
+<th align="center">Último tiempo registrado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">20</td>
+<td align="center">20</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">12</td>
+<td align="center">12</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center"></td>
+<td align="center">87</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">30</td>
+<td align="center">30</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">100</td>
+<td align="center">100</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center"></td>
+<td align="center">20</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center"></td>
+<td align="center">8</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">15</td>
+<td align="center">15</td>
+</tr>
+</tbody>
+</table>
+<!-- ## Ambiente de R -->
+<!-- Para el análisis de los datos se utilizaron las librerías que se muestran a continuación: -->
+<!-- - `plotly` -> animación de gráficas. -->
+<!-- - `tidyverse` -> carga de archivos csv, creación de gráficas y manipulación de tablas. -->
+<!-- - `lubridate` -> manejo de fechas. -->
+<!-- - `openxlsx` -> carga de archivos de excel. -->
+<!-- - `kableExtra` -> diseño de tablas. -->
+<!-- - `sf` -> leer archivos shp para el mapa. -->
+<!-- - `moments` -> asimetría y curtosis. -->
+<!-- - `gganimate` -> gráficas animadas con el tiempo. -->
+<!-- - `wordcloud` -> nube de palabras. -->
+<!-- - `stringr` -> manejo de textos. -->
+<!-- ```{r lib} -->
+<!-- library(plotly) -->
+<!-- library(tidyverse) -->
+<!-- library(lubridate) -->
+<!-- library(openxlsx) -->
+<!-- library(kableExtra) -->
+<!-- library(sf) -->
+<!-- library(moments) -->
+<!-- library(gganimate) -->
+<!-- library(wordcloud) -->
+<!-- library(stringr) -->
+<!-- ``` -->
+<!-- ```{r clean, include=FALSE} -->
+<!-- rm(list = ls()[!(ls() %in% c("victimas", "diccionario"))]) -->
+<!-- ``` -->
+</div>
+</div>
+    </section>
+  </div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

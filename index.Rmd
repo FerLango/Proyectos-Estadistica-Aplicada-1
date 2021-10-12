@@ -30,4 +30,6 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
 
 # [Víctimas en carpetas de investigación FGJ](https://ferlango.github.io/Proyectos-Estadistica-Aplicada-1/Proyecto-1)
 
+# [Encuestas censuradas](https://ferlango.github.io/Proyectos-Estadistica-Aplicada-1/Proyecto-2)
+
 
