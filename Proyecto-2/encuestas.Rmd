@@ -19,7 +19,7 @@ output:
     number_sections: True
     fig_caption: True
     self_contained: false
-    #pandoc_args: [ "--output=index.html"]
+    pandoc_args: [ "--output=index.html"]
     includes:
       in_header: "icono.html"
 ---
