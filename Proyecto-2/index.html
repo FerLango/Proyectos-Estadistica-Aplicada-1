@@ -12,7 +12,6 @@
 
 <meta name="author" content="Fernando Lango - 181055" />
 
-<meta name="date" content="2021-12-10" />
 
 <title>Encuestas censuradas</title>
 
@@ -41,7 +40,7 @@
 <h1 class="title toc-ignore">Encuestas censuradas</h1>
 <h2 class="subtitle">Estadística Aplicada 1 - Proyecto 2</h2>
 <h3 class="author">Fernando Lango - 181055</h3>
-<h3 class="date">12/10/2021</h3>
+<h3 class="date">13/10/2021</h3>
 </div>
 </header>
 
@@ -55,6 +54,19 @@
 <li><a href="#problema"><span class="toc-section-number">1.1</span> Problema</a></li>
 <li><a href="#descripción"><span class="toc-section-number">1.2</span> Descripción</a></li>
 <li><a href="#proyecto"><span class="toc-section-number">1.3</span> Proyecto</a></li>
+</ul></li>
+<li><a href="#solución"><span class="toc-section-number">2</span> Solución</a>
+<ul>
+<li><a href="#ambiente-de-r"><span class="toc-section-number">2.0.1</span> Ambiente de R</a></li>
+<li><a href="#tiempo-de-sobrevida"><span class="toc-section-number">2.1</span> Tiempo de sobrevida</a>
+<ul>
+<li><a href="#sesgo"><span class="toc-section-number">2.1.1</span> Sesgo</a></li>
+<li><a href="#varianza"><span class="toc-section-number">2.1.2</span> Varianza</a></li>
+<li><a href="#error-cuadrático-medio-mse"><span class="toc-section-number">2.1.3</span> Error cuadrático medio (MSE)</a></li>
+<li><a href="#consistencia"><span class="toc-section-number">2.1.4</span> Consistencia</a></li>
+</ul></li>
+<li><a href="#función-de-supervivencia-empírica"><span class="toc-section-number">2.2</span> Función de supervivencia empírica</a></li>
+<li><a href="#media-de-la-función-de-supervivencia"><span class="toc-section-number">2.3</span> Media de la función de supervivencia</a></li>
 </ul></li>
 </ul>
 </div>
@@ -151,33 +163,76 @@ F_{n}(t) = \frac{1}{n}\sum_{i=1}^{n} \mathbb{I}_{[\tau_{i},\infty)}(t)
 </tr>
 </tbody>
 </table>
-<!-- ## Ambiente de R -->
-<!-- Para el análisis de los datos se utilizaron las librerías que se muestran a continuación: -->
-<!-- - `plotly` -> animación de gráficas. -->
-<!-- - `tidyverse` -> carga de archivos csv, creación de gráficas y manipulación de tablas. -->
-<!-- - `lubridate` -> manejo de fechas. -->
-<!-- - `openxlsx` -> carga de archivos de excel. -->
-<!-- - `kableExtra` -> diseño de tablas. -->
-<!-- - `sf` -> leer archivos shp para el mapa. -->
-<!-- - `moments` -> asimetría y curtosis. -->
-<!-- - `gganimate` -> gráficas animadas con el tiempo. -->
-<!-- - `wordcloud` -> nube de palabras. -->
-<!-- - `stringr` -> manejo de textos. -->
-<!-- ```{r lib} -->
-<!-- library(plotly) -->
-<!-- library(tidyverse) -->
-<!-- library(lubridate) -->
-<!-- library(openxlsx) -->
-<!-- library(kableExtra) -->
-<!-- library(sf) -->
-<!-- library(moments) -->
-<!-- library(gganimate) -->
-<!-- library(wordcloud) -->
-<!-- library(stringr) -->
-<!-- ``` -->
-<!-- ```{r clean, include=FALSE} -->
-<!-- rm(list = ls()[!(ls() %in% c("victimas", "diccionario"))]) -->
-<!-- ``` -->
+</div>
+</div>
+<div id="solución" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Solución</h1>
+<div id="ambiente-de-r" class="section level3" number="2.0.1">
+<h3><span class="header-section-number">2.0.1</span> Ambiente de R</h3>
+<p>Para el presente proyecto se utilizaron las librerías que se muestran a continuación:</p>
+<ul>
+<li>`` -&gt; .</li>
+</ul>
+</div>
+<div id="tiempo-de-sobrevida" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Tiempo de sobrevida</h2>
+<p>Cuando tomamos una muestra de la población, esta es de tal manera que incluye a aquellas personas que dejaron de contestar pero en realidad no tenemos conocimiento si se encuentran vivos:</p>
+<p><span class="math display">\[
+S = \{(x_{1}, t_{1}),(x_{2}, t_{2}),...,(x_{\ell}, t_{\ell}), (x_{\ell+1}, \nu_{\ell+1}), (x_{\ell+2}, \nu_{\ell+2}), ... , (x_{n}, \nu_{n}) \}
+\]</span></p>
+<p>El tiempo de sobrevida de los pacientes está definido como sigue:</p>
+<p><span class="math display">\[
+\mu = \frac{1}{N}\sum\limits_{i=1}^{N} t_{i}
+\]</span></p>
+<p>Si estimamos el tiempo de sobrevida de los pacientes tomando solamente en cuenta a aquellos de los que se tiene el registro completo, entonces podemos definir el estimador de la siguiente manera:</p>
+<p><span class="math display">\[
+\hat{\mu} = \frac{1}{n}\sum_{i=1}^{\ell} t_{i}
+\]</span></p>
+<p>Notemos que el límite superior de la suma llega hasta <span class="math inline">\(\ell\)</span> (aleatorio) que nos indica la cantidad de personas de las que estamos seguros que fallecieron.</p>
+<p>Recordemos que cada día los cuidadores tienen una probabilidad <span class="math inline">\(p \in [0,1)\)</span> de dejar de contestar el teléfono, por lo que la cantidad de pacientes de los que se va a tener la información completa se distribuye <em>Binomial</em> y depende de <span class="math inline">\(p\)</span>.</p>
+<div id="sesgo" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Sesgo</h3>
+<p>Recordemos que el sesgo de <span class="math inline">\(\hat{\mu}\)</span> está definido como:</p>
+<p><span class="math display">\[
+\begin{split}
+\text{Sesgo}_{\mu} 
+    &amp; = \mathbf{E}(\hat{\mu}) - \mu \\
+    &amp; = \mathbf{E}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) - \mu \\
+    &amp; = \frac{1}{n} \sum_{i=1}^{\ell} \mathbf{E}(t_{i}) - \mu \\
+    &amp; = \frac{1}{n} \sum_{i=1}^{\ell} \mu - \mu \\
+    &amp; = \frac{1}{n}\ell\mu - \mu \\
+    &amp; = \frac{\ell}{n}\mu - \mu \\
+    &amp; = \mu(\frac{\ell}{n}-1)
+\end{split}
+\]</span></p>
+<p>Por lo tanto, podemos determinar que el estimador <span class="math inline">\(\hat{\mu}\)</span> es insesgado si y solo si <span class="math inline">\(p=0\)</span> (es decir, los cuidadores en ningún momento dejaron de contestar). De esta manera, el <span class="math inline">\(\text{Sesgo}_{\mu}\)</span> depende de <span class="math inline">\(p\)</span> con <span class="math inline">\(\ell \backsim \text{Binom}(n,p)\)</span>.</p>
+</div>
+<div id="varianza" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Varianza</h3>
+<p>Para determinar la varianza de <span class="math inline">\(\hat{\mu}\)</span> utilizamos la siguiente formula y supondremos independencia sobre el tiempo de sobrevida:</p>
+<p><span class="math display">\[
+\begin{split}
+\text{Var}({\hat{\mu}}) 
+    &amp; = \text{Var}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) \\
+    &amp; = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{\ell} t_{i}) \\
+    &amp; = \frac{1}{n^2}\sum_{i=1}^{\ell} \text{Var}(t_{i}) \\
+    &amp; = \frac{1}{n^2}\sum_{i=1}^{\ell}\sigma^2 \\
+    &amp; = \frac{1}{n^2}\ell\sigma^2
+\end{split}
+\]</span></p>
+</div>
+<div id="error-cuadrático-medio-mse" class="section level3" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Error cuadrático medio (MSE)</h3>
+</div>
+<div id="consistencia" class="section level3" number="2.1.4">
+<h3><span class="header-section-number">2.1.4</span> Consistencia</h3>
+</div>
+</div>
+<div id="función-de-supervivencia-empírica" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Función de supervivencia empírica</h2>
+</div>
+<div id="media-de-la-función-de-supervivencia" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Media de la función de supervivencia</h2>
 </div>
 </div>
     </section>

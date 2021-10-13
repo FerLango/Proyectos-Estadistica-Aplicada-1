@@ -33,89 +33,53 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
 
 ## Problema
 
-Interesa cuantificar el tiempo de sobreviva de un paciente a partir de
-su diagnóstico con una enfermedad. Se sabe que dicha enfermedad reduce
-el tiempo de vida de las personas (respecto a la media de los no
-enfermos) e interesa determinar cuánto tiempo vivirá después de su
-diagnóstico. Finalmente suponemos que todas las personas eventualmente
-mueren (independientemente de la causa).
+Interesa cuantificar el tiempo de sobreviva de un paciente a partir de su diagnóstico con una enfermedad. Se sabe que dicha enfermedad reduce el tiempo de vida de las personas (respecto a la media de los no enfermos) e interesa determinar cuánto tiempo vivirá después de su diagnóstico. Finalmente suponemos que todas las personas eventualmente mueren (independientemente de la causa).
 
 ## Descripción
 
-Considera una población finita de pacientes $x_{i}$ los cuales tienen
-asociados su tiempo de sobrevida ($i.e.$ cuánto tiempo tardan en
-fallecer a partir del momento de diagnóstico)
+Considera una población finita de pacientes $x_{i}$ los cuales tienen asociados su tiempo de sobrevida ($i.e.$ cuánto tiempo tardan en fallecer a partir del momento de diagnóstico)
 
 $$
 U = \{(x_{1}, t_{1}),(x_{2}, t_{2}),...,(x_{N}, t_{N})\}
 $$
 
-De esta población se obtiene una muestra aleatoria $S$ mediante muestreo
-simple con $\pi_{k} = \mathbb{P}((x_{k},t_{k}) \in S)$. Estas personas
-son los recién diagnosticados. Cada día se les llama a los cuidadores de
-los pacientes para ver cómo han evolucionado en su enfermedad. En el
-caso de que se reporte que el paciente $i$ haya fallecido se registra
-$t_{i} = \tau_{i}$ el día en el que falleció (medido a partir del tiempo
-$t_{0}$ de diagnóstico). Por ejemplo, si un paciente fue diagnosticado
-hace veinte días y en la llamada de hoy nos dicen que murió, entonces su
-$t_{i}$ es $20$. En teoría obtendríamos la muestra conjunta de los
-pacientes y el tiempo que tardaron en fallecer.
+De esta población se obtiene una muestra aleatoria $S$ mediante muestreo simple con $\pi_{k} = \mathbb{P}((x_{k},t_{k}) \in S)$. Estas personas son los recién diagnosticados. Cada día se les llama a los cuidadores de los pacientes para ver cómo han evolucionado en su enfermedad. En el caso de que se reporte que el paciente $i$ haya fallecido se registra $t_{i} = \tau_{i}$ el día en el que falleció (medido a partir del tiempo $t_{0}$ de diagnóstico). Por ejemplo, si un paciente fue diagnosticado hace veinte días y en la llamada de hoy nos dicen que murió, entonces su $t_{i}$ es $20$. En teoría obtendríamos la muestra conjunta de los pacientes y el tiempo que tardaron en fallecer.
 
 $$
 S = \{(x_{1}, t_{1}),(x_{2}, t_{2}),...,(x_{n}, t_{n})\}
 $$
 
-donde un ejemplo sería $x_{i} = \text Fer$ y $t_{i} = 10$ si el paciente
-*Fer* se murió a los $10$ días de su diagnóstico.
+donde un ejemplo sería $x_{i} = \text Fer$ y $t_{i} = 10$ si el paciente *Fer* se murió a los $10$ días de su diagnóstico.
 
-En particular, cada día los cuidadores tienen una probabilidad
-$p \in [0,1)$ (constante desconocida) de dejar de contestar el teléfono
-para siempre incluso antes de que el paciente muera por lo que para
-$n - \ell$ pacientes no se registra el momento en el que murieron, sino
-el último momento en el que se supo que estaban vivos antes de que el
-cuidador dejara de contestar el teléfono. En este escenario
-representamos la muestra como:
+En particular, cada día los cuidadores tienen una probabilidad $p \in [0,1)$ (constante desconocida) de dejar de contestar el teléfono para siempre incluso antes de que el paciente muera por lo que para $n - \ell$ pacientes no se registra el momento en el que murieron, sino el último momento en el que se supo que estaban vivos antes de que el cuidador dejara de contestar el teléfono. En este escenario representamos la muestra como:
 
 $$
 S = \{(x_{1}, t_{1}),(x_{2}, t_{2}),...,(x_{\ell}, t_{\ell}), (x_{\ell+1}, \nu_{\ell+1}), (x_{\ell+2}, \nu_{\ell+2}), ... , (x_{n}, \nu_{n}) \}
 $$
 
-donde $\nu_{j}$ representa el último momento en el que se contactó al
-cuidador del paciente (y se sabe que $t_{j} > \nu_{j}$).
+donde $\nu_{j}$ representa el último momento en el que se contactó al cuidador del paciente (y se sabe que $t_{j} > \nu_{j}$).
 
-1.  Una opción para estimar el tiempo de sobrevida de los pacientes
-    (definido como $\mu = \frac{1}{N}\sum\limits_{i=1}^{N} t_{i}$) es
-    quitar a los que se les perdió en el seguimiento y estimar la media
-    sólo con los que sí se registraron completos: $$
-    \hat{\mu} = \frac{1}{n}\sum_{i=1}^{\ell} t_{i}
-    $$ (recordemos que $\ell$ es aleatorio pues depende de $p$).
-    Determina su error cuadrático medio, sesgo y varianza, así como su
-    consistencia. Recordemos que van a depender de $p$ y no de $\ell$.
+1.  Una opción para estimar el tiempo de sobrevida de los pacientes (definido como $\mu = \frac{1}{N}\sum\limits_{i=1}^{N} t_{i}$) es quitar a los que se les perdió en el seguimiento y estimar la media sólo con los que sí se registraron completos: 
+$$
+\hat{\mu} = \frac{1}{n}\sum_{i=1}^{\ell} t_{i}
+$$ 
+    (recordemos que $\ell$ es aleatorio pues depende de $p$). Determina su error cuadrático medio, sesgo y varianza, así como su consistencia. Recordemos que van a depender de $p$ y no de $\ell$.
 
-2.  Se construye la función de supervivencia empírica dada por: $$
-    S_{n}(t) = 1 - F_{n}(t)
-    $$ donde $$
-    F_{n}(t) = \frac{1}{n}\sum_{i=1}^{n} \mathbb{I}_{[\tau_{i},\infty)}(t)
-    $$ con $\tau_{i} = {t_i}$ ó $\tau_{i} = \nu_{i}$ según el que se
-    haya medido. Verificar la consistencia (Fisher), sesgo y varianza de
-    $S_{n}(t)$.
+2.  Se construye la función de supervivencia empírica dada por: 
+$$
+S_{n}(t) = 1 - F_{n}(t)
+$$ 
+donde 
+$$
+F_{n}(t) = \frac{1}{n}\sum_{i=1}^{n} \mathbb{I}_{[\tau_{i},\infty)}(t)
+$$ 
+con $\tau_{i} = {t_i}$ ó $\tau_{i} = \nu_{i}$ según el que se haya medido. Verificar la consistencia (Fisher), sesgo y varianza de $S_{n}(t)$.
 
-3.  Finalmente, utilizar que a partir de la función $S_{n}(t)$ se puede
-    calcular la media (recordar que hay formas de usar la distribución
-    acumulada para calcular la media sin derivar porque esto no se puede
-    derivar en todo su dominio y en donde sí es cero) para construir un
-    estimador de $\mu$.
+3.  Finalmente, utilizar que a partir de la función $S_{n}(t)$ se puede calcular la media (recordar que hay formas de usar la distribución acumulada para calcular la media sin derivar porque esto no se puede derivar en todo su dominio y en donde sí es cero) para construir un estimador de $\mu$.
 
 ## Proyecto
 
-Construir los estimadores para $\mu$ y determina cuál es el mejor usando
-como criterios: funciones de pérdida, varianza, consistencia (de
-Fisher), sesgo ya sea de manera directa o mediante experimentos
-numéricos. Genera sus intervalos de confianza (bootstrap). Finalmente,
-construye una función de R para realizar la estimación. La base de datos
-que se le pasaría sería así donde no haya dato en
-`Tiempo de fallecimiento` significa que se perdió durante el
-seguimiento.
+Construir los estimadores para $\mu$ y determina cuál es el mejor usando como criterios: funciones de pérdida, varianza, consistencia (de Fisher), sesgo ya sea de manera directa o mediante experimentos numéricos. Genera sus intervalos de confianza (bootstrap). Finalmente, construye una función de R para realizar la estimación. La base de datos que se le pasaría sería así donde no haya dato en `Tiempo de fallecimiento` significa que se perdió durante el seguimiento.
 
 | Persona | Tiempo de fallecimiento (días) | Último tiempo registrado |
 |:-------:|:------------------------------:|:------------------------:|
@@ -128,57 +92,153 @@ seguimiento.
 |    7    |                                |            8             |
 |    8    |               15               |            15            |
 
+# Solución
 
-<!-- ## Ambiente de R -->
+### Ambiente de R
 
-<!-- Para el análisis de los datos se utilizaron las librerías que se muestran a continuación: -->
+Para el presente proyecto se utilizaron las librerías que se muestran a continuación: 
 
-<!-- - `plotly` -> animación de gráficas. -->
+-   `` -> .
 
-<!-- - `tidyverse` -> carga de archivos csv, creación de gráficas y manipulación de tablas. -->
+```{r lib}
+```
 
-<!-- - `lubridate` -> manejo de fechas. -->
+## Tiempo de sobrevida
 
-<!-- - `openxlsx` -> carga de archivos de excel. -->
+Cuando tomamos una muestra de la población, esta es de tal manera que incluye a aquellas personas que dejaron de contestar pero en realidad no tenemos conocimiento si se encuentran vivos: 
 
-<!-- - `kableExtra` -> diseño de tablas. -->
+$$
+S = \{(x_{1}, t_{1}),(x_{2}, t_{2}),...,(x_{\ell}, t_{\ell}), (x_{\ell+1}, \nu_{\ell+1}), (x_{\ell+2}, \nu_{\ell+2}), ... , (x_{n}, \nu_{n}) \}
+$$
 
-<!-- - `sf` -> leer archivos shp para el mapa. -->
+El tiempo de sobrevida de los pacientes está definido como sigue:
 
-<!-- - `moments` -> asimetría y curtosis. -->
+$$
+\mu = \frac{1}{N}\sum\limits_{i=1}^{N} t_{i}
+$$
 
-<!-- - `gganimate` -> gráficas animadas con el tiempo. -->
+Si estimamos el tiempo de sobrevida de los pacientes tomando solamente en cuenta a aquellos de los que se tiene el registro completo, entonces podemos definir el estimador de la siguiente manera:
 
-<!-- - `wordcloud` -> nube de palabras. -->
+$$
+\hat{\mu} = \frac{1}{n}\sum_{i=1}^{\ell} t_{i}
+$$ 
 
-<!-- - `stringr` -> manejo de textos. -->
+Notemos que el límite superior de la suma llega hasta $\ell$ (aleatorio) que nos indica la cantidad de personas de las que estamos seguros que fallecieron.
 
-<!-- ```{r lib} -->
+Recordemos que cada día los cuidadores tienen una probabilidad $p \in [0,1)$ de dejar de contestar el teléfono, por lo que la cantidad de pacientes de los que se va a tener la información completa se distribuye *Binomial* y depende de $p$.
 
-<!-- library(plotly) -->
+### Sesgo
 
-<!-- library(tidyverse) -->
+Recordemos que el sesgo de $\hat{\mu}$ está definido como:
 
-<!-- library(lubridate) -->
+$$
+\begin{split}
+\text{Sesgo}_{\mu} 
+    & = \mathbf{E}(\hat{\mu}) - \mu \\
+    & = \mathbf{E}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) - \mu \\
+    & = \frac{1}{n} \sum_{i=1}^{\ell} \mathbf{E}(t_{i}) - \mu \\
+    & = \frac{1}{n} \sum_{i=1}^{\ell} \mu - \mu \\
+    & = \frac{1}{n}\ell\mu - \mu \\
+    & = \frac{\ell}{n}\mu - \mu \\
+    & = \mu(\frac{\ell}{n}-1)
+\end{split}
+$$
 
-<!-- library(openxlsx) -->
+Por lo tanto, podemos determinar que el estimador $\hat{\mu}$ es insesgado si y solo si $p=0$ (es decir, los cuidadores en ningún momento dejaron de contestar). De esta manera, el $\text{Sesgo}_{\mu}$ depende de $p$ con $\ell \backsim \text{Binom}(n,p)$.
 
-<!-- library(kableExtra) -->
+### Varianza
 
-<!-- library(sf) -->
+Para determinar la varianza de $\hat{\mu}$ utilizamos la siguiente formula y supondremos independencia sobre el tiempo de sobrevida:
 
-<!-- library(moments) -->
+$$
+\begin{split}
+\text{Var}({\hat{\mu}}) 
+    & = \text{Var}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) \\
+    & = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{\ell} t_{i}) \\
+    & = \frac{1}{n^2}\sum_{i=1}^{\ell} \text{Var}(t_{i}) \\
+    & = \frac{1}{n^2}\sum_{i=1}^{\ell}\sigma^2 \\
+    & = \frac{1}{n^2}\ell\sigma^2
+\end{split}
+$$
 
-<!-- library(gganimate) -->
+### Error cuadrático medio (MSE)
 
-<!-- library(wordcloud) -->
+### Consistencia 
 
-<!-- library(stringr) -->
 
-<!-- ``` -->
 
-<!-- ```{r clean, include=FALSE} -->
 
-<!-- rm(list = ls()[!(ls() %in% c("victimas", "diccionario"))]) -->
 
-<!-- ``` -->
+
+
+
+
+## Función de supervivencia empírica
+
+## Media de la función de supervivencia
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r clean, include=FALSE}
+
+#rm(list = ls()[!(ls() %in% c("victimas", "diccionario"))])
+
+```
