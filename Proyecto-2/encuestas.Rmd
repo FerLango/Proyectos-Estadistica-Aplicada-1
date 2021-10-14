@@ -309,7 +309,7 @@ Se va a generar una población de $N=100$ personas, se fijará la semilla de los
 
 ```{r}
 set.seed(1)
-N <- 100
+N <- 5
 persona <- 1:N
 tiempo <- rnorm(N, 50, 20) %>%
     abs() %>%
@@ -331,6 +331,7 @@ Vamos a incluir el tiempo y cada una de las indicadoras en una sola tabla para f
 
 ```{r}
 pacientes_pob <- data.frame(persona, tiempo, p_0, p_25, p_50, p_75)
+rm(persona,tiempo,p_0,p_25,p_50,p_75)
 ```
 
 Veamos como se ven los primeros 20 registro de nuestra tabla:
@@ -340,12 +341,14 @@ head(pacientes_pob, 20) %>%
     kable()
 ```
 
+### Medias
+
 Calculemos el tiempo de sobrevida de nuestra población para los dos casos:
 
 - Solamente tomar en cuenta aquellos de los que se tiene registro completo.
 - Tomar en cuenta a toda la población.
 
-### Registro completo
+#### Registro completo
 
 ```{r}
 medias_com_pob <- NULL
@@ -360,14 +363,14 @@ for (i in 3:6) {
         mean()
     medias_com_pob <-append(medias_com_pob, temp)
 }
-rm(temp)
+rm(temp,i)
 names(medias_com_pob) <- c("p=0","p=.25","p=.50", "p=.75")
 
 medias_com_pob %>%
     kable()
 ```
 
-### Toda la población
+#### Toda la población
 
 ```{r}
 temp <- 
@@ -384,6 +387,33 @@ medias_todo_pob %>%
     kable()
 ```
 
+### Función de supervivencia empírica
+
+```{r}
+temp <- NULL
+temp <- pacientes_pob %>%
+        select(tiempo) %>%
+        arrange(tiempo) %>%
+        group_by(tiempo) %>%
+        tally() %>%
+        mutate(p = n/N) %>%
+        mutate(cum = 1 - cumsum(p), abi = NULL)
+
+time1 <- c(0,temp$tiempo)
+prob1 <- c(1,1,temp$cum[1:length(temp$cum)-1])
+
+temp <- temp %>% 
+    add_column(abi = c(1,temp$cum[1:length(temp$cum)-1])) %>%
+    add_row(tiempo=0,cum=1) %>%
+    arrange(tiempo)
+
+temp %>%
+    ggplot() +
+    geom_point(aes(x=tiempo, y=cum),pch=19, color="blue",size=10) +
+    geom_point(aes(x=tiempo, y=abi),pch=1, color="red",size=10)
+```
+
+
 ## Muestra
 
 A continuación vamos a obtener la muestra mediante *Muestreo Aleatorio Simple sin reemplazo* de $50$ pacientes para poner a prueba nuestros estimadores.
@@ -393,67 +423,47 @@ n <- 50
 pacientes_mues <- sample_n(pacientes_pob,n, replace = FALSE)
 ```
 
+Veamos los primeros $20$ registros:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```{r clean, include=FALSE}
-
-#rm(list = ls()[!(ls() %in% c("victimas", "diccionario"))])
-
+```{r}
+head(pacientes_mues,20) %>%
+    kable()
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
