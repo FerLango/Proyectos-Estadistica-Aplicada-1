@@ -19,6 +19,99 @@
 <link rel="shortcut icon" href="icono.ico">
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+/* A workaround for https://github.com/jgm/pandoc/issues/4278 */
+a.sourceLine {
+  pointer-events: auto;
+}
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -40,7 +133,7 @@
 <h1 class="title toc-ignore">Encuestas censuradas</h1>
 <h2 class="subtitle">Estadística Aplicada 1 - Proyecto 2</h2>
 <h3 class="author">Fernando Lango - 181055</h3>
-<h3 class="date">13/10/2021</h3>
+<h3 class="date">14/10/2021</h3>
 </div>
 </header>
 
@@ -57,7 +150,6 @@
 </ul></li>
 <li><a href="#solución"><span class="toc-section-number">2</span> Solución</a>
 <ul>
-<li><a href="#ambiente-de-r"><span class="toc-section-number">2.0.1</span> Ambiente de R</a></li>
 <li><a href="#tiempo-de-sobrevida"><span class="toc-section-number">2.1</span> Tiempo de sobrevida</a>
 <ul>
 <li><a href="#sesgo"><span class="toc-section-number">2.1.1</span> Sesgo</a></li>
@@ -72,7 +164,16 @@
 <li><a href="#varianza-1"><span class="toc-section-number">2.2.3</span> Varianza</a></li>
 </ul></li>
 <li><a href="#media-de-la-función-de-supervivencia"><span class="toc-section-number">2.3</span> Media de la función de supervivencia</a></li>
-<li><a href="#análisis-gráfico-y-simulaciones"><span class="toc-section-number">2.4</span> Análisis gráfico y simulaciones</a></li>
+</ul></li>
+<li><a href="#análisis-gráfico-y-simulaciones"><span class="toc-section-number">3</span> Análisis gráfico y simulaciones</a>
+<ul>
+<li><a href="#ambiente-de-r"><span class="toc-section-number">3.1</span> Ambiente de R</a></li>
+<li><a href="#población"><span class="toc-section-number">3.2</span> Población</a>
+<ul>
+<li><a href="#registro-completo"><span class="toc-section-number">3.2.1</span> Registro completo</a></li>
+<li><a href="#toda-la-población"><span class="toc-section-number">3.2.2</span> Toda la población</a></li>
+</ul></li>
+<li><a href="#muestra"><span class="toc-section-number">3.3</span> Muestra</a></li>
 </ul></li>
 </ul>
 </div>
@@ -173,13 +274,6 @@ F_{n}(t) = \frac{1}{n}\sum_{i=1}^{n} \mathbb{I}_{[\tau_{i},\infty)}(t)
 </div>
 <div id="solución" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Solución</h1>
-<div id="ambiente-de-r" class="section level3" number="2.0.1">
-<h3><span class="header-section-number">2.0.1</span> Ambiente de R</h3>
-<p>Para el presente proyecto se utilizaron las librerías que se muestran a continuación:</p>
-<ul>
-<li>`` -&gt; .</li>
-</ul>
-</div>
 <div id="tiempo-de-sobrevida" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Tiempo de sobrevida</h2>
 <p>Cuando tomamos una muestra de la población, esta es de tal manera que incluye a aquellas personas que dejaron de contestar pero en realidad no tenemos conocimiento si se encuentran vivos:</p>
@@ -292,31 +386,659 @@ F_{n}(t) = \frac{1}{n}\sum_{i=1}^{n} \mathbb{I}_{[\tau_{i},\infty)}(t)
 <div id="sesgo-1" class="section level3" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Sesgo</h3>
 <p>Dado nuestro estimador <span class="math inline">\(S_{n}(t)\)</span> de <span class="math inline">\(S_{N}(t)\)</span>, definimos el sesgo como:</p>
-$$
-<span class="math display">\[\begin{split}
-\text{Sesgo}_{S_{n}(t)}(S_{N}(t)) 
-    &amp; = \mathbf{E}(S_{n}(t)) - S_{N}(t) \\
-    &amp; = \mathbf{E}(1 - F_{n}(t)) - S_{N}(t) \\
+<p><span class="math display">\[
+\begin{split}
+\text{Sesgo}_{\hat{S_{n}}(t)}(S_{n}(t)) 
+    &amp; = \mathbf{E}(\hat{S_{n}}(t)) - S_{n}(t) \\
+    &amp; = \mathbf{E}(1 - \hat{F_{n}}(t)) - S_{n}(t) \\
     &amp; = \mathbf{E}[1 - 
         \frac{1}{n}\sum_{i=1}^{n} 
-        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{N}(t)\\
+        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{n}(t)\\
     &amp; = 1 - \frac{1}{n}\sum_{i=1}^{n}\mathbf{E}[
-        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{N}(t)\\
-    &amp; = 1 - \frac{1}{n}\sum_{i=1}^{n}\pi_{i} - S_{N}(t)\\
-    
-    
-\end{split}\]</span>
-<p>$$</p>
+        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{n}(t)\\
+    &amp; = 1 - \frac{1}{n}\sum_{i=1}^{n}\pi_{i} - S_{n}(t)\\
+    &amp; = 1- \frac{1}{n}nF_{n}(t) - S_{n}(t)\\
+    &amp; = 1- F_{n}(t) - S_{n}(t)\\
+    &amp; = S_{n}(t) - S_{n}(t)\\
+    &amp; = 0
+\end{split}
+\]</span></p>
+<p>De esta manera podemos concluir que el estimador de la función de supervivencia empírica es insesgado.</p>
 </div>
 <div id="varianza-1" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Varianza</h3>
+<p>Definimos la varianza de la siguiente manera:</p>
+<p><span class="math display">\[
+\begin{split}
+\text{Var}(S_{n}(t)) 
+    &amp; = \text{Var}(1-F_{n}(t)) \\
+    &amp; = \text{Var}(1-\frac{1}{n}\sum_{i=1}^{n} 
+        \mathbb{I}_{[\tau_{i},\infty)}(t)) \\
+    &amp; = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{n} 
+        \mathbb{I}_{[\tau_{i},\infty)}(t)) \\
+    &amp; = \frac{1}{n^2}[\sum_{i=1}^{n} 
+        \text{Var}(\mathbb{I}_{[\tau_{i},\infty)}(t)) +
+        \sum_{i=1}^{n} \sum\limits_{\substack{j=1 \\ j
+        \ne i}}^{n}\text{Cov}(\mathbb{I}_{[\tau_{i},
+        \infty)}(t), \mathbb{I}_{[\tau_{j},\infty)}(t))] \\
+    &amp; = \frac{1}{n^2}[\sum_{i=1}^{n} \Delta_{i,i} +
+        \sum_{i=1}^{n} \sum\limits_{\substack{j=1 \\ j
+        \ne i}}^{n}\Delta_{i,j}] \\
+\end{split}
+\]</span></p>
 </div>
 </div>
 <div id="media-de-la-función-de-supervivencia" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Media de la función de supervivencia</h2>
+<p>Buscamos construir un estimador del tiempo de sobrevida de los pacientes al proponer la media de la función de supervivencia empírica como sigue:</p>
+<p><span class="math display">\[
+\begin{split}
+\mu 
+    &amp; = \mathbf{E}(\nu) \\
+    &amp; = \sum_{i=1}^n \nu_{i} \cdot \mathbb{P}(\nu = \nu_{i})\\
+    &amp; = \sum_{i=1}^n \nu_{i} \cdot [F(\nu_{i}) -
+        \lim_{y \rightarrow \nu_{i}^-} F(y)]\\
+\end{split}
+\]</span></p>
 </div>
-<div id="análisis-gráfico-y-simulaciones" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Análisis gráfico y simulaciones</h2>
+</div>
+<div id="análisis-gráfico-y-simulaciones" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Análisis gráfico y simulaciones</h1>
+<div id="ambiente-de-r" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Ambiente de R</h2>
+<p>Para el presente proyecto se utilizaron las librerías que se muestran a continuación:</p>
+<ul>
+<li><code>ggplot2</code> -&gt; graficar.</li>
+<li><code>tidyverse</code> -&gt; manejar los datos.</li>
+<li><code>kableExtra</code> -&gt; diseño de las tablas.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code></pre></div>
+</div>
+<div id="población" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Población</h2>
+<p>A continuación vamos a generar el tiempo que se tiene registrado de los pacientes (inicialmente sin importar si es el tiempo de fallecimiento o si dejaron de contestar) siguiendo una distribución normal con media <span class="math inline">\(\mu=50\)</span> y desviación estándar <span class="math inline">\(\sigma=20\)</span>.</p>
+<p>Se va a generar una población de <span class="math inline">\(N=100\)</span> personas, se fijará la semilla de los aleatorio en <span class="math inline">\(\text{Seed} = 1\)</span> para hacer un ejemplo reproducible, se tomará el valor absoluto de los tiempos generados y se truncará el decimal al entero próximo.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>persona <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>N</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>tiempo <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, <span class="dv">50</span>, <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abs</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ceiling</span>()</span></code></pre></div>
+<p>Ahora vamos a determinar cuales de ellos dejaron de contestar, recordemos que los cuidadores tienen una probabilidad <span class="math inline">\(p\in[0,1)\)</span> de dejar de contestar el teléfono. Para eso vamos a suponer que cada uno de ellos se distribuye <span class="math inline">\(\text{Bernoulli}(p)\)</span>, por lo que para generar cada uno de ellos vamos a utilizar la distribución <span class="math inline">\(\text{Binomial(N,p)}\)</span>. Con fines de verificar que tanto cambian nuestro estimadores con cada probabilidad utilizaremos distintos valores de <span class="math inline">\(p\in\{0,.25,.50,.75\}\)</span>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p_0 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>p_25 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N,<span class="dv">1</span>,.<span class="dv">25</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>p_50 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N,<span class="dv">1</span>,.<span class="dv">50</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>p_75 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(N,<span class="dv">1</span>,.<span class="dv">75</span>)</span></code></pre></div>
+<p>De esta manera podemos determinar que si el número generado por cada una de las <span class="math inline">\(\text{Bernoulli}\)</span> es <span class="math inline">\(1\)</span> entonces dejó de contestar y si es <span class="math inline">\(0\)</span> entonces tenemos la información actualizada.</p>
+<p>Vamos a incluir el tiempo y cada una de las indicadoras en una sola tabla para facilitar el análisis.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pacientes_pob <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(persona, tiempo, p_0, p_25, p_50, p_75)</span></code></pre></div>
+<p>Veamos como se ven los primeros 20 registro de nuestra tabla:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pacientes_pob, <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+persona
+</th>
+<th style="text-align:right;">
+tiempo
+</th>
+<th style="text-align:right;">
+p_0
+</th>
+<th style="text-align:right;">
+p_25
+</th>
+<th style="text-align:right;">
+p_50
+</th>
+<th style="text-align:right;">
+p_75
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+44
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<p>Calculemos el tiempo de sobrevida de nuestra población para los dos casos:</p>
+<ul>
+<li>Solamente tomar en cuenta aquellos de los que se tiene registro completo.</li>
+<li>Tomar en cuenta a toda la población.</li>
+</ul>
+<div id="registro-completo" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Registro completo</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>medias_com_pob <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">&lt;-</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        pacientes_pob <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(persona,tiempo, i) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">filter_at</span>(<span class="dv">3</span>, <span class="fu">all_vars</span>(.<span class="sc">==</span><span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mean</span>()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    medias_com_pob <span class="ot">&lt;-</span><span class="fu">append</span>(medias_com_pob, temp)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(temp)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(medias_com_pob) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;p=0&quot;</span>,<span class="st">&quot;p=.25&quot;</span>,<span class="st">&quot;p=.50&quot;</span>, <span class="st">&quot;p=.75&quot;</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>medias_com_pob <span class="sc">%&gt;%</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+p=0
+</td>
+<td style="text-align:right;">
+52.66000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.25
+</td>
+<td style="text-align:right;">
+51.54321
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.50
+</td>
+<td style="text-align:right;">
+52.59649
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.75
+</td>
+<td style="text-align:right;">
+50.61538
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="toda-la-población" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Toda la población</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    pacientes_pob <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(tiempo) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>medias_todo_pob <span class="ot">&lt;-</span> <span class="fu">rep</span>(temp,<span class="dv">4</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(temp)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(medias_todo_pob) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;p=0&quot;</span>,<span class="st">&quot;p=.25&quot;</span>,<span class="st">&quot;p=.50&quot;</span>, <span class="st">&quot;p=.75&quot;</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>medias_todo_pob <span class="sc">%&gt;%</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+p=0
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.25
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.50
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.75
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="muestra" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Muestra</h2>
+<p>A continuación vamos a obtener la muestra mediante <em>Muestreo Aleatorio Simple sin reemplazo</em> de <span class="math inline">\(50\)</span> pacientes para poner a prueba nuestros estimadores.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pacientes_mues <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(pacientes_pob,n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 </div>
     </section>

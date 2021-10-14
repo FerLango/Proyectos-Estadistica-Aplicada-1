@@ -94,15 +94,6 @@ Construir los estimadores para $\mu$ y determina cuál es el mejor usando como c
 
 # Solución
 
-### Ambiente de R
-
-Para el presente proyecto se utilizaron las librerías que se muestran a continuación: 
-
--   `` -> .
-
-```{r lib}
-```
-
 ## Tiempo de sobrevida
 
 Cuando tomamos una muestra de la población, esta es de tal manera que incluye a aquellas personas que dejaron de contestar pero en realidad no tenemos conocimiento si se encuentran vivos: 
@@ -239,27 +230,169 @@ Dado nuestro estimador $S_{n}(t)$ de $S_{N}(t)$, definimos el sesgo como:
 
 $$
 \begin{split}
-\text{Sesgo}_{S_{n}(t)}(S_{N}(t)) 
-    & = \mathbf{E}(S_{n}(t)) - S_{N}(t) \\
-    & = \mathbf{E}(1 - F_{n}(t)) - S_{N}(t) \\
+\text{Sesgo}_{\hat{S_{n}}(t)}(S_{n}(t)) 
+    & = \mathbf{E}(\hat{S_{n}}(t)) - S_{n}(t) \\
+    & = \mathbf{E}(1 - \hat{F_{n}}(t)) - S_{n}(t) \\
     & = \mathbf{E}[1 - 
         \frac{1}{n}\sum_{i=1}^{n} 
-        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{N}(t)\\
+        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{n}(t)\\
     & = 1 - \frac{1}{n}\sum_{i=1}^{n}\mathbf{E}[
-        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{N}(t)\\
-    & = 1 - \frac{1}{n}\sum_{i=1}^{n}\pi_{i} - S_{N}(t)\\
-    
-    
+        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{n}(t)\\
+    & = 1 - \frac{1}{n}\sum_{i=1}^{n}\pi_{i} - S_{n}(t)\\
+    & = 1- \frac{1}{n}nF_{n}(t) - S_{n}(t)\\
+    & = 1- F_{n}(t) - S_{n}(t)\\
+    & = S_{n}(t) - S_{n}(t)\\
+    & = 0
 \end{split}
 $$
 
-
+De esta manera podemos concluir que el estimador de la función de supervivencia empírica es insesgado.
 
 ### Varianza
 
+Definimos la varianza de la siguiente manera:
+
+$$
+\begin{split}
+\text{Var}(S_{n}(t)) 
+    & = \text{Var}(1-F_{n}(t)) \\
+    & = \text{Var}(1-\frac{1}{n}\sum_{i=1}^{n} 
+        \mathbb{I}_{[\tau_{i},\infty)}(t)) \\
+    & = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{n} 
+        \mathbb{I}_{[\tau_{i},\infty)}(t)) \\
+    & = \frac{1}{n^2}[\sum_{i=1}^{n} 
+        \text{Var}(\mathbb{I}_{[\tau_{i},\infty)}(t)) +
+        \sum_{i=1}^{n} \sum\limits_{\substack{j=1 \\ j
+        \ne i}}^{n}\text{Cov}(\mathbb{I}_{[\tau_{i},
+        \infty)}(t), \mathbb{I}_{[\tau_{j},\infty)}(t))] \\
+    & = \frac{1}{n^2}[\sum_{i=1}^{n} \Delta_{i,i} +
+        \sum_{i=1}^{n} \sum\limits_{\substack{j=1 \\ j
+        \ne i}}^{n}\Delta_{i,j}] \\
+\end{split}
+$$
+
 ## Media de la función de supervivencia
 
-## Análisis gráfico y simulaciones
+Buscamos construir un estimador del tiempo de sobrevida de los pacientes al proponer la media de la función de supervivencia empírica como sigue:
+
+$$
+\begin{split}
+\mu 
+    & = \mathbf{E}(\nu) \\
+    & = \sum_{i=1}^n \nu_{i} \cdot \mathbb{P}(\nu = \nu_{i})\\
+    & = \sum_{i=1}^n \nu_{i} \cdot [F(\nu_{i}) -
+        \lim_{y \rightarrow \nu_{i}^-} F(y)]\\
+\end{split}
+$$
+
+# Análisis gráfico y simulaciones
+
+## Ambiente de R
+
+Para el presente proyecto se utilizaron las librerías que se muestran a continuación: 
+
+- `ggplot2` -> graficar.
+- `tidyverse` -> manejar los datos.
+- `kableExtra` -> diseño de las tablas.
+
+```{r lib}
+library(ggplot2)
+library(tidyverse)
+library(kableExtra)
+```
+
+## Población
+
+A continuación vamos a generar el tiempo que se tiene registrado de los pacientes (inicialmente sin importar si es el tiempo de fallecimiento o si dejaron de contestar) siguiendo una distribución normal con media $\mu=50$ y desviación estándar $\sigma=20$.
+
+Se va a generar una población de $N=100$ personas, se fijará la semilla de los aleatorio en $\text{Seed} = 1$ para hacer un ejemplo reproducible, se tomará el valor absoluto de los tiempos generados y se truncará el decimal al entero próximo.
+
+```{r}
+set.seed(1)
+N <- 100
+persona <- 1:N
+tiempo <- rnorm(N, 50, 20) %>%
+    abs() %>%
+    ceiling()
+```
+
+Ahora vamos a determinar cuales de ellos dejaron de contestar, recordemos que los cuidadores tienen una probabilidad $p\in[0,1)$ de dejar de contestar el teléfono. Para eso vamos a suponer que cada uno de ellos se distribuye $\text{Bernoulli}(p)$, por lo que para generar cada uno de ellos vamos a utilizar la distribución $\text{Binomial(N,p)}$. Con fines de verificar que tanto cambian nuestro estimadores con cada probabilidad utilizaremos distintos valores de $p\in\{0,.25,.50,.75\}$.
+
+```{r}
+p_0 <- rbinom(N,1,0)
+p_25 <- rbinom(N,1,.25)
+p_50 <- rbinom(N,1,.50)
+p_75 <- rbinom(N,1,.75)
+```
+
+De esta manera podemos determinar que si el número generado por cada una de las $\text{Bernoulli}$ es $1$ entonces dejó de contestar y si es $0$ entonces tenemos la información actualizada.
+
+Vamos a incluir el tiempo y cada una de las indicadoras en una sola tabla para facilitar el análisis.
+
+```{r}
+pacientes_pob <- data.frame(persona, tiempo, p_0, p_25, p_50, p_75)
+```
+
+Veamos como se ven los primeros 20 registro de nuestra tabla:
+
+```{r}
+head(pacientes_pob, 20) %>%
+    kable()
+```
+
+Calculemos el tiempo de sobrevida de nuestra población para los dos casos:
+
+- Solamente tomar en cuenta aquellos de los que se tiene registro completo.
+- Tomar en cuenta a toda la población.
+
+### Registro completo
+
+```{r}
+medias_com_pob <- NULL
+for (i in 3:6) {
+    temp <- 
+        pacientes_pob %>%
+        select(persona,tiempo, i) %>%
+        filter_at(3, all_vars(.==0)) %>%
+        select(2) %>%
+        as.vector() %>%
+        unlist() %>%
+        mean()
+    medias_com_pob <-append(medias_com_pob, temp)
+}
+rm(temp)
+names(medias_com_pob) <- c("p=0","p=.25","p=.50", "p=.75")
+
+medias_com_pob %>%
+    kable()
+```
+
+### Toda la población
+
+```{r}
+temp <- 
+    pacientes_pob %>%
+    select(tiempo) %>%
+    as.vector() %>%
+    unlist() %>%
+    mean()
+medias_todo_pob <- rep(temp,4)
+rm(temp)
+names(medias_todo_pob) <- c("p=0","p=.25","p=.50", "p=.75")
+
+medias_todo_pob %>%
+    kable()
+```
+
+## Muestra
+
+A continuación vamos a obtener la muestra mediante *Muestreo Aleatorio Simple sin reemplazo* de $50$ pacientes para poner a prueba nuestros estimadores.
+
+```{r}
+n <- 50
+pacientes_mues <- sample_n(pacientes_pob,n, replace = FALSE)
+```
+
 
 
 
