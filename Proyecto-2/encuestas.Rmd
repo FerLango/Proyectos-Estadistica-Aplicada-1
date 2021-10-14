@@ -155,29 +155,111 @@ $$
 \text{Var}({\hat{\mu}}) 
     & = \text{Var}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) \\
     & = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{\ell} t_{i}) \\
-    & = \frac{1}{n^2}\sum_{i=1}^{\ell} \text{Var}(t_{i}) \\
-    & = \frac{1}{n^2}\sum_{i=1}^{\ell}\sigma^2 \\
-    & = \frac{1}{n^2}\ell\sigma^2
+    & = \frac{1}{n^2}(\sum_{i=1}^{\ell} \text{Var}(t_{i}) + 
+        \sum_{i=1}^{\ell} \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}
+        \text{Cov}(t_{i}, t_{j})) \\
+    & = \frac{1}{n^2}(\ell\sigma^2 +  \sum_{i=1}^{\ell}                               \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}
+        (\pi_{i,j}-\pi_{i}\pi_{j})) \\
+     & = \frac{1}{n^2}(\ell\sigma^2 +  \sum_{i=1}^{\ell}                               \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}\Delta_{i,j})
 \end{split}
 $$
 
 ### Error cuadrático medio (MSE)
 
+Recordemos que el error cuadrático medio está definido como sigue:
+
+$$
+\begin{split}
+\text{MSE}(\hat{\mu},\mu) 
+    & = \mathbf{E}[(\hat{\mu}-\mu)^2] \\
+    & = \text{Var}(\hat{\mu}) + (\text{Sesgo}_{\mu}(\hat{\mu}))^2 \\
+    & = \frac{1}{n^2}(\ell\sigma^2 +  \sum_{i=1}^{\ell}                               \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}\Delta_{i,j}) +
+        (\mu(\frac{\ell}{n}-1))^2
+\end{split}
+$$
+
 ### Consistencia 
 
+Veamos si el estimado es Fisher-consistente:
 
+$$
+\begin{split}
+\lim_{n \rightarrow N} \hat{\mu} 
+    & = \lim_{n \rightarrow N} \frac{1}{n}\sum_{i=1}^{\ell} t_{i} \\
+    & = \frac{1}{N}\sum_{i=1}^{\ell} t_{i} \ne 
+        \frac{1}{N}\sum_{i=1}^{N} t_{i}
+\end{split}
+$$
 
-
-
-
-
-
+Por lo tanto, no es Fisher-consistente, pues depende nuevamente de la probabilidad de que el cuidador conteste. Al solamente tomar en cuenta aquellos que sí contestaron, tenemos un sesgo que se refleja al llevar el estimador al límite porque no estamos llegando al valor verdadero de toda la muestra.
 
 ## Función de supervivencia empírica
 
+Mediante la función de supervivencia empírica buscamos estimar a la verdadera función de supervivencia. De esta manera podremos estimar el tiempo de sobrevida de los pacientes.
+
+La función de supervivencia empírica está dada por:
+
+$$
+S_{n}(t) = 1 - F_{n}(t)
+$$ 
+donde 
+$$
+F_{n}(t) = \frac{1}{n}\sum_{i=1}^{n} \mathbb{I}_{[\tau_{i},\infty)}(t)
+$$ 
+con $\tau_{i} = {t_i}$ ó $\tau_{i} = \nu_{i}$.
+
+Podemos interpretar la función de supervivencia empírica como el complemento de un función de acumulación. De esta manera, la función de supervivencia será decreciente a lo largo de la edad que se registró que vivieron los pacientes. Además, podemos observar que cumple las siguientes propiedades:
+
+- $S_{n}(\nu_{1}) \approx 1$
+- $S_{n}(\nu_{n}) \approx 0$
+
+### Consistencia
+
+Resulta sencillo observar que la función de supervivencia empírica es Fisher-consistente, pues:
+
+$$
+\begin{split}
+\lim_{n \rightarrow N} S_{n}(t) 
+    & = \lim_{n \rightarrow N} 1 - F_{n}(t) \\
+    & = \lim_{n \rightarrow N} 1 - 
+        \frac{1}{n}\sum_{i=1}^{n} 
+        \mathbb{I}_{[\tau_{i},\infty)}(t) \\
+    & = 1 - \frac{1}{N}\sum_{i=1}^{N} 
+        \mathbb{I}_{[\tau_{i},\infty)}(t) \\
+    & = 1 - F_{N}(t) \\
+    & = S_{N}(t) 
+\end{split}
+$$
+
+De esta manera, en realidad estamos obteniendo la función de supervivencia empírica de toda la población.
+
+### Sesgo
+
+Dado nuestro estimador $S_{n}(t)$ de $S_{N}(t)$, definimos el sesgo como:
+
+$$
+\begin{split}
+\text{Sesgo}_{S_{n}(t)}(S_{N}(t)) 
+    & = \mathbf{E}(S_{n}(t)) - S_{N}(t) \\
+    & = \mathbf{E}(1 - F_{n}(t)) - S_{N}(t) \\
+    & = \mathbf{E}[1 - 
+        \frac{1}{n}\sum_{i=1}^{n} 
+        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{N}(t)\\
+    & = 1 - \frac{1}{n}\sum_{i=1}^{n}\mathbf{E}[
+        \mathbb{I}_{[\tau_{i},\infty)}(t)] - S_{N}(t)\\
+    & = 1 - \frac{1}{n}\sum_{i=1}^{n}\pi_{i} - S_{N}(t)\\
+    
+    
+\end{split}
+$$
+
+
+
+### Varianza
+
 ## Media de la función de supervivencia
 
-
+## Análisis gráfico y simulaciones
 
 
 
