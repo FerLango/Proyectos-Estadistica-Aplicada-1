@@ -180,9 +180,16 @@ a.sourceLine {
 <ul>
 <li><a href="#medias"><span class="toc-section-number">3.2.1</span> Medias</a></li>
 <li><a href="#función-de-supervivencia-empírica-1"><span class="toc-section-number">3.2.2</span> Función de supervivencia empírica</a></li>
+<li><a href="#media-de-la-función-de-supervivencia-1"><span class="toc-section-number">3.2.3</span> Media de la función de supervivencia</a></li>
 </ul></li>
-<li><a href="#muestra"><span class="toc-section-number">3.3</span> Muestra</a></li>
+<li><a href="#muestra"><span class="toc-section-number">3.3</span> Muestra</a>
+<ul>
+<li><a href="#tiempo-de-sobrevida-completo"><span class="toc-section-number">3.3.1</span> Tiempo de sobrevida completo</a></li>
+<li><a href="#función-de-supervivencia"><span class="toc-section-number">3.3.2</span> Función de supervivencia</a></li>
+<li><a href="#media-de-la-función-de-superviviencia"><span class="toc-section-number">3.3.3</span> Media de la función de superviviencia</a></li>
 </ul></li>
+</ul></li>
+<li><a href="#conclusión"><span class="toc-section-number">4</span> Conclusión</a></li>
 </ul>
 </div>
 </div>
@@ -1045,6 +1052,7 @@ p=.75
 </tr>
 </tbody>
 </table>
+<p>Lo cual tiene completo sentido que no cambie porque no estamos tomando en cuenta a aquellos que dejaron de contestar.</p>
 </div>
 </div>
 <div id="función-de-supervivencia-empírica-1" class="section level3" number="3.2.2">
@@ -1088,20 +1096,65 @@ p=.75
 <span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(pacientes_pob<span class="sc">$</span>tiempo)<span class="sc">+</span><span class="dv">5</span>,<span class="dv">5</span>)) <span class="sc">+</span></span>
 <span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">1</span>))</span>
 <span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(sup_plot,<span class="at">tooltip =</span> <span class="fu">c</span>(<span class="st">&quot;tiempo&quot;</span>, <span class="st">&quot;cum&quot;</span>), <span class="at">width =</span> <span class="dv">800</span>,</span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>         <span class="at">dynamicTicks =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>sup_plot_ply <span class="ot">&lt;-</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplotly</span>(sup_plot,<span class="at">tooltip =</span> <span class="fu">c</span>(<span class="st">&quot;tiempo&quot;</span>, <span class="st">&quot;cum&quot;</span>), </span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>             <span class="at">width =</span> <span class="dv">800</span>, <span class="at">dynamicTicks =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layout</span>(<span class="at">title =</span> </span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">text =</span> <span class="fu">paste0</span>(</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Función de supervivencia empírica&quot;</span>,</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;&lt;br&gt;&quot;</span>,</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;&lt;sup&gt;&quot;</span>,</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Población&quot;</span>)))</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>sup_plot_ply</span></code></pre></div>
 <div id="htmlwidget-de3276d0e432f67cb358" style="width:800px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-de3276d0e432f67cb358">{"x":{"data":[{"x":[99,null,0,6,null,6,11,null,11,14,null,14,20,null,20,21,null,21,23,null,23,25,null,25,26,null,26,28,null,28,30,null,30,32,null,32,34,null,34,36,null,36,37,null,37,38,null,38,39,null,39,40,null,40,41,null,41,42,null,42,43,null,43,44,null,44,45,null,45,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,64,null,64,65,null,65,66,null,66,67,null,67,68,null,68,69,null,69,72,null,72,73,null,73,74,null,74,75,null,75,78,null,78,79,null,79,80,null,80,81,null,81,82,null,82,90,null,90,94,null,94,99],"y":[0,null,1,1,null,0.99,0.99,null,0.98,0.98,null,0.97,0.97,null,0.96,0.96,null,0.95,0.95,null,0.94,0.94,null,0.92,0.92,null,0.91,0.91,null,0.9,0.9,null,0.89,0.89,null,0.88,0.88,null,0.86,0.86,null,0.83,0.83,null,0.82,0.82,null,0.79,0.79,null,0.76,0.76,null,0.75,0.75,null,0.73,0.73,null,0.71,0.71,null,0.69,0.69,null,0.67,0.67,null,0.66,0.66,null,0.64,0.64,null,0.6,0.6,null,0.57,0.57,null,0.54,0.54,null,0.52,0.52,null,0.5,0.5,null,0.47,0.47,null,0.45,0.45,null,0.42,0.42,null,0.37,0.37,null,0.36,0.36,null,0.34,0.34,null,0.28,0.28,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.19,0.19,null,0.18,0.18,null,0.17,0.17,null,0.15,0.15,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.09,0.09,null,0.08,0.08,null,0.07,0.07,null,0.0599999999999999,0.0599999999999999,null,0.05,0.05,null,0.03,0.03,null,0.02,0.02,null,0.01,0.01],"text":["tiempo: 99<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo:  6<br />cum: 1.00",null,"tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.99",null,"tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.98",null,"tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.97",null,"tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.96",null,"tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.95",null,"tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.94",null,"tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.92",null,"tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.91",null,"tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.90",null,"tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.89",null,"tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.88",null,"tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.86",null,"tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.83",null,"tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.82",null,"tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.79",null,"tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.76",null,"tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.75",null,"tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.73",null,"tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.71",null,"tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.69",null,"tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.67",null,"tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.66",null,"tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.64",null,"tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.60",null,"tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.57",null,"tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.54",null,"tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.52",null,"tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.50",null,"tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.47",null,"tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.45",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.37",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.28",null,"tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.26",null,"tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.24",null,"tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.22",null,"tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.19",null,"tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.18",null,"tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.17",null,"tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.15",null,"tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.14",null,"tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.12",null,"tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.10",null,"tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.09",null,"tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.08",null,"tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.07",null,"tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.06",null,"tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.05",null,"tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.03",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02",null,"tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99],"y":[1,0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01],"text":["tiempo:  6<br />cum: 1.00","tiempo: 11<br />cum: 0.99","tiempo: 14<br />cum: 0.98","tiempo: 20<br />cum: 0.97","tiempo: 21<br />cum: 0.96","tiempo: 23<br />cum: 0.95","tiempo: 25<br />cum: 0.94","tiempo: 26<br />cum: 0.92","tiempo: 28<br />cum: 0.91","tiempo: 30<br />cum: 0.90","tiempo: 32<br />cum: 0.89","tiempo: 34<br />cum: 0.88","tiempo: 36<br />cum: 0.86","tiempo: 37<br />cum: 0.83","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.79","tiempo: 40<br />cum: 0.76","tiempo: 41<br />cum: 0.75","tiempo: 42<br />cum: 0.73","tiempo: 43<br />cum: 0.71","tiempo: 44<br />cum: 0.69","tiempo: 45<br />cum: 0.67","tiempo: 47<br />cum: 0.66","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.60","tiempo: 50<br />cum: 0.57","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.50","tiempo: 56<br />cum: 0.47","tiempo: 57<br />cum: 0.45","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.37","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.28","tiempo: 64<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 67<br />cum: 0.19","tiempo: 68<br />cum: 0.18","tiempo: 69<br />cum: 0.17","tiempo: 72<br />cum: 0.15","tiempo: 73<br />cum: 0.14","tiempo: 74<br />cum: 0.12","tiempo: 75<br />cum: 0.10","tiempo: 78<br />cum: 0.09","tiempo: 79<br />cum: 0.08","tiempo: 80<br />cum: 0.07","tiempo: 81<br />cum: 0.06","tiempo: 82<br />cum: 0.05","tiempo: 90<br />cum: 0.03","tiempo: 94<br />cum: 0.02","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99,0],"y":[0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01,0,1],"text":["tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,103.95],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Tiempo en días","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Probabilidad de sobrevivir","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"2764160d39cf":{"x":{},"y":{},"type":"scatter"},"27643a68714":{"x":{},"y":{},"colour":{},"shape":{}}},"cur_data":"2764160d39cf","visdat":{"2764160d39cf":["function (y) ","x"],"27643a68714":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-de3276d0e432f67cb358">{"x":{"data":[{"x":[99,null,0,6,null,6,11,null,11,14,null,14,20,null,20,21,null,21,23,null,23,25,null,25,26,null,26,28,null,28,30,null,30,32,null,32,34,null,34,36,null,36,37,null,37,38,null,38,39,null,39,40,null,40,41,null,41,42,null,42,43,null,43,44,null,44,45,null,45,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,64,null,64,65,null,65,66,null,66,67,null,67,68,null,68,69,null,69,72,null,72,73,null,73,74,null,74,75,null,75,78,null,78,79,null,79,80,null,80,81,null,81,82,null,82,90,null,90,94,null,94,99],"y":[0,null,1,1,null,0.99,0.99,null,0.98,0.98,null,0.97,0.97,null,0.96,0.96,null,0.95,0.95,null,0.94,0.94,null,0.92,0.92,null,0.91,0.91,null,0.9,0.9,null,0.89,0.89,null,0.88,0.88,null,0.86,0.86,null,0.83,0.83,null,0.82,0.82,null,0.79,0.79,null,0.76,0.76,null,0.75,0.75,null,0.73,0.73,null,0.71,0.71,null,0.69,0.69,null,0.67,0.67,null,0.66,0.66,null,0.64,0.64,null,0.6,0.6,null,0.57,0.57,null,0.54,0.54,null,0.52,0.52,null,0.5,0.5,null,0.47,0.47,null,0.45,0.45,null,0.42,0.42,null,0.37,0.37,null,0.36,0.36,null,0.34,0.34,null,0.28,0.28,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.19,0.19,null,0.18,0.18,null,0.17,0.17,null,0.15,0.15,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.09,0.09,null,0.08,0.08,null,0.07,0.07,null,0.0599999999999999,0.0599999999999999,null,0.05,0.05,null,0.03,0.03,null,0.02,0.02,null,0.01,0.01],"text":["tiempo: 99<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo:  6<br />cum: 1.00",null,"tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.99",null,"tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.98",null,"tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.97",null,"tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.96",null,"tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.95",null,"tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.94",null,"tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.92",null,"tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.91",null,"tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.90",null,"tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.89",null,"tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.88",null,"tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.86",null,"tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.83",null,"tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.82",null,"tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.79",null,"tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.76",null,"tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.75",null,"tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.73",null,"tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.71",null,"tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.69",null,"tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.67",null,"tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.66",null,"tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.64",null,"tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.60",null,"tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.57",null,"tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.54",null,"tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.52",null,"tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.50",null,"tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.47",null,"tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.45",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.37",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.28",null,"tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.26",null,"tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.24",null,"tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.22",null,"tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.19",null,"tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.18",null,"tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.17",null,"tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.15",null,"tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.14",null,"tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.12",null,"tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.10",null,"tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.09",null,"tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.08",null,"tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.07",null,"tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.06",null,"tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.05",null,"tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.03",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02",null,"tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99],"y":[1,0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01],"text":["tiempo:  6<br />cum: 1.00","tiempo: 11<br />cum: 0.99","tiempo: 14<br />cum: 0.98","tiempo: 20<br />cum: 0.97","tiempo: 21<br />cum: 0.96","tiempo: 23<br />cum: 0.95","tiempo: 25<br />cum: 0.94","tiempo: 26<br />cum: 0.92","tiempo: 28<br />cum: 0.91","tiempo: 30<br />cum: 0.90","tiempo: 32<br />cum: 0.89","tiempo: 34<br />cum: 0.88","tiempo: 36<br />cum: 0.86","tiempo: 37<br />cum: 0.83","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.79","tiempo: 40<br />cum: 0.76","tiempo: 41<br />cum: 0.75","tiempo: 42<br />cum: 0.73","tiempo: 43<br />cum: 0.71","tiempo: 44<br />cum: 0.69","tiempo: 45<br />cum: 0.67","tiempo: 47<br />cum: 0.66","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.60","tiempo: 50<br />cum: 0.57","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.50","tiempo: 56<br />cum: 0.47","tiempo: 57<br />cum: 0.45","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.37","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.28","tiempo: 64<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 67<br />cum: 0.19","tiempo: 68<br />cum: 0.18","tiempo: 69<br />cum: 0.17","tiempo: 72<br />cum: 0.15","tiempo: 73<br />cum: 0.14","tiempo: 74<br />cum: 0.12","tiempo: 75<br />cum: 0.10","tiempo: 78<br />cum: 0.09","tiempo: 79<br />cum: 0.08","tiempo: 80<br />cum: 0.07","tiempo: 81<br />cum: 0.06","tiempo: 82<br />cum: 0.05","tiempo: 90<br />cum: 0.03","tiempo: 94<br />cum: 0.02","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99,0],"y":[0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01,0,1],"text":["tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica<br><sup>Población","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,103.95],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Tiempo en días","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Probabilidad de sobrevivir","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"2df8490c72c7":{"x":{},"y":{},"type":"scatter"},"2df843cc93f":{"x":{},"y":{},"colour":{},"shape":{}}},"cur_data":"2df8490c72c7","visdat":{"2df8490c72c7":["function (y) ","x"],"2df843cc93f":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>En los puntos azules podemos observar aquellos que se encontraron en nuestros datos por lo que representan la parte cerrada del intervalo. Los puntos rojos fueron generados para poder generar la gráfica de la función empírica de manera correcta.</p>
+</div>
+<div id="media-de-la-función-de-supervivencia-1" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Media de la función de supervivencia</h3>
+<p>Recordemos que para obtener la media de la función de supervivencia utilizamos lo siguiente:</p>
+<p><span class="math display">\[
+\begin{split}
+\mu 
+    &amp; = \sum_{i=1}^N \nu_{i} \cdot [F(\nu_{i}) -
+        \lim_{y \rightarrow \nu_{i}^-} F(y)]\\
+    &amp; = \sum_{i=1}^N \nu_{i} \cdot [(1 - S(\nu_{i})) -
+        \lim_{y \rightarrow \nu_{i}^-} (1-S(y))]\\
+    &amp; = \sum_{i=1}^N \nu_{i} \cdot [
+        \lim_{y \rightarrow \nu_{i}^-} S(y)
+        - S(\nu_{i}))]\\
+\end{split}
+\]</span></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>media_sup <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>temp_sup <span class="ot">&lt;-</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    sup <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(tiempo)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">3</span>,<span class="fu">length</span>(temp_sup<span class="sc">$</span>tiempo),<span class="dv">2</span>)) {</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="sc">==</span> <span class="fu">length</span>(temp_sup<span class="sc">$</span>tiempo)) {</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        media_sup <span class="ot">&lt;-</span> media_sup <span class="sc">+</span> </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">as.numeric</span>(temp_sup[i,<span class="dv">1</span>])<span class="sc">*</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                     (<span class="fu">as.numeric</span>(temp_sup[i,<span class="dv">4</span>]))</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        media_sup <span class="ot">&lt;-</span> media_sup <span class="sc">+</span> </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">as.numeric</span>(temp_sup[i,<span class="dv">1</span>])<span class="sc">*</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                     (<span class="fu">as.numeric</span>(temp_sup[i,<span class="dv">4</span>]) <span class="sc">-</span> </span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">as.numeric</span>(temp_sup[i<span class="sc">+</span><span class="dv">2</span>,<span class="dv">4</span>]))</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>}  </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(temp_sup)</span></code></pre></div>
+<p>De esta manera, la media obtenida directamente de nuestra función de supervivencia es de <strong>52.66</strong>.</p>
 </div>
 </div>
 <div id="muestra" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Muestra</h2>
 <p>A continuación vamos a obtener la muestra mediante <em>Muestreo Aleatorio Simple sin reemplazo</em> de <span class="math inline">\(50\)</span> pacientes para poner a prueba nuestros estimadores.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pacientes_mues <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(pacientes_pob,n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pacientes_mues <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(pacientes_pob,n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Veamos los primeros <span class="math inline">\(20\)</span> registros:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pacientes_mues,<span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pacientes_mues,<span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1528,7 +1581,479 @@ p_75
 </tr>
 </tbody>
 </table>
+<p>A continuación vamos a poner a prueba nuestros estimadores con nuestra muestra respecto a la población.</p>
+<div id="tiempo-de-sobrevida-completo" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Tiempo de sobrevida completo</h3>
+<p>Para este caso solamente vamos a tomar en cuenta a aquellos de los que se tiene el registro completo, por lo que vamos a utilizar nuestro estimador con estos registros:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>medias_com_mues <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">&lt;-</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        pacientes_mues <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(persona,tiempo, i) <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">filter_at</span>(<span class="dv">3</span>, <span class="fu">all_vars</span>(.<span class="sc">==</span><span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.vector</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mean</span>()</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    medias_com_mues <span class="ot">&lt;-</span><span class="fu">append</span>(medias_com_mues, temp)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(temp,i)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(medias_com_mues) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;p=0&quot;</span>,<span class="st">&quot;p=.25&quot;</span>,<span class="st">&quot;p=.50&quot;</span>, <span class="st">&quot;p=.75&quot;</span>)</span></code></pre></div>
+<p>Si comparamos los resultados obtenidos entonces nuestros resultados son los siguientes:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>medias_com_comp <span class="ot">&lt;-</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(medias_com_pob, medias_com_mues) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dif =</span> <span class="fu">abs</span>(medias_com_pob<span class="sc">-</span>medias_com_mues))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>medias_com_comp <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+medias_com_pob
+</th>
+<th style="text-align:right;">
+medias_com_mues
+</th>
+<th style="text-align:right;">
+dif
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+p=0
+</td>
+<td style="text-align:right;">
+52.66000
+</td>
+<td style="text-align:right;">
+55.06000
+</td>
+<td style="text-align:right;">
+2.400000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.25
+</td>
+<td style="text-align:right;">
+51.54321
+</td>
+<td style="text-align:right;">
+54.10526
+</td>
+<td style="text-align:right;">
+2.562053
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.50
+</td>
+<td style="text-align:right;">
+52.59649
+</td>
+<td style="text-align:right;">
+54.88000
+</td>
+<td style="text-align:right;">
+2.283509
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.75
+</td>
+<td style="text-align:right;">
+50.61538
+</td>
+<td style="text-align:right;">
+54.12500
+</td>
+<td style="text-align:right;">
+3.509615
+</td>
+</tr>
+</tbody>
+</table>
+<p>Notemos que mientras una mayor cantidad de cuidadores dejan de contestar entonces nuestro estimador presenta un mayor error.</p>
 </div>
+<div id="función-de-supervivencia" class="section level3" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Función de supervivencia</h3>
+<p>Veamos cómo se ve nuestra función de supervivencia empírica para la muestra.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sup_mues <span class="ot">&lt;-</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    pacientes_mues <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(tiempo) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(tiempo) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(tiempo) <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">count =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">p =</span> count<span class="sc">/</span>n)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>sup_mues <span class="ot">&lt;-</span> </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    sup_mues <span class="sc">%&gt;%</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cum =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">cumsum</span>(p), </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="fu">rep</span>(<span class="st">&quot;cerrado&quot;</span>,<span class="fu">length</span>(sup_mues<span class="sc">$</span>tiempo)),</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">match =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(sup_mues<span class="sc">$</span>tiempo)<span class="sc">-</span><span class="dv">1</span>), <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>sup_mues <span class="ot">&lt;-</span> </span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    sup_mues <span class="sc">%&gt;%</span> </span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_row</span>(<span class="at">tiempo =</span> sup_mues<span class="sc">$</span>tiempo,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">cum =</span> <span class="fu">c</span>(<span class="dv">1</span>,sup_mues<span class="sc">$</span>cum[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sup_mues<span class="sc">$</span>cum)<span class="sc">-</span><span class="dv">1</span>]),</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">type =</span> <span class="fu">rep</span>(<span class="st">&quot;abierto&quot;</span>,<span class="fu">length</span>(sup_mues<span class="sc">$</span>tiempo)),</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">match =</span> <span class="dv">0</span><span class="sc">:</span>(<span class="fu">length</span>(sup_mues<span class="sc">$</span>tiempo)<span class="sc">-</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_row</span>(<span class="at">tiempo=</span><span class="dv">0</span>,<span class="at">cum=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">&quot;cerrado&quot;</span>, <span class="at">match=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(type))</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>sup_plot_mues <span class="ot">&lt;-</span>    </span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    sup_mues <span class="sc">%&gt;%</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>tiempo, <span class="at">y=</span>cum)) <span class="sc">+</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> match), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>type, <span class="at">pch =</span> type), <span class="at">size =</span> <span class="dv">1</span>, </span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>               <span class="at">pch =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">19</span>,<span class="fu">ceiling</span>(<span class="fu">nrow</span>(sup_mues)<span class="sc">/</span><span class="dv">2</span>)),</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">rep</span>(<span class="dv">1</span>,<span class="fu">floor</span>(<span class="fu">nrow</span>(sup_mues)<span class="sc">/</span><span class="dv">2</span>)))) <span class="sc">+</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Función de supervivencia empírica&quot;</span>,</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">&quot;Muestra&quot;</span>,</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Tiempo en días&quot;</span>,</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Probabilidad de sobrevivir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> </span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(pacientes_mues<span class="sc">$</span>tiempo)<span class="sc">+</span><span class="dv">5</span>,<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">1</span>))</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>sup_plot_mues_ply <span class="ot">&lt;-</span> </span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplotly</span>(sup_plot_mues,<span class="at">tooltip =</span> <span class="fu">c</span>(<span class="st">&quot;tiempo&quot;</span>, <span class="st">&quot;cum&quot;</span>), </span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>             <span class="at">width =</span> <span class="dv">800</span>, <span class="at">dynamicTicks =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layout</span>(<span class="at">title =</span> </span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">text =</span> <span class="fu">paste0</span>(</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Función de supervivencia empírica&quot;</span>,</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;&lt;br&gt;&quot;</span>,</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;&lt;sup&gt;&quot;</span>,</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Muestra&quot;</span>)))</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>sup_plot_mues_ply</span></code></pre></div>
+<div id="htmlwidget-c894144e72fb64bfd74d" style="width:800px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c894144e72fb64bfd74d">{"x":{"data":[{"x":[94,null,0,20,null,20,26,null,26,30,null,30,32,null,32,34,null,34,37,null,37,38,null,38,39,null,39,41,null,41,43,null,43,44,null,44,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,65,null,65,66,null,66,69,null,69,73,null,73,74,null,74,75,null,75,79,null,79,80,null,80,82,null,82,90,null,90,94],"y":[0,null,1,1,null,0.98,0.98,null,0.96,0.96,null,0.94,0.94,null,0.92,0.92,null,0.9,0.9,null,0.88,0.88,null,0.82,0.82,null,0.8,0.8,null,0.76,0.76,null,0.72,0.72,null,0.7,0.7,null,0.68,0.68,null,0.64,0.64,null,0.62,0.62,null,0.58,0.58,null,0.54,0.54,null,0.52,0.52,null,0.46,0.46,null,0.44,0.44,null,0.42,0.42,null,0.38,0.38,null,0.36,0.36,null,0.34,0.34,null,0.3,0.3,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.2,0.2,null,0.18,0.18,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.08,0.08,null,0.04,0.04,null,0.02,0.02],"text":["tiempo: 94<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo: 20<br />cum: 1.00",null,"tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.98",null,"tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.96",null,"tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.94",null,"tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.92",null,"tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.90",null,"tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.88",null,"tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.82",null,"tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.80",null,"tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.76",null,"tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.72",null,"tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.70",null,"tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.68",null,"tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.64",null,"tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.62",null,"tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.58",null,"tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.54",null,"tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.52",null,"tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.46",null,"tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.44",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.38",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.30",null,"tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.26",null,"tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.24",null,"tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.22",null,"tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.20",null,"tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.18",null,"tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.14",null,"tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.12",null,"tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.10",null,"tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.08",null,"tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.04",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94],"y":[1,0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02],"text":["tiempo: 20<br />cum: 1.00","tiempo: 26<br />cum: 0.98","tiempo: 30<br />cum: 0.96","tiempo: 32<br />cum: 0.94","tiempo: 34<br />cum: 0.92","tiempo: 37<br />cum: 0.90","tiempo: 38<br />cum: 0.88","tiempo: 39<br />cum: 0.82","tiempo: 41<br />cum: 0.80","tiempo: 43<br />cum: 0.76","tiempo: 44<br />cum: 0.72","tiempo: 47<br />cum: 0.70","tiempo: 48<br />cum: 0.68","tiempo: 49<br />cum: 0.64","tiempo: 50<br />cum: 0.62","tiempo: 51<br />cum: 0.58","tiempo: 52<br />cum: 0.54","tiempo: 54<br />cum: 0.52","tiempo: 56<br />cum: 0.46","tiempo: 57<br />cum: 0.44","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.38","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.30","tiempo: 65<br />cum: 0.26","tiempo: 66<br />cum: 0.24","tiempo: 69<br />cum: 0.22","tiempo: 73<br />cum: 0.20","tiempo: 74<br />cum: 0.18","tiempo: 75<br />cum: 0.14","tiempo: 79<br />cum: 0.12","tiempo: 80<br />cum: 0.10","tiempo: 82<br />cum: 0.08","tiempo: 90<br />cum: 0.04","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94,0],"y":[0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02,0,1],"text":["tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica<br><sup>Muestra","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.7,98.7],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Tiempo en días","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Probabilidad de sobrevivir","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"2df857376eaa":{"x":{},"y":{},"type":"scatter"},"2df826586023":{"x":{},"y":{},"colour":{},"shape":{}}},"cur_data":"2df857376eaa","visdat":{"2df857376eaa":["function (y) ","x"],"2df826586023":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Veamos la comparación de ambas gráficas para notar sus diferencias entre la muestra y la población.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subplot</span>(sup_plot_ply, sup_plot_mues_ply, <span class="at">nrows =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layout</span>(<span class="at">title =</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">text =</span> <span class="fu">paste0</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Función de supervivencia empírica&quot;</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;&lt;br&gt;&quot;</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;&lt;sup&gt;&quot;</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Población - Muestra&quot;</span>)))</span></code></pre></div>
+<div id="htmlwidget-467f3ada599dec390e71" style="width:800px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-467f3ada599dec390e71">{"x":{"data":[{"x":[99,null,0,6,null,6,11,null,11,14,null,14,20,null,20,21,null,21,23,null,23,25,null,25,26,null,26,28,null,28,30,null,30,32,null,32,34,null,34,36,null,36,37,null,37,38,null,38,39,null,39,40,null,40,41,null,41,42,null,42,43,null,43,44,null,44,45,null,45,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,64,null,64,65,null,65,66,null,66,67,null,67,68,null,68,69,null,69,72,null,72,73,null,73,74,null,74,75,null,75,78,null,78,79,null,79,80,null,80,81,null,81,82,null,82,90,null,90,94,null,94,99],"y":[0,null,1,1,null,0.99,0.99,null,0.98,0.98,null,0.97,0.97,null,0.96,0.96,null,0.95,0.95,null,0.94,0.94,null,0.92,0.92,null,0.91,0.91,null,0.9,0.9,null,0.89,0.89,null,0.88,0.88,null,0.86,0.86,null,0.83,0.83,null,0.82,0.82,null,0.79,0.79,null,0.76,0.76,null,0.75,0.75,null,0.73,0.73,null,0.71,0.71,null,0.69,0.69,null,0.67,0.67,null,0.66,0.66,null,0.64,0.64,null,0.6,0.6,null,0.57,0.57,null,0.54,0.54,null,0.52,0.52,null,0.5,0.5,null,0.47,0.47,null,0.45,0.45,null,0.42,0.42,null,0.37,0.37,null,0.36,0.36,null,0.34,0.34,null,0.28,0.28,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.19,0.19,null,0.18,0.18,null,0.17,0.17,null,0.15,0.15,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.09,0.09,null,0.08,0.08,null,0.07,0.07,null,0.0599999999999999,0.0599999999999999,null,0.05,0.05,null,0.03,0.03,null,0.02,0.02,null,0.01,0.01],"text":["tiempo: 99<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo:  6<br />cum: 1.00",null,"tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.99",null,"tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.98",null,"tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.97",null,"tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.96",null,"tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.95",null,"tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.94",null,"tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.92",null,"tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.91",null,"tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.90",null,"tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.89",null,"tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.88",null,"tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.86",null,"tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.83",null,"tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.82",null,"tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.79",null,"tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.76",null,"tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.75",null,"tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.73",null,"tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.71",null,"tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.69",null,"tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.67",null,"tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.66",null,"tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.64",null,"tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.60",null,"tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.57",null,"tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.54",null,"tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.52",null,"tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.50",null,"tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.47",null,"tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.45",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.37",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.28",null,"tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.26",null,"tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.24",null,"tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.22",null,"tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.19",null,"tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.18",null,"tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.17",null,"tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.15",null,"tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.14",null,"tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.12",null,"tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.10",null,"tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.09",null,"tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.08",null,"tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.07",null,"tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.06",null,"tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.05",null,"tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.03",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02",null,"tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99],"y":[1,0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01],"text":["tiempo:  6<br />cum: 1.00","tiempo: 11<br />cum: 0.99","tiempo: 14<br />cum: 0.98","tiempo: 20<br />cum: 0.97","tiempo: 21<br />cum: 0.96","tiempo: 23<br />cum: 0.95","tiempo: 25<br />cum: 0.94","tiempo: 26<br />cum: 0.92","tiempo: 28<br />cum: 0.91","tiempo: 30<br />cum: 0.90","tiempo: 32<br />cum: 0.89","tiempo: 34<br />cum: 0.88","tiempo: 36<br />cum: 0.86","tiempo: 37<br />cum: 0.83","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.79","tiempo: 40<br />cum: 0.76","tiempo: 41<br />cum: 0.75","tiempo: 42<br />cum: 0.73","tiempo: 43<br />cum: 0.71","tiempo: 44<br />cum: 0.69","tiempo: 45<br />cum: 0.67","tiempo: 47<br />cum: 0.66","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.60","tiempo: 50<br />cum: 0.57","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.50","tiempo: 56<br />cum: 0.47","tiempo: 57<br />cum: 0.45","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.37","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.28","tiempo: 64<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 67<br />cum: 0.19","tiempo: 68<br />cum: 0.18","tiempo: 69<br />cum: 0.17","tiempo: 72<br />cum: 0.15","tiempo: 73<br />cum: 0.14","tiempo: 74<br />cum: 0.12","tiempo: 75<br />cum: 0.10","tiempo: 78<br />cum: 0.09","tiempo: 79<br />cum: 0.08","tiempo: 80<br />cum: 0.07","tiempo: 81<br />cum: 0.06","tiempo: 82<br />cum: 0.05","tiempo: 90<br />cum: 0.03","tiempo: 94<br />cum: 0.02","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99,0],"y":[0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01,0,1],"text":["tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[94,null,0,20,null,20,26,null,26,30,null,30,32,null,32,34,null,34,37,null,37,38,null,38,39,null,39,41,null,41,43,null,43,44,null,44,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,65,null,65,66,null,66,69,null,69,73,null,73,74,null,74,75,null,75,79,null,79,80,null,80,82,null,82,90,null,90,94],"y":[0,null,1,1,null,0.98,0.98,null,0.96,0.96,null,0.94,0.94,null,0.92,0.92,null,0.9,0.9,null,0.88,0.88,null,0.82,0.82,null,0.8,0.8,null,0.76,0.76,null,0.72,0.72,null,0.7,0.7,null,0.68,0.68,null,0.64,0.64,null,0.62,0.62,null,0.58,0.58,null,0.54,0.54,null,0.52,0.52,null,0.46,0.46,null,0.44,0.44,null,0.42,0.42,null,0.38,0.38,null,0.36,0.36,null,0.34,0.34,null,0.3,0.3,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.2,0.2,null,0.18,0.18,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.08,0.08,null,0.04,0.04,null,0.02,0.02],"text":["tiempo: 94<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo: 20<br />cum: 1.00",null,"tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.98",null,"tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.96",null,"tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.94",null,"tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.92",null,"tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.90",null,"tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.88",null,"tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.82",null,"tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.80",null,"tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.76",null,"tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.72",null,"tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.70",null,"tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.68",null,"tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.64",null,"tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.62",null,"tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.58",null,"tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.54",null,"tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.52",null,"tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.46",null,"tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.44",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.38",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.30",null,"tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.26",null,"tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.24",null,"tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.22",null,"tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.20",null,"tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.18",null,"tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.14",null,"tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.12",null,"tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.10",null,"tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.08",null,"tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.04",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94],"y":[1,0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02],"text":["tiempo: 20<br />cum: 1.00","tiempo: 26<br />cum: 0.98","tiempo: 30<br />cum: 0.96","tiempo: 32<br />cum: 0.94","tiempo: 34<br />cum: 0.92","tiempo: 37<br />cum: 0.90","tiempo: 38<br />cum: 0.88","tiempo: 39<br />cum: 0.82","tiempo: 41<br />cum: 0.80","tiempo: 43<br />cum: 0.76","tiempo: 44<br />cum: 0.72","tiempo: 47<br />cum: 0.70","tiempo: 48<br />cum: 0.68","tiempo: 49<br />cum: 0.64","tiempo: 50<br />cum: 0.62","tiempo: 51<br />cum: 0.58","tiempo: 52<br />cum: 0.54","tiempo: 54<br />cum: 0.52","tiempo: 56<br />cum: 0.46","tiempo: 57<br />cum: 0.44","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.38","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.30","tiempo: 65<br />cum: 0.26","tiempo: 66<br />cum: 0.24","tiempo: 69<br />cum: 0.22","tiempo: 73<br />cum: 0.20","tiempo: 74<br />cum: 0.18","tiempo: 75<br />cum: 0.14","tiempo: 79<br />cum: 0.12","tiempo: 80<br />cum: 0.10","tiempo: 82<br />cum: 0.08","tiempo: 90<br />cum: 0.04","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94,0],"y":[0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02,0,1],"text":["tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"xaxis":{"domain":[0,0.48],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,103.95],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","hoverformat":".2f"},"xaxis2":{"domain":[0.52,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.7,98.7],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y2","hoverformat":".2f"},"yaxis2":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x2","hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","hoverformat":".2f"},"annotations":[],"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":0.48,"y0":0,"y1":1},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0.52,"x1":1,"y0":0,"y1":1}],"images":[],"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica<br><sup>Población - Muestra","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"attrs":{"2df8490c72c7":{"x":{},"y":{},"type":"scatter"},"2df843cc93f":{"x":{},"y":{},"colour":{},"shape":{}},"2df857376eaa":{"x":{},"y":{},"type":"scatter"},"2df826586023":{"x":{},"y":{},"colour":{},"shape":{}}},"source":"A","config":{"doubleClick":"reset","showSendToCloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Si observamos a detalle las gráficas, podemos darnos cuenta que guardan una pequeña diferencia. Los saltos entre ellas se dan cuando dentro de la muestra tenemos un espacio entre los dos datos.</p>
+</div>
+<div id="media-de-la-función-de-superviviencia" class="section level3" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Media de la función de superviviencia</h3>
+<p>Para obtener la media de la función de supervivencia empírica para la muestra utilizamos el mismo procedimiento que seguimos cuando calculamos la de la población.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>media_sup_mues <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>temp_sup_mues <span class="ot">&lt;-</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    sup_mues <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(tiempo)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">3</span>,<span class="fu">length</span>(temp_sup_mues<span class="sc">$</span>tiempo),<span class="dv">2</span>)) {</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="sc">==</span> <span class="fu">length</span>(temp_sup_mues<span class="sc">$</span>tiempo)) {</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        media_sup_mues <span class="ot">&lt;-</span> media_sup_mues <span class="sc">+</span> </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">as.numeric</span>(temp_sup_mues[i,<span class="dv">1</span>])<span class="sc">*</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                     (<span class="fu">as.numeric</span>(temp_sup_mues[i,<span class="dv">4</span>]))</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        media_sup_mues <span class="ot">&lt;-</span> media_sup_mues <span class="sc">+</span> </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">as.numeric</span>(temp_sup_mues[i,<span class="dv">1</span>])<span class="sc">*</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                     (<span class="fu">as.numeric</span>(temp_sup_mues[i,<span class="dv">4</span>]) <span class="sc">-</span> </span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">as.numeric</span>(temp_sup_mues[i<span class="sc">+</span><span class="dv">2</span>,<span class="dv">4</span>]))</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>}  </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(temp_sup_mues)</span></code></pre></div>
+<p>De esta manera, la media obtenida directamente de nuestra función de supervivencia para la muestra es de <strong>55.06</strong>.</p>
+<p>Comparando nuestros resultados de la media real de la población vs la media de la población mediante la función de supervivencia empírica vs la media de la muestra mediante la función de supervivencia empírica, obtenemos los siguientes resultados:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>medias_sup_comp <span class="ot">&lt;-</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(medias_todo_pob, media_sup, media_sup_mues) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dif =</span> <span class="fu">abs</span>(medias_todo_pob<span class="sc">-</span>media_sup_mues))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>medias_sup_comp <span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+medias_todo_pob
+</th>
+<th style="text-align:right;">
+media_sup
+</th>
+<th style="text-align:right;">
+media_sup_mues
+</th>
+<th style="text-align:right;">
+dif
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+p=0
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+55.06
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.25
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+55.06
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.50
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+55.06
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.75
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+55.06
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="conclusión" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Conclusión</h1>
+<p>A continuación veremos la comparación entre nuestros dos estimadores:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">list</span>(medias_com_comp, medias_sup_comp),</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">table.attr =</span> <span class="st">&quot;style=&#39;width:100px&#39;&quot;</span>)</span></code></pre></div>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table style="width:100px">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+medias_com_pob
+</th>
+<th style="text-align:right;">
+medias_com_mues
+</th>
+<th style="text-align:right;">
+dif
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+p=0
+</td>
+<td style="text-align:right;">
+52.66000
+</td>
+<td style="text-align:right;">
+55.06000
+</td>
+<td style="text-align:right;">
+2.400000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.25
+</td>
+<td style="text-align:right;">
+51.54321
+</td>
+<td style="text-align:right;">
+54.10526
+</td>
+<td style="text-align:right;">
+2.562053
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.50
+</td>
+<td style="text-align:right;">
+52.59649
+</td>
+<td style="text-align:right;">
+54.88000
+</td>
+<td style="text-align:right;">
+2.283509
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.75
+</td>
+<td style="text-align:right;">
+50.61538
+</td>
+<td style="text-align:right;">
+54.12500
+</td>
+<td style="text-align:right;">
+3.509615
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table style="width:100px">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+medias_todo_pob
+</th>
+<th style="text-align:right;">
+media_sup
+</th>
+<th style="text-align:right;">
+media_sup_mues
+</th>
+<th style="text-align:right;">
+dif
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+p=0
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+55.06
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.25
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+55.06
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.50
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+55.06
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+p=.75
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+52.66
+</td>
+<td style="text-align:right;">
+55.06
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
     </section>
   </div>

@@ -389,6 +389,8 @@ medias_todo_pob %>%
     kable()
 ```
 
+Lo cual tiene completo sentido que no cambie porque no estamos tomando en cuenta a aquellos que dejaron de contestar.
+
 ### Función de supervivencia empírica
 
 ```{r}
@@ -431,10 +433,60 @@ sup_plot <-
                            seq(0,max(pacientes_pob$tiempo)+5,5)) +
     scale_y_continuous(breaks = seq(0,1,.1))
 
-ggplotly(sup_plot,tooltip = c("tiempo", "cum"), width = 800,
-         dynamicTicks = FALSE)
+sup_plot_ply <-
+    ggplotly(sup_plot,tooltip = c("tiempo", "cum"), 
+             width = 800, dynamicTicks = FALSE) %>%
+    layout(title = 
+               list(text = paste0(
+                   "Función de supervivencia empírica",
+                   "<br>",
+                   "<sup>",
+                   "Población")))
+sup_plot_ply
 ```
 
+En los puntos azules podemos observar aquellos que se encontraron en nuestros datos por lo que representan la parte cerrada del intervalo. Los puntos rojos fueron generados para poder generar la gráfica de la función empírica de manera correcta.
+
+### Media de la función de supervivencia
+
+Recordemos que para obtener la media de la función de supervivencia utilizamos lo siguiente:
+
+$$
+\begin{split}
+\mu 
+    & = \sum_{i=1}^N \nu_{i} \cdot [F(\nu_{i}) -
+        \lim_{y \rightarrow \nu_{i}^-} F(y)]\\
+    & = \sum_{i=1}^N \nu_{i} \cdot [(1 - S(\nu_{i})) -
+        \lim_{y \rightarrow \nu_{i}^-} (1-S(y))]\\
+    & = \sum_{i=1}^N \nu_{i} \cdot [
+        \lim_{y \rightarrow \nu_{i}^-} S(y)
+        - S(\nu_{i}))]\\
+\end{split}
+$$
+
+```{r}
+media_sup <- 0
+temp_sup <-
+    sup %>%
+    arrange(tiempo)
+
+for (i in seq(3,length(temp_sup$tiempo),2)) {
+    if (i == length(temp_sup$tiempo)) {
+        media_sup <- media_sup + 
+                     as.numeric(temp_sup[i,1])*
+                     (as.numeric(temp_sup[i,4]))
+    } else {
+        media_sup <- media_sup + 
+                     as.numeric(temp_sup[i,1])*
+                     (as.numeric(temp_sup[i,4]) - 
+                     as.numeric(temp_sup[i+2,4]))
+    }
+}  
+
+rm(temp_sup)
+```
+
+De esta manera, la media obtenida directamente de nuestra función de supervivencia es de **`r media_sup`**.
 
 ## Muestra
 
@@ -452,14 +504,163 @@ head(pacientes_mues,20) %>%
     kable()
 ```
 
+A continuación vamos a poner a prueba nuestros estimadores con nuestra muestra respecto a la población.
 
+### Tiempo de sobrevida completo
 
+Para este caso solamente vamos a tomar en cuenta a aquellos de los que se tiene el registro completo, por lo que vamos a utilizar nuestro estimador con estos registros:
 
+```{r}
+medias_com_mues <- NULL
+for (i in 3:6) {
+    temp <- 
+        pacientes_mues %>%
+        select(persona,tiempo, i) %>%
+        filter_at(3, all_vars(.==0)) %>%
+        select(2) %>%
+        as.vector() %>%
+        unlist() %>%
+        mean()
+    medias_com_mues <-append(medias_com_mues, temp)
+}
+rm(temp,i)
+names(medias_com_mues) <- c("p=0","p=.25","p=.50", "p=.75")
+```
 
+Si comparamos los resultados obtenidos entonces nuestros resultados son los siguientes:
 
+```{r}
+medias_com_comp <-
+    data.frame(medias_com_pob, medias_com_mues) %>%
+    mutate(dif = abs(medias_com_pob-medias_com_mues))
 
+medias_com_comp %>%
+    kable()
+```
 
+Notemos que mientras una mayor cantidad de cuidadores dejan de contestar entonces nuestro estimador presenta un mayor error.
 
+### Función de supervivencia
+
+Veamos cómo se ve nuestra función de supervivencia empírica para la muestra.
+
+```{r}
+sup_mues <- 
+    pacientes_mues %>%
+    select(tiempo) %>%
+    arrange(tiempo) %>%
+    group_by(tiempo) %>%
+    tally() %>%
+    rename(count = n) %>%
+    mutate(p = count/n)
+
+sup_mues <- 
+    sup_mues %>%
+    mutate(cum = 1 - cumsum(p), 
+           type = rep("cerrado",length(sup_mues$tiempo)),
+           match = c(1:(length(sup_mues$tiempo)-1), -1))
+
+sup_mues <- 
+    sup_mues %>% 
+    add_row(tiempo = sup_mues$tiempo,
+            cum = c(1,sup_mues$cum[1:length(sup_mues$cum)-1]),
+            type = rep("abierto",length(sup_mues$tiempo)),
+            match = 0:(length(sup_mues$tiempo)-1)) %>%
+    add_row(tiempo=0,cum=1, type="cerrado", match=0) %>%
+    arrange(desc(type))
+
+sup_plot_mues <-    
+    sup_mues %>%
+    ggplot(aes(x=tiempo, y=cum)) +
+    geom_line(aes(group = match), size = .5) +
+    geom_point(aes(color=type, pch = type), size = 1, 
+               pch = c(rep(19,ceiling(nrow(sup_mues)/2)),
+                       rep(1,floor(nrow(sup_mues)/2)))) +
+    labs(title = "Función de supervivencia empírica",
+         subtitle = "Muestra",
+         x = "Tiempo en días",
+         y = "Probabilidad de sobrevivir") +
+    theme(legend.position = "none") +
+    scale_x_continuous(breaks = 
+                           seq(0,max(pacientes_mues$tiempo)+5,5)) +
+    scale_y_continuous(breaks = seq(0,1,.1))
+
+sup_plot_mues_ply <- 
+    ggplotly(sup_plot_mues,tooltip = c("tiempo", "cum"), 
+             width = 800, dynamicTicks = FALSE) %>%
+    layout(title = 
+               list(text = paste0(
+                   "Función de supervivencia empírica",
+                   "<br>",
+                   "<sup>",
+                   "Muestra")))
+
+sup_plot_mues_ply
+```
+
+Veamos la comparación de ambas gráficas para notar sus diferencias entre la muestra y la población.
+
+```{r}
+subplot(sup_plot_ply, sup_plot_mues_ply, nrows = 1) %>%
+    layout(title = 
+               list(text = paste0(
+                   "Función de supervivencia empírica",
+                   "<br>",
+                   "<sup>",
+                   "Población - Muestra")))
+```
+
+Si observamos a detalle las gráficas, podemos darnos cuenta que guardan una pequeña diferencia. Los saltos entre ellas se dan cuando dentro de la muestra tenemos un espacio entre los dos datos.
+
+### Media de la función de superviviencia
+
+Para obtener la media de la función de supervivencia empírica para la muestra utilizamos el mismo procedimiento que seguimos cuando calculamos la de la población.
+
+```{r}
+media_sup_mues <- 0
+temp_sup_mues <-
+    sup_mues %>%
+    arrange(tiempo)
+
+for (i in seq(3,length(temp_sup_mues$tiempo),2)) {
+    if (i == length(temp_sup_mues$tiempo)) {
+        media_sup_mues <- media_sup_mues + 
+                     as.numeric(temp_sup_mues[i,1])*
+                     (as.numeric(temp_sup_mues[i,4]))
+    } else {
+        media_sup_mues <- media_sup_mues + 
+                     as.numeric(temp_sup_mues[i,1])*
+                     (as.numeric(temp_sup_mues[i,4]) - 
+                     as.numeric(temp_sup_mues[i+2,4]))
+    }
+}  
+
+rm(temp_sup_mues)
+```
+
+De esta manera, la media obtenida directamente de nuestra función de supervivencia para la muestra es de **`r media_sup_mues`**.
+
+Comparando nuestros resultados de la media real de la población vs la media de la población mediante la función de supervivencia empírica vs la media de la muestra mediante la función de supervivencia empírica, obtenemos los siguientes resultados:
+
+```{r}
+medias_sup_comp <-
+    data.frame(medias_todo_pob, media_sup, media_sup_mues) %>%
+    mutate(dif = abs(medias_todo_pob-media_sup_mues))
+
+medias_sup_comp %>%
+    kable()
+```
+
+# Conclusión
+
+A continuación veremos la comparación entre nuestros dos estimadores:
+
+```{r}
+kable(list(medias_com_comp, medias_sup_comp),
+      table.attr = "style='width:400px'")
+```
+
+De esta manera, podemos concluir que estimar la media mediante la función de supervivencia empírica es un mejor estimador porque presenta un menor error.
 
 
 
