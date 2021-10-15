@@ -392,37 +392,42 @@ medias_todo_pob %>%
 ### Función de supervivencia empírica
 
 ```{r}
-sup <- pacientes_pob %>%
-        select(tiempo) %>%
-        arrange(tiempo) %>%
-        group_by(tiempo) %>%
-        tally() %>%
-        mutate(p = n/N) %>%
-        mutate(cum = 1 - cumsum(p), 
-               type = rep("cerrado",N),
-               match = c(1:(N-1), -1))
+sup <- 
+    pacientes_pob %>%
+    select(tiempo) %>%
+    arrange(tiempo) %>%
+    group_by(tiempo) %>%
+    tally() %>%
+    mutate(p = n/N)
+
+sup <- 
+    sup %>%
+    mutate(cum = 1 - cumsum(p), 
+               type = rep("cerrado",length(sup$tiempo)),
+               match = c(1:(length(sup$tiempo)-1), -1))
 
 sup <- 
     sup %>% 
     add_row(tiempo = sup$tiempo,
             cum = c(1,sup$cum[1:length(sup$cum)-1]),
-            type = rep("abierto",N),
-            match = 0:(N-1)) %>%
+            type = rep("abierto",length(sup$tiempo)),
+            match = 0:(length(sup$tiempo)-1)) %>%
     add_row(tiempo=0,cum=1, type="cerrado", match=0) %>%
     arrange(desc(type))
 
 sup %>%
     ggplot(aes(x=tiempo, y=cum)) +
-    geom_line(aes(group = match), size = .5) +
-    geom_point(aes(color=type, pch = type), size=4, 
-               pch = c(rep(19,N+1),rep(1,N))) +
+    geom_line(aes(group = match)) +
+    geom_point(aes(color=type, pch = type), 
+               pch = c(rep(19,ceiling(nrow(sup)/2)),
+                       rep(1,floor(nrow(sup)/2)))) +
     labs(title = "Función de supervivencia empírica",
          subtitle = "Población",
          x = "Tiempo en días",
          y = "Probabilidad de sobrevivir") +
     theme(legend.position = "none") +
     scale_x_continuous(breaks = 
-                           seq(0,max(pacientes_mues$tiempo),5)) +
+                           seq(0,max(pacientes_pob$tiempo)+5,5)) +
     scale_y_continuous(breaks = seq(0,1,.1))
 
 ggplotly(tooltip = c("tiempo", "cum"))
