@@ -494,428 +494,434 @@ F_{n}(t) = \frac{1}{n}\sum_{i=1}^{n} \mathbb{I}_{[\tau_{i},\infty)}(t)
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(persona,tiempo,p_0,p_25,p_50,p_75)</span></code></pre></div>
 <p>Veamos como se ven los primeros 20 registro de nuestra tabla:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pacientes_pob, <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Persona&quot;</span>,<span class="st">&quot;Tiempo&quot;</span>,<span class="st">&quot;p=0&quot;</span>,<span class="st">&quot;p=.25&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;p=.50&quot;</span>,<span class="st">&quot;p=.75&quot;</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">align =</span> <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;Población&quot;</span>)</span></code></pre></div>
 <table>
+<caption>
+Población
+</caption>
 <thead>
 <tr>
-<th style="text-align:right;">
-persona
+<th style="text-align:center;">
+Persona
 </th>
-<th style="text-align:right;">
-tiempo
+<th style="text-align:center;">
+Tiempo
 </th>
-<th style="text-align:right;">
-p_0
+<th style="text-align:center;">
+p=0
 </th>
-<th style="text-align:right;">
-p_25
+<th style="text-align:center;">
+p=.25
 </th>
-<th style="text-align:right;">
-p_50
+<th style="text-align:center;">
+p=.50
 </th>
-<th style="text-align:right;">
-p_75
+<th style="text-align:center;">
+p=.75
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 38
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 54
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 3
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 34
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 4
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 82
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 5
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 57
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 6
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 34
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 7
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 60
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 8
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 65
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 9
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 62
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 10
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 44
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 11
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 81
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 12
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 58
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 13
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 38
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 14
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 6
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 15
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 73
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 16
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 50
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 17
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 50
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 18
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 69
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 19
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 67
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 20
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 62
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
@@ -946,14 +952,19 @@ p_75
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(medias_com_pob) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;p=0&quot;</span>,<span class="st">&quot;p=.25&quot;</span>,<span class="st">&quot;p=.50&quot;</span>, <span class="st">&quot;p=.75&quot;</span>)</span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>medias_com_pob <span class="sc">%&gt;%</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="st">&quot;Media&quot;</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">align =</span> <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;Media población registro completo&quot;</span>)</span></code></pre></div>
 <table>
+<caption>
+Media población registro completo
+</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:right;">
-x
+<th style="text-align:center;">
+Media
 </th>
 </tr>
 </thead>
@@ -962,7 +973,7 @@ x
 <td style="text-align:left;">
 p=0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66000
 </td>
 </tr>
@@ -970,7 +981,7 @@ p=0
 <td style="text-align:left;">
 p=.25
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 51.54321
 </td>
 </tr>
@@ -978,7 +989,7 @@ p=.25
 <td style="text-align:left;">
 p=.50
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.59649
 </td>
 </tr>
@@ -986,7 +997,7 @@ p=.50
 <td style="text-align:left;">
 p=.75
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 50.61538
 </td>
 </tr>
@@ -1006,14 +1017,19 @@ p=.75
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(medias_todo_pob) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;p=0&quot;</span>,<span class="st">&quot;p=.25&quot;</span>,<span class="st">&quot;p=.50&quot;</span>, <span class="st">&quot;p=.75&quot;</span>)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>medias_todo_pob <span class="sc">%&gt;%</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="st">&quot;Media&quot;</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">align =</span> <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;Media población cualquier registro&quot;</span>)</span></code></pre></div>
 <table>
+<caption>
+Media población cualquier registro
+</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:right;">
-x
+<th style="text-align:center;">
+Media
 </th>
 </tr>
 </thead>
@@ -1022,7 +1038,7 @@ x
 <td style="text-align:left;">
 p=0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
 </tr>
@@ -1030,7 +1046,7 @@ p=0
 <td style="text-align:left;">
 p=.25
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
 </tr>
@@ -1038,7 +1054,7 @@ p=.25
 <td style="text-align:left;">
 p=.50
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
 </tr>
@@ -1046,7 +1062,7 @@ p=.50
 <td style="text-align:left;">
 p=.75
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
 </tr>
@@ -1107,7 +1123,7 @@ p=.75
 <span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Población&quot;</span>)))</span>
 <span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>sup_plot_ply</span></code></pre></div>
 <div id="htmlwidget-de3276d0e432f67cb358" style="width:800px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-de3276d0e432f67cb358">{"x":{"data":[{"x":[99,null,0,6,null,6,11,null,11,14,null,14,20,null,20,21,null,21,23,null,23,25,null,25,26,null,26,28,null,28,30,null,30,32,null,32,34,null,34,36,null,36,37,null,37,38,null,38,39,null,39,40,null,40,41,null,41,42,null,42,43,null,43,44,null,44,45,null,45,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,64,null,64,65,null,65,66,null,66,67,null,67,68,null,68,69,null,69,72,null,72,73,null,73,74,null,74,75,null,75,78,null,78,79,null,79,80,null,80,81,null,81,82,null,82,90,null,90,94,null,94,99],"y":[0,null,1,1,null,0.99,0.99,null,0.98,0.98,null,0.97,0.97,null,0.96,0.96,null,0.95,0.95,null,0.94,0.94,null,0.92,0.92,null,0.91,0.91,null,0.9,0.9,null,0.89,0.89,null,0.88,0.88,null,0.86,0.86,null,0.83,0.83,null,0.82,0.82,null,0.79,0.79,null,0.76,0.76,null,0.75,0.75,null,0.73,0.73,null,0.71,0.71,null,0.69,0.69,null,0.67,0.67,null,0.66,0.66,null,0.64,0.64,null,0.6,0.6,null,0.57,0.57,null,0.54,0.54,null,0.52,0.52,null,0.5,0.5,null,0.47,0.47,null,0.45,0.45,null,0.42,0.42,null,0.37,0.37,null,0.36,0.36,null,0.34,0.34,null,0.28,0.28,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.19,0.19,null,0.18,0.18,null,0.17,0.17,null,0.15,0.15,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.09,0.09,null,0.08,0.08,null,0.07,0.07,null,0.0599999999999999,0.0599999999999999,null,0.05,0.05,null,0.03,0.03,null,0.02,0.02,null,0.01,0.01],"text":["tiempo: 99<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo:  6<br />cum: 1.00",null,"tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.99",null,"tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.98",null,"tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.97",null,"tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.96",null,"tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.95",null,"tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.94",null,"tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.92",null,"tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.91",null,"tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.90",null,"tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.89",null,"tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.88",null,"tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.86",null,"tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.83",null,"tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.82",null,"tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.79",null,"tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.76",null,"tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.75",null,"tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.73",null,"tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.71",null,"tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.69",null,"tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.67",null,"tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.66",null,"tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.64",null,"tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.60",null,"tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.57",null,"tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.54",null,"tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.52",null,"tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.50",null,"tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.47",null,"tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.45",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.37",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.28",null,"tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.26",null,"tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.24",null,"tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.22",null,"tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.19",null,"tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.18",null,"tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.17",null,"tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.15",null,"tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.14",null,"tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.12",null,"tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.10",null,"tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.09",null,"tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.08",null,"tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.07",null,"tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.06",null,"tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.05",null,"tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.03",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02",null,"tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99],"y":[1,0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01],"text":["tiempo:  6<br />cum: 1.00","tiempo: 11<br />cum: 0.99","tiempo: 14<br />cum: 0.98","tiempo: 20<br />cum: 0.97","tiempo: 21<br />cum: 0.96","tiempo: 23<br />cum: 0.95","tiempo: 25<br />cum: 0.94","tiempo: 26<br />cum: 0.92","tiempo: 28<br />cum: 0.91","tiempo: 30<br />cum: 0.90","tiempo: 32<br />cum: 0.89","tiempo: 34<br />cum: 0.88","tiempo: 36<br />cum: 0.86","tiempo: 37<br />cum: 0.83","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.79","tiempo: 40<br />cum: 0.76","tiempo: 41<br />cum: 0.75","tiempo: 42<br />cum: 0.73","tiempo: 43<br />cum: 0.71","tiempo: 44<br />cum: 0.69","tiempo: 45<br />cum: 0.67","tiempo: 47<br />cum: 0.66","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.60","tiempo: 50<br />cum: 0.57","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.50","tiempo: 56<br />cum: 0.47","tiempo: 57<br />cum: 0.45","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.37","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.28","tiempo: 64<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 67<br />cum: 0.19","tiempo: 68<br />cum: 0.18","tiempo: 69<br />cum: 0.17","tiempo: 72<br />cum: 0.15","tiempo: 73<br />cum: 0.14","tiempo: 74<br />cum: 0.12","tiempo: 75<br />cum: 0.10","tiempo: 78<br />cum: 0.09","tiempo: 79<br />cum: 0.08","tiempo: 80<br />cum: 0.07","tiempo: 81<br />cum: 0.06","tiempo: 82<br />cum: 0.05","tiempo: 90<br />cum: 0.03","tiempo: 94<br />cum: 0.02","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99,0],"y":[0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01,0,1],"text":["tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica<br><sup>Población","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,103.95],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Tiempo en días","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Probabilidad de sobrevivir","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"2df8490c72c7":{"x":{},"y":{},"type":"scatter"},"2df843cc93f":{"x":{},"y":{},"colour":{},"shape":{}}},"cur_data":"2df8490c72c7","visdat":{"2df8490c72c7":["function (y) ","x"],"2df843cc93f":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-de3276d0e432f67cb358">{"x":{"data":[{"x":[99,null,0,6,null,6,11,null,11,14,null,14,20,null,20,21,null,21,23,null,23,25,null,25,26,null,26,28,null,28,30,null,30,32,null,32,34,null,34,36,null,36,37,null,37,38,null,38,39,null,39,40,null,40,41,null,41,42,null,42,43,null,43,44,null,44,45,null,45,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,64,null,64,65,null,65,66,null,66,67,null,67,68,null,68,69,null,69,72,null,72,73,null,73,74,null,74,75,null,75,78,null,78,79,null,79,80,null,80,81,null,81,82,null,82,90,null,90,94,null,94,99],"y":[0,null,1,1,null,0.99,0.99,null,0.98,0.98,null,0.97,0.97,null,0.96,0.96,null,0.95,0.95,null,0.94,0.94,null,0.92,0.92,null,0.91,0.91,null,0.9,0.9,null,0.89,0.89,null,0.88,0.88,null,0.86,0.86,null,0.83,0.83,null,0.82,0.82,null,0.79,0.79,null,0.76,0.76,null,0.75,0.75,null,0.73,0.73,null,0.71,0.71,null,0.69,0.69,null,0.67,0.67,null,0.66,0.66,null,0.64,0.64,null,0.6,0.6,null,0.57,0.57,null,0.54,0.54,null,0.52,0.52,null,0.5,0.5,null,0.47,0.47,null,0.45,0.45,null,0.42,0.42,null,0.37,0.37,null,0.36,0.36,null,0.34,0.34,null,0.28,0.28,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.19,0.19,null,0.18,0.18,null,0.17,0.17,null,0.15,0.15,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.09,0.09,null,0.08,0.08,null,0.07,0.07,null,0.0599999999999999,0.0599999999999999,null,0.05,0.05,null,0.03,0.03,null,0.02,0.02,null,0.01,0.01],"text":["tiempo: 99<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo:  6<br />cum: 1.00",null,"tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.99",null,"tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.98",null,"tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.97",null,"tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.96",null,"tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.95",null,"tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.94",null,"tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.92",null,"tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.91",null,"tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.90",null,"tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.89",null,"tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.88",null,"tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.86",null,"tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.83",null,"tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.82",null,"tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.79",null,"tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.76",null,"tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.75",null,"tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.73",null,"tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.71",null,"tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.69",null,"tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.67",null,"tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.66",null,"tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.64",null,"tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.60",null,"tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.57",null,"tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.54",null,"tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.52",null,"tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.50",null,"tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.47",null,"tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.45",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.37",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.28",null,"tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.26",null,"tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.24",null,"tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.22",null,"tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.19",null,"tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.18",null,"tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.17",null,"tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.15",null,"tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.14",null,"tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.12",null,"tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.10",null,"tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.09",null,"tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.08",null,"tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.07",null,"tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.06",null,"tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.05",null,"tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.03",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02",null,"tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99],"y":[1,0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01],"text":["tiempo:  6<br />cum: 1.00","tiempo: 11<br />cum: 0.99","tiempo: 14<br />cum: 0.98","tiempo: 20<br />cum: 0.97","tiempo: 21<br />cum: 0.96","tiempo: 23<br />cum: 0.95","tiempo: 25<br />cum: 0.94","tiempo: 26<br />cum: 0.92","tiempo: 28<br />cum: 0.91","tiempo: 30<br />cum: 0.90","tiempo: 32<br />cum: 0.89","tiempo: 34<br />cum: 0.88","tiempo: 36<br />cum: 0.86","tiempo: 37<br />cum: 0.83","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.79","tiempo: 40<br />cum: 0.76","tiempo: 41<br />cum: 0.75","tiempo: 42<br />cum: 0.73","tiempo: 43<br />cum: 0.71","tiempo: 44<br />cum: 0.69","tiempo: 45<br />cum: 0.67","tiempo: 47<br />cum: 0.66","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.60","tiempo: 50<br />cum: 0.57","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.50","tiempo: 56<br />cum: 0.47","tiempo: 57<br />cum: 0.45","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.37","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.28","tiempo: 64<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 67<br />cum: 0.19","tiempo: 68<br />cum: 0.18","tiempo: 69<br />cum: 0.17","tiempo: 72<br />cum: 0.15","tiempo: 73<br />cum: 0.14","tiempo: 74<br />cum: 0.12","tiempo: 75<br />cum: 0.10","tiempo: 78<br />cum: 0.09","tiempo: 79<br />cum: 0.08","tiempo: 80<br />cum: 0.07","tiempo: 81<br />cum: 0.06","tiempo: 82<br />cum: 0.05","tiempo: 90<br />cum: 0.03","tiempo: 94<br />cum: 0.02","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99,0],"y":[0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01,0,1],"text":["tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica<br><sup>Población","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,103.95],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Tiempo en días","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Probabilidad de sobrevivir","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"10c26b87bc":{"x":{},"y":{},"type":"scatter"},"10c467f382d":{"x":{},"y":{},"colour":{},"shape":{}}},"cur_data":"10c26b87bc","visdat":{"10c26b87bc":["function (y) ","x"],"10c467f382d":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <p>En los puntos azules podemos observar aquellos que se encontraron en nuestros datos por lo que representan la parte cerrada del intervalo. Los puntos rojos fueron generados para poder generar la gráfica de la función empírica de manera correcta.</p>
 </div>
 <div id="media-de-la-función-de-supervivencia-1" class="section level3" number="3.2.3">
@@ -1154,428 +1170,434 @@ p=.75
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pacientes_mues <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(pacientes_pob,n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Veamos los primeros <span class="math inline">\(20\)</span> registros:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pacientes_mues,<span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Persona&quot;</span>,<span class="st">&quot;Tiempo&quot;</span>,<span class="st">&quot;p=0&quot;</span>,<span class="st">&quot;p=.25&quot;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;p=.50&quot;</span>,<span class="st">&quot;p=.75&quot;</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">align =</span> <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;Muestra&quot;</span>)</span></code></pre></div>
 <table>
+<caption>
+Muestra
+</caption>
 <thead>
 <tr>
-<th style="text-align:right;">
-persona
+<th style="text-align:center;">
+Persona
 </th>
-<th style="text-align:right;">
-tiempo
+<th style="text-align:center;">
+Tiempo
 </th>
-<th style="text-align:right;">
-p_0
+<th style="text-align:center;">
+p=0
 </th>
-<th style="text-align:right;">
-p_25
+<th style="text-align:center;">
+p=.25
 </th>
-<th style="text-align:right;">
-p_50
+<th style="text-align:center;">
+p=.50
 </th>
-<th style="text-align:right;">
-p_75
+<th style="text-align:center;">
+p=.75
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 95
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 82
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 51
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 58
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 81
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 39
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 99
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 26
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 38
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 89
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 58
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 73
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 63
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 21
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 69
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 93
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 74
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 79
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 64
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 51
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 88
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 44
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 78
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 51
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 71
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 60
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 59
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 62
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 30
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 59
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 58
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 30
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 15
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 73
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 90
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 56
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:center;">
 6
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 34
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
@@ -1605,20 +1627,27 @@ p_75
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dif =</span> <span class="fu">abs</span>(medias_com_pob<span class="sc">-</span>medias_com_mues))</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>medias_com_comp <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Media población&quot;</span>, <span class="st">&quot;Media muestra&quot;</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Diferencia&quot;</span>),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">align =</span> <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;Comparación medias registro completo&quot;</span>)</span></code></pre></div>
 <table>
+<caption>
+Comparación medias registro completo
+</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:right;">
-medias_com_pob
+<th style="text-align:center;">
+Media población
 </th>
-<th style="text-align:right;">
-medias_com_mues
+<th style="text-align:center;">
+Media muestra
 </th>
-<th style="text-align:right;">
-dif
+<th style="text-align:center;">
+Diferencia
 </th>
 </tr>
 </thead>
@@ -1627,56 +1656,56 @@ dif
 <td style="text-align:left;">
 p=0
 </td>
-<td style="text-align:right;">
-52.66000
+<td style="text-align:center;">
+52.66
 </td>
-<td style="text-align:right;">
-55.06000
+<td style="text-align:center;">
+55.06
 </td>
-<td style="text-align:right;">
-2.400000
+<td style="text-align:center;">
+2.40
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 p=.25
 </td>
-<td style="text-align:right;">
-51.54321
+<td style="text-align:center;">
+51.54
 </td>
-<td style="text-align:right;">
-54.10526
+<td style="text-align:center;">
+54.11
 </td>
-<td style="text-align:right;">
-2.562053
+<td style="text-align:center;">
+2.56
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 p=.50
 </td>
-<td style="text-align:right;">
-52.59649
+<td style="text-align:center;">
+52.60
 </td>
-<td style="text-align:right;">
-54.88000
+<td style="text-align:center;">
+54.88
 </td>
-<td style="text-align:right;">
-2.283509
+<td style="text-align:center;">
+2.28
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 p=.75
 </td>
-<td style="text-align:right;">
-50.61538
+<td style="text-align:center;">
+50.62
 </td>
-<td style="text-align:right;">
-54.12500
+<td style="text-align:center;">
+54.12
 </td>
-<td style="text-align:right;">
-3.509615
+<td style="text-align:center;">
+3.51
 </td>
 </tr>
 </tbody>
@@ -1738,7 +1767,7 @@ p=.75
 <span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>sup_plot_mues_ply</span></code></pre></div>
 <div id="htmlwidget-c894144e72fb64bfd74d" style="width:800px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c894144e72fb64bfd74d">{"x":{"data":[{"x":[94,null,0,20,null,20,26,null,26,30,null,30,32,null,32,34,null,34,37,null,37,38,null,38,39,null,39,41,null,41,43,null,43,44,null,44,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,65,null,65,66,null,66,69,null,69,73,null,73,74,null,74,75,null,75,79,null,79,80,null,80,82,null,82,90,null,90,94],"y":[0,null,1,1,null,0.98,0.98,null,0.96,0.96,null,0.94,0.94,null,0.92,0.92,null,0.9,0.9,null,0.88,0.88,null,0.82,0.82,null,0.8,0.8,null,0.76,0.76,null,0.72,0.72,null,0.7,0.7,null,0.68,0.68,null,0.64,0.64,null,0.62,0.62,null,0.58,0.58,null,0.54,0.54,null,0.52,0.52,null,0.46,0.46,null,0.44,0.44,null,0.42,0.42,null,0.38,0.38,null,0.36,0.36,null,0.34,0.34,null,0.3,0.3,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.2,0.2,null,0.18,0.18,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.08,0.08,null,0.04,0.04,null,0.02,0.02],"text":["tiempo: 94<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo: 20<br />cum: 1.00",null,"tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.98",null,"tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.96",null,"tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.94",null,"tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.92",null,"tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.90",null,"tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.88",null,"tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.82",null,"tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.80",null,"tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.76",null,"tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.72",null,"tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.70",null,"tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.68",null,"tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.64",null,"tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.62",null,"tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.58",null,"tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.54",null,"tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.52",null,"tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.46",null,"tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.44",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.38",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.30",null,"tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.26",null,"tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.24",null,"tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.22",null,"tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.20",null,"tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.18",null,"tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.14",null,"tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.12",null,"tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.10",null,"tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.08",null,"tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.04",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94],"y":[1,0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02],"text":["tiempo: 20<br />cum: 1.00","tiempo: 26<br />cum: 0.98","tiempo: 30<br />cum: 0.96","tiempo: 32<br />cum: 0.94","tiempo: 34<br />cum: 0.92","tiempo: 37<br />cum: 0.90","tiempo: 38<br />cum: 0.88","tiempo: 39<br />cum: 0.82","tiempo: 41<br />cum: 0.80","tiempo: 43<br />cum: 0.76","tiempo: 44<br />cum: 0.72","tiempo: 47<br />cum: 0.70","tiempo: 48<br />cum: 0.68","tiempo: 49<br />cum: 0.64","tiempo: 50<br />cum: 0.62","tiempo: 51<br />cum: 0.58","tiempo: 52<br />cum: 0.54","tiempo: 54<br />cum: 0.52","tiempo: 56<br />cum: 0.46","tiempo: 57<br />cum: 0.44","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.38","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.30","tiempo: 65<br />cum: 0.26","tiempo: 66<br />cum: 0.24","tiempo: 69<br />cum: 0.22","tiempo: 73<br />cum: 0.20","tiempo: 74<br />cum: 0.18","tiempo: 75<br />cum: 0.14","tiempo: 79<br />cum: 0.12","tiempo: 80<br />cum: 0.10","tiempo: 82<br />cum: 0.08","tiempo: 90<br />cum: 0.04","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94,0],"y":[0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02,0,1],"text":["tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica<br><sup>Muestra","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.7,98.7],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Tiempo en días","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Probabilidad de sobrevivir","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"2df857376eaa":{"x":{},"y":{},"type":"scatter"},"2df826586023":{"x":{},"y":{},"colour":{},"shape":{}}},"cur_data":"2df857376eaa","visdat":{"2df857376eaa":["function (y) ","x"],"2df826586023":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-c894144e72fb64bfd74d">{"x":{"data":[{"x":[94,null,0,20,null,20,26,null,26,30,null,30,32,null,32,34,null,34,37,null,37,38,null,38,39,null,39,41,null,41,43,null,43,44,null,44,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,65,null,65,66,null,66,69,null,69,73,null,73,74,null,74,75,null,75,79,null,79,80,null,80,82,null,82,90,null,90,94],"y":[0,null,1,1,null,0.98,0.98,null,0.96,0.96,null,0.94,0.94,null,0.92,0.92,null,0.9,0.9,null,0.88,0.88,null,0.82,0.82,null,0.8,0.8,null,0.76,0.76,null,0.72,0.72,null,0.7,0.7,null,0.68,0.68,null,0.64,0.64,null,0.62,0.62,null,0.58,0.58,null,0.54,0.54,null,0.52,0.52,null,0.46,0.46,null,0.44,0.44,null,0.42,0.42,null,0.38,0.38,null,0.36,0.36,null,0.34,0.34,null,0.3,0.3,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.2,0.2,null,0.18,0.18,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.08,0.08,null,0.04,0.04,null,0.02,0.02],"text":["tiempo: 94<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo: 20<br />cum: 1.00",null,"tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.98",null,"tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.96",null,"tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.94",null,"tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.92",null,"tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.90",null,"tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.88",null,"tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.82",null,"tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.80",null,"tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.76",null,"tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.72",null,"tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.70",null,"tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.68",null,"tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.64",null,"tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.62",null,"tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.58",null,"tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.54",null,"tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.52",null,"tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.46",null,"tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.44",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.38",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.30",null,"tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.26",null,"tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.24",null,"tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.22",null,"tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.20",null,"tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.18",null,"tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.14",null,"tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.12",null,"tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.10",null,"tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.08",null,"tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.04",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94],"y":[1,0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02],"text":["tiempo: 20<br />cum: 1.00","tiempo: 26<br />cum: 0.98","tiempo: 30<br />cum: 0.96","tiempo: 32<br />cum: 0.94","tiempo: 34<br />cum: 0.92","tiempo: 37<br />cum: 0.90","tiempo: 38<br />cum: 0.88","tiempo: 39<br />cum: 0.82","tiempo: 41<br />cum: 0.80","tiempo: 43<br />cum: 0.76","tiempo: 44<br />cum: 0.72","tiempo: 47<br />cum: 0.70","tiempo: 48<br />cum: 0.68","tiempo: 49<br />cum: 0.64","tiempo: 50<br />cum: 0.62","tiempo: 51<br />cum: 0.58","tiempo: 52<br />cum: 0.54","tiempo: 54<br />cum: 0.52","tiempo: 56<br />cum: 0.46","tiempo: 57<br />cum: 0.44","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.38","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.30","tiempo: 65<br />cum: 0.26","tiempo: 66<br />cum: 0.24","tiempo: 69<br />cum: 0.22","tiempo: 73<br />cum: 0.20","tiempo: 74<br />cum: 0.18","tiempo: 75<br />cum: 0.14","tiempo: 79<br />cum: 0.12","tiempo: 80<br />cum: 0.10","tiempo: 82<br />cum: 0.08","tiempo: 90<br />cum: 0.04","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94,0],"y":[0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02,0,1],"text":["tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica<br><sup>Muestra","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.7,98.7],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Tiempo en días","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Probabilidad de sobrevivir","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"10c1fbb3a3d":{"x":{},"y":{},"type":"scatter"},"10c1c267ed":{"x":{},"y":{},"colour":{},"shape":{}}},"cur_data":"10c1fbb3a3d","visdat":{"10c1fbb3a3d":["function (y) ","x"],"10c1c267ed":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <p>Veamos la comparación de ambas gráficas para notar sus diferencias entre la muestra y la población.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subplot</span>(sup_plot_ply, sup_plot_mues_ply, <span class="at">nrows =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layout</span>(<span class="at">title =</span> </span>
@@ -1748,7 +1777,7 @@ p=.75
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;&lt;sup&gt;&quot;</span>,</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Población - Muestra&quot;</span>)))</span></code></pre></div>
 <div id="htmlwidget-467f3ada599dec390e71" style="width:800px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-467f3ada599dec390e71">{"x":{"data":[{"x":[99,null,0,6,null,6,11,null,11,14,null,14,20,null,20,21,null,21,23,null,23,25,null,25,26,null,26,28,null,28,30,null,30,32,null,32,34,null,34,36,null,36,37,null,37,38,null,38,39,null,39,40,null,40,41,null,41,42,null,42,43,null,43,44,null,44,45,null,45,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,64,null,64,65,null,65,66,null,66,67,null,67,68,null,68,69,null,69,72,null,72,73,null,73,74,null,74,75,null,75,78,null,78,79,null,79,80,null,80,81,null,81,82,null,82,90,null,90,94,null,94,99],"y":[0,null,1,1,null,0.99,0.99,null,0.98,0.98,null,0.97,0.97,null,0.96,0.96,null,0.95,0.95,null,0.94,0.94,null,0.92,0.92,null,0.91,0.91,null,0.9,0.9,null,0.89,0.89,null,0.88,0.88,null,0.86,0.86,null,0.83,0.83,null,0.82,0.82,null,0.79,0.79,null,0.76,0.76,null,0.75,0.75,null,0.73,0.73,null,0.71,0.71,null,0.69,0.69,null,0.67,0.67,null,0.66,0.66,null,0.64,0.64,null,0.6,0.6,null,0.57,0.57,null,0.54,0.54,null,0.52,0.52,null,0.5,0.5,null,0.47,0.47,null,0.45,0.45,null,0.42,0.42,null,0.37,0.37,null,0.36,0.36,null,0.34,0.34,null,0.28,0.28,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.19,0.19,null,0.18,0.18,null,0.17,0.17,null,0.15,0.15,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.09,0.09,null,0.08,0.08,null,0.07,0.07,null,0.0599999999999999,0.0599999999999999,null,0.05,0.05,null,0.03,0.03,null,0.02,0.02,null,0.01,0.01],"text":["tiempo: 99<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo:  6<br />cum: 1.00",null,"tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.99",null,"tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.98",null,"tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.97",null,"tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.96",null,"tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.95",null,"tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.94",null,"tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.92",null,"tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.91",null,"tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.90",null,"tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.89",null,"tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.88",null,"tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.86",null,"tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.83",null,"tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.82",null,"tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.79",null,"tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.76",null,"tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.75",null,"tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.73",null,"tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.71",null,"tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.69",null,"tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.67",null,"tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.66",null,"tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.64",null,"tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.60",null,"tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.57",null,"tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.54",null,"tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.52",null,"tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.50",null,"tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.47",null,"tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.45",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.37",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.28",null,"tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.26",null,"tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.24",null,"tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.22",null,"tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.19",null,"tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.18",null,"tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.17",null,"tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.15",null,"tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.14",null,"tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.12",null,"tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.10",null,"tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.09",null,"tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.08",null,"tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.07",null,"tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.06",null,"tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.05",null,"tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.03",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02",null,"tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99],"y":[1,0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01],"text":["tiempo:  6<br />cum: 1.00","tiempo: 11<br />cum: 0.99","tiempo: 14<br />cum: 0.98","tiempo: 20<br />cum: 0.97","tiempo: 21<br />cum: 0.96","tiempo: 23<br />cum: 0.95","tiempo: 25<br />cum: 0.94","tiempo: 26<br />cum: 0.92","tiempo: 28<br />cum: 0.91","tiempo: 30<br />cum: 0.90","tiempo: 32<br />cum: 0.89","tiempo: 34<br />cum: 0.88","tiempo: 36<br />cum: 0.86","tiempo: 37<br />cum: 0.83","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.79","tiempo: 40<br />cum: 0.76","tiempo: 41<br />cum: 0.75","tiempo: 42<br />cum: 0.73","tiempo: 43<br />cum: 0.71","tiempo: 44<br />cum: 0.69","tiempo: 45<br />cum: 0.67","tiempo: 47<br />cum: 0.66","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.60","tiempo: 50<br />cum: 0.57","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.50","tiempo: 56<br />cum: 0.47","tiempo: 57<br />cum: 0.45","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.37","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.28","tiempo: 64<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 67<br />cum: 0.19","tiempo: 68<br />cum: 0.18","tiempo: 69<br />cum: 0.17","tiempo: 72<br />cum: 0.15","tiempo: 73<br />cum: 0.14","tiempo: 74<br />cum: 0.12","tiempo: 75<br />cum: 0.10","tiempo: 78<br />cum: 0.09","tiempo: 79<br />cum: 0.08","tiempo: 80<br />cum: 0.07","tiempo: 81<br />cum: 0.06","tiempo: 82<br />cum: 0.05","tiempo: 90<br />cum: 0.03","tiempo: 94<br />cum: 0.02","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99,0],"y":[0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01,0,1],"text":["tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[94,null,0,20,null,20,26,null,26,30,null,30,32,null,32,34,null,34,37,null,37,38,null,38,39,null,39,41,null,41,43,null,43,44,null,44,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,65,null,65,66,null,66,69,null,69,73,null,73,74,null,74,75,null,75,79,null,79,80,null,80,82,null,82,90,null,90,94],"y":[0,null,1,1,null,0.98,0.98,null,0.96,0.96,null,0.94,0.94,null,0.92,0.92,null,0.9,0.9,null,0.88,0.88,null,0.82,0.82,null,0.8,0.8,null,0.76,0.76,null,0.72,0.72,null,0.7,0.7,null,0.68,0.68,null,0.64,0.64,null,0.62,0.62,null,0.58,0.58,null,0.54,0.54,null,0.52,0.52,null,0.46,0.46,null,0.44,0.44,null,0.42,0.42,null,0.38,0.38,null,0.36,0.36,null,0.34,0.34,null,0.3,0.3,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.2,0.2,null,0.18,0.18,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.08,0.08,null,0.04,0.04,null,0.02,0.02],"text":["tiempo: 94<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo: 20<br />cum: 1.00",null,"tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.98",null,"tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.96",null,"tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.94",null,"tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.92",null,"tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.90",null,"tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.88",null,"tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.82",null,"tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.80",null,"tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.76",null,"tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.72",null,"tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.70",null,"tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.68",null,"tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.64",null,"tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.62",null,"tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.58",null,"tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.54",null,"tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.52",null,"tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.46",null,"tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.44",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.38",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.30",null,"tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.26",null,"tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.24",null,"tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.22",null,"tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.20",null,"tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.18",null,"tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.14",null,"tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.12",null,"tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.10",null,"tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.08",null,"tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.04",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94],"y":[1,0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02],"text":["tiempo: 20<br />cum: 1.00","tiempo: 26<br />cum: 0.98","tiempo: 30<br />cum: 0.96","tiempo: 32<br />cum: 0.94","tiempo: 34<br />cum: 0.92","tiempo: 37<br />cum: 0.90","tiempo: 38<br />cum: 0.88","tiempo: 39<br />cum: 0.82","tiempo: 41<br />cum: 0.80","tiempo: 43<br />cum: 0.76","tiempo: 44<br />cum: 0.72","tiempo: 47<br />cum: 0.70","tiempo: 48<br />cum: 0.68","tiempo: 49<br />cum: 0.64","tiempo: 50<br />cum: 0.62","tiempo: 51<br />cum: 0.58","tiempo: 52<br />cum: 0.54","tiempo: 54<br />cum: 0.52","tiempo: 56<br />cum: 0.46","tiempo: 57<br />cum: 0.44","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.38","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.30","tiempo: 65<br />cum: 0.26","tiempo: 66<br />cum: 0.24","tiempo: 69<br />cum: 0.22","tiempo: 73<br />cum: 0.20","tiempo: 74<br />cum: 0.18","tiempo: 75<br />cum: 0.14","tiempo: 79<br />cum: 0.12","tiempo: 80<br />cum: 0.10","tiempo: 82<br />cum: 0.08","tiempo: 90<br />cum: 0.04","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94,0],"y":[0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02,0,1],"text":["tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"xaxis":{"domain":[0,0.48],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,103.95],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","hoverformat":".2f"},"xaxis2":{"domain":[0.52,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.7,98.7],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y2","hoverformat":".2f"},"yaxis2":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x2","hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","hoverformat":".2f"},"annotations":[],"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":0.48,"y0":0,"y1":1},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0.52,"x1":1,"y0":0,"y1":1}],"images":[],"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica<br><sup>Población - Muestra","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"attrs":{"2df8490c72c7":{"x":{},"y":{},"type":"scatter"},"2df843cc93f":{"x":{},"y":{},"colour":{},"shape":{}},"2df857376eaa":{"x":{},"y":{},"type":"scatter"},"2df826586023":{"x":{},"y":{},"colour":{},"shape":{}}},"source":"A","config":{"doubleClick":"reset","showSendToCloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-467f3ada599dec390e71">{"x":{"data":[{"x":[99,null,0,6,null,6,11,null,11,14,null,14,20,null,20,21,null,21,23,null,23,25,null,25,26,null,26,28,null,28,30,null,30,32,null,32,34,null,34,36,null,36,37,null,37,38,null,38,39,null,39,40,null,40,41,null,41,42,null,42,43,null,43,44,null,44,45,null,45,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,64,null,64,65,null,65,66,null,66,67,null,67,68,null,68,69,null,69,72,null,72,73,null,73,74,null,74,75,null,75,78,null,78,79,null,79,80,null,80,81,null,81,82,null,82,90,null,90,94,null,94,99],"y":[0,null,1,1,null,0.99,0.99,null,0.98,0.98,null,0.97,0.97,null,0.96,0.96,null,0.95,0.95,null,0.94,0.94,null,0.92,0.92,null,0.91,0.91,null,0.9,0.9,null,0.89,0.89,null,0.88,0.88,null,0.86,0.86,null,0.83,0.83,null,0.82,0.82,null,0.79,0.79,null,0.76,0.76,null,0.75,0.75,null,0.73,0.73,null,0.71,0.71,null,0.69,0.69,null,0.67,0.67,null,0.66,0.66,null,0.64,0.64,null,0.6,0.6,null,0.57,0.57,null,0.54,0.54,null,0.52,0.52,null,0.5,0.5,null,0.47,0.47,null,0.45,0.45,null,0.42,0.42,null,0.37,0.37,null,0.36,0.36,null,0.34,0.34,null,0.28,0.28,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.19,0.19,null,0.18,0.18,null,0.17,0.17,null,0.15,0.15,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.09,0.09,null,0.08,0.08,null,0.07,0.07,null,0.0599999999999999,0.0599999999999999,null,0.05,0.05,null,0.03,0.03,null,0.02,0.02,null,0.01,0.01],"text":["tiempo: 99<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo:  6<br />cum: 1.00",null,"tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.99",null,"tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.98",null,"tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.97",null,"tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.96",null,"tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.95",null,"tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.94",null,"tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.92",null,"tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.91",null,"tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.90",null,"tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.89",null,"tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.88",null,"tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.86",null,"tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.83",null,"tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.82",null,"tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.79",null,"tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.76",null,"tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.75",null,"tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.73",null,"tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.71",null,"tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.69",null,"tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.67",null,"tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.66",null,"tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.64",null,"tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.60",null,"tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.57",null,"tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.54",null,"tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.52",null,"tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.50",null,"tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.47",null,"tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.45",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.37",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.28",null,"tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.26",null,"tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.24",null,"tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.22",null,"tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.19",null,"tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.18",null,"tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.17",null,"tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.15",null,"tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.14",null,"tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.12",null,"tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.10",null,"tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.09",null,"tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.08",null,"tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.07",null,"tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.06",null,"tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.05",null,"tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.03",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02",null,"tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99],"y":[1,0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01],"text":["tiempo:  6<br />cum: 1.00","tiempo: 11<br />cum: 0.99","tiempo: 14<br />cum: 0.98","tiempo: 20<br />cum: 0.97","tiempo: 21<br />cum: 0.96","tiempo: 23<br />cum: 0.95","tiempo: 25<br />cum: 0.94","tiempo: 26<br />cum: 0.92","tiempo: 28<br />cum: 0.91","tiempo: 30<br />cum: 0.90","tiempo: 32<br />cum: 0.89","tiempo: 34<br />cum: 0.88","tiempo: 36<br />cum: 0.86","tiempo: 37<br />cum: 0.83","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.79","tiempo: 40<br />cum: 0.76","tiempo: 41<br />cum: 0.75","tiempo: 42<br />cum: 0.73","tiempo: 43<br />cum: 0.71","tiempo: 44<br />cum: 0.69","tiempo: 45<br />cum: 0.67","tiempo: 47<br />cum: 0.66","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.60","tiempo: 50<br />cum: 0.57","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.50","tiempo: 56<br />cum: 0.47","tiempo: 57<br />cum: 0.45","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.37","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.28","tiempo: 64<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 67<br />cum: 0.19","tiempo: 68<br />cum: 0.18","tiempo: 69<br />cum: 0.17","tiempo: 72<br />cum: 0.15","tiempo: 73<br />cum: 0.14","tiempo: 74<br />cum: 0.12","tiempo: 75<br />cum: 0.10","tiempo: 78<br />cum: 0.09","tiempo: 79<br />cum: 0.08","tiempo: 80<br />cum: 0.07","tiempo: 81<br />cum: 0.06","tiempo: 82<br />cum: 0.05","tiempo: 90<br />cum: 0.03","tiempo: 94<br />cum: 0.02","tiempo: 99<br />cum: 0.01"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6,11,14,20,21,23,25,26,28,30,32,34,36,37,38,39,40,41,42,43,44,45,47,48,49,50,51,52,54,56,57,58,59,60,62,63,64,65,66,67,68,69,72,73,74,75,78,79,80,81,82,90,94,99,0],"y":[0.99,0.98,0.97,0.96,0.95,0.94,0.92,0.91,0.9,0.89,0.88,0.86,0.83,0.82,0.79,0.76,0.75,0.73,0.71,0.69,0.67,0.66,0.64,0.6,0.57,0.54,0.52,0.5,0.47,0.45,0.42,0.37,0.36,0.34,0.28,0.26,0.24,0.22,0.19,0.18,0.17,0.15,0.14,0.12,0.1,0.09,0.08,0.07,0.0599999999999999,0.05,0.03,0.02,0.01,0,1],"text":["tiempo:  6<br />cum: 0.99","tiempo: 11<br />cum: 0.98","tiempo: 14<br />cum: 0.97","tiempo: 20<br />cum: 0.96","tiempo: 21<br />cum: 0.95","tiempo: 23<br />cum: 0.94","tiempo: 25<br />cum: 0.92","tiempo: 26<br />cum: 0.91","tiempo: 28<br />cum: 0.90","tiempo: 30<br />cum: 0.89","tiempo: 32<br />cum: 0.88","tiempo: 34<br />cum: 0.86","tiempo: 36<br />cum: 0.83","tiempo: 37<br />cum: 0.82","tiempo: 38<br />cum: 0.79","tiempo: 39<br />cum: 0.76","tiempo: 40<br />cum: 0.75","tiempo: 41<br />cum: 0.73","tiempo: 42<br />cum: 0.71","tiempo: 43<br />cum: 0.69","tiempo: 44<br />cum: 0.67","tiempo: 45<br />cum: 0.66","tiempo: 47<br />cum: 0.64","tiempo: 48<br />cum: 0.60","tiempo: 49<br />cum: 0.57","tiempo: 50<br />cum: 0.54","tiempo: 51<br />cum: 0.52","tiempo: 52<br />cum: 0.50","tiempo: 54<br />cum: 0.47","tiempo: 56<br />cum: 0.45","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.37","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.28","tiempo: 63<br />cum: 0.26","tiempo: 64<br />cum: 0.24","tiempo: 65<br />cum: 0.22","tiempo: 66<br />cum: 0.19","tiempo: 67<br />cum: 0.18","tiempo: 68<br />cum: 0.17","tiempo: 69<br />cum: 0.15","tiempo: 72<br />cum: 0.14","tiempo: 73<br />cum: 0.12","tiempo: 74<br />cum: 0.10","tiempo: 75<br />cum: 0.09","tiempo: 78<br />cum: 0.08","tiempo: 79<br />cum: 0.07","tiempo: 80<br />cum: 0.06","tiempo: 81<br />cum: 0.05","tiempo: 82<br />cum: 0.03","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.01","tiempo: 99<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[94,null,0,20,null,20,26,null,26,30,null,30,32,null,32,34,null,34,37,null,37,38,null,38,39,null,39,41,null,41,43,null,43,44,null,44,47,null,47,48,null,48,49,null,49,50,null,50,51,null,51,52,null,52,54,null,54,56,null,56,57,null,57,58,null,58,59,null,59,60,null,60,62,null,62,63,null,63,65,null,65,66,null,66,69,null,69,73,null,73,74,null,74,75,null,75,79,null,79,80,null,80,82,null,82,90,null,90,94],"y":[0,null,1,1,null,0.98,0.98,null,0.96,0.96,null,0.94,0.94,null,0.92,0.92,null,0.9,0.9,null,0.88,0.88,null,0.82,0.82,null,0.8,0.8,null,0.76,0.76,null,0.72,0.72,null,0.7,0.7,null,0.68,0.68,null,0.64,0.64,null,0.62,0.62,null,0.58,0.58,null,0.54,0.54,null,0.52,0.52,null,0.46,0.46,null,0.44,0.44,null,0.42,0.42,null,0.38,0.38,null,0.36,0.36,null,0.34,0.34,null,0.3,0.3,null,0.26,0.26,null,0.24,0.24,null,0.22,0.22,null,0.2,0.2,null,0.18,0.18,null,0.14,0.14,null,0.12,0.12,null,0.1,0.1,null,0.08,0.08,null,0.04,0.04,null,0.02,0.02],"text":["tiempo: 94<br />cum: 0.00",null,"tiempo:  0<br />cum: 1.00","tiempo: 20<br />cum: 1.00",null,"tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.98",null,"tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.96",null,"tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.94",null,"tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.92",null,"tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.90",null,"tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.88",null,"tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.82",null,"tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.80",null,"tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.76",null,"tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.72",null,"tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.70",null,"tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.68",null,"tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.64",null,"tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.62",null,"tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.58",null,"tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.54",null,"tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.52",null,"tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.46",null,"tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.44",null,"tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.42",null,"tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.38",null,"tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.36",null,"tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.34",null,"tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.30",null,"tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.26",null,"tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.24",null,"tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.22",null,"tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.20",null,"tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.18",null,"tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.14",null,"tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.12",null,"tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.10",null,"tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.08",null,"tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.04",null,"tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94],"y":[1,0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02],"text":["tiempo: 20<br />cum: 1.00","tiempo: 26<br />cum: 0.98","tiempo: 30<br />cum: 0.96","tiempo: 32<br />cum: 0.94","tiempo: 34<br />cum: 0.92","tiempo: 37<br />cum: 0.90","tiempo: 38<br />cum: 0.88","tiempo: 39<br />cum: 0.82","tiempo: 41<br />cum: 0.80","tiempo: 43<br />cum: 0.76","tiempo: 44<br />cum: 0.72","tiempo: 47<br />cum: 0.70","tiempo: 48<br />cum: 0.68","tiempo: 49<br />cum: 0.64","tiempo: 50<br />cum: 0.62","tiempo: 51<br />cum: 0.58","tiempo: 52<br />cum: 0.54","tiempo: 54<br />cum: 0.52","tiempo: 56<br />cum: 0.46","tiempo: 57<br />cum: 0.44","tiempo: 58<br />cum: 0.42","tiempo: 59<br />cum: 0.38","tiempo: 60<br />cum: 0.36","tiempo: 62<br />cum: 0.34","tiempo: 63<br />cum: 0.30","tiempo: 65<br />cum: 0.26","tiempo: 66<br />cum: 0.24","tiempo: 69<br />cum: 0.22","tiempo: 73<br />cum: 0.20","tiempo: 74<br />cum: 0.18","tiempo: 75<br />cum: 0.14","tiempo: 79<br />cum: 0.12","tiempo: 80<br />cum: 0.10","tiempo: 82<br />cum: 0.08","tiempo: 90<br />cum: 0.04","tiempo: 94<br />cum: 0.02"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":3.77952755905512,"symbol":"circle-open","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"abierto","legendgroup":"abierto","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[20,26,30,32,34,37,38,39,41,43,44,47,48,49,50,51,52,54,56,57,58,59,60,62,63,65,66,69,73,74,75,79,80,82,90,94,0],"y":[0.98,0.96,0.94,0.92,0.9,0.88,0.82,0.8,0.76,0.72,0.7,0.68,0.64,0.62,0.58,0.54,0.52,0.46,0.44,0.42,0.38,0.36,0.34,0.3,0.26,0.24,0.22,0.2,0.18,0.14,0.12,0.1,0.08,0.04,0.02,0,1],"text":["tiempo: 20<br />cum: 0.98","tiempo: 26<br />cum: 0.96","tiempo: 30<br />cum: 0.94","tiempo: 32<br />cum: 0.92","tiempo: 34<br />cum: 0.90","tiempo: 37<br />cum: 0.88","tiempo: 38<br />cum: 0.82","tiempo: 39<br />cum: 0.80","tiempo: 41<br />cum: 0.76","tiempo: 43<br />cum: 0.72","tiempo: 44<br />cum: 0.70","tiempo: 47<br />cum: 0.68","tiempo: 48<br />cum: 0.64","tiempo: 49<br />cum: 0.62","tiempo: 50<br />cum: 0.58","tiempo: 51<br />cum: 0.54","tiempo: 52<br />cum: 0.52","tiempo: 54<br />cum: 0.46","tiempo: 56<br />cum: 0.44","tiempo: 57<br />cum: 0.42","tiempo: 58<br />cum: 0.38","tiempo: 59<br />cum: 0.36","tiempo: 60<br />cum: 0.34","tiempo: 62<br />cum: 0.30","tiempo: 63<br />cum: 0.26","tiempo: 65<br />cum: 0.24","tiempo: 66<br />cum: 0.22","tiempo: 69<br />cum: 0.20","tiempo: 73<br />cum: 0.18","tiempo: 74<br />cum: 0.14","tiempo: 75<br />cum: 0.12","tiempo: 79<br />cum: 0.10","tiempo: 80<br />cum: 0.08","tiempo: 82<br />cum: 0.04","tiempo: 90<br />cum: 0.02","tiempo: 94<br />cum: 0.00","tiempo:  0<br />cum: 1.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":3.77952755905512,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"cerrado","legendgroup":"cerrado","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"xaxis":{"domain":[0,0.48],"automargin":true,"type":"linear","autorange":false,"range":[-4.95,103.95],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","hoverformat":".2f"},"xaxis2":{"domain":[0.52,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.7,98.7],"tickmode":"array","ticktext":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"tickvals":[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y2","hoverformat":".2f"},"yaxis2":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x2","hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","hoverformat":".2f"},"annotations":[],"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":0.48,"y0":0,"y1":1},{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0.52,"x1":1,"y0":0,"y1":1}],"images":[],"margin":{"t":45.7108066971081,"r":7.30593607305936,"b":42.130898021309,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Función de supervivencia empírica<br><sup>Población - Muestra","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","width":800,"barmode":"relative"},"attrs":{"10c26b87bc":{"x":{},"y":{},"type":"scatter"},"10c467f382d":{"x":{},"y":{},"colour":{},"shape":{}},"10c1fbb3a3d":{"x":{},"y":{},"type":"scatter"},"10c1c267ed":{"x":{},"y":{},"colour":{},"shape":{}}},"source":"A","config":{"doubleClick":"reset","showSendToCloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <p>Si observamos a detalle las gráficas, podemos darnos cuenta que guardan una pequeña diferencia. Los saltos entre ellas se dan cuando dentro de la muestra tenemos un espacio entre los dos datos.</p>
 </div>
 <div id="media-de-la-función-de-superviviencia" class="section level3" number="3.3.3">
@@ -1780,23 +1809,31 @@ p=.75
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dif =</span> <span class="fu">abs</span>(medias_todo_pob<span class="sc">-</span>media_sup_mues))</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>medias_sup_comp <span class="sc">%&gt;%</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Media población&quot;</span>, </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Media población supervivencia&quot;</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Media muestra supervivencia&quot;</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Diferencia&quot;</span>),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">align =</span> <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;Comparación medias función supervivencia&quot;</span>)</span></code></pre></div>
 <table>
+<caption>
+Comparación medias función supervivencia
+</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:right;">
-medias_todo_pob
+<th style="text-align:center;">
+Media población
 </th>
-<th style="text-align:right;">
-media_sup
+<th style="text-align:center;">
+Media población supervivencia
 </th>
-<th style="text-align:right;">
-media_sup_mues
+<th style="text-align:center;">
+Media muestra supervivencia
 </th>
-<th style="text-align:right;">
-dif
+<th style="text-align:center;">
+Diferencia
 </th>
 </tr>
 </thead>
@@ -1805,16 +1842,16 @@ dif
 <td style="text-align:left;">
 p=0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 55.06
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.4
 </td>
 </tr>
@@ -1822,16 +1859,16 @@ p=0
 <td style="text-align:left;">
 p=.25
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 55.06
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.4
 </td>
 </tr>
@@ -1839,16 +1876,16 @@ p=.25
 <td style="text-align:left;">
 p=.50
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 55.06
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.4
 </td>
 </tr>
@@ -1856,16 +1893,16 @@ p=.50
 <td style="text-align:left;">
 p=.75
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 55.06
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.4
 </td>
 </tr>
@@ -1877,25 +1914,43 @@ p=.75
 <div id="conclusión" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Conclusión</h1>
 <p>A continuación veremos la comparación entre nuestros dos estimadores:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">list</span>(medias_com_comp, medias_sup_comp),</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">table.attr =</span> <span class="st">&quot;style=&#39;width:100px&#39;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kables</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">kable</span>(medias_com_comp, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">table.attr =</span> <span class="st">&quot;style=&#39;width:400px&#39;&quot;</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Media población&quot;</span>, </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;Media muestra&quot;</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;Diferencia&quot;</span>),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">align =</span> <span class="st">&quot;c&quot;</span>),</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">kable</span>(medias_sup_comp,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">table.attr =</span> <span class="st">&quot;style=&#39;width:400px&#39;&quot;</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Media población&quot;</span>, </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;Media población supervivencia&quot;</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;Media muestra supervivencia&quot;</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;Diferencia&quot;</span>),</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">align =</span> <span class="st">&quot;c&quot;</span>)),</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Comparación entre estimadores&quot;</span>)</span></code></pre></div>
 <table class="kable_wrapper">
+<caption>
+Comparación entre estimadores
+</caption>
 <tbody>
 <tr>
 <td>
-<table style="width:100px">
+<table style="width:400px">
 <thead>
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:right;">
-medias_com_pob
+<th style="text-align:center;">
+Media población
 </th>
-<th style="text-align:right;">
-medias_com_mues
+<th style="text-align:center;">
+Media muestra
 </th>
-<th style="text-align:right;">
-dif
+<th style="text-align:center;">
+Diferencia
 </th>
 </tr>
 </thead>
@@ -1904,78 +1959,78 @@ dif
 <td style="text-align:left;">
 p=0
 </td>
-<td style="text-align:right;">
-52.66000
+<td style="text-align:center;">
+52.66
 </td>
-<td style="text-align:right;">
-55.06000
+<td style="text-align:center;">
+55.06
 </td>
-<td style="text-align:right;">
-2.400000
+<td style="text-align:center;">
+2.40
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 p=.25
 </td>
-<td style="text-align:right;">
-51.54321
+<td style="text-align:center;">
+51.54
 </td>
-<td style="text-align:right;">
-54.10526
+<td style="text-align:center;">
+54.11
 </td>
-<td style="text-align:right;">
-2.562053
+<td style="text-align:center;">
+2.56
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 p=.50
 </td>
-<td style="text-align:right;">
-52.59649
+<td style="text-align:center;">
+52.60
 </td>
-<td style="text-align:right;">
-54.88000
+<td style="text-align:center;">
+54.88
 </td>
-<td style="text-align:right;">
-2.283509
+<td style="text-align:center;">
+2.28
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 p=.75
 </td>
-<td style="text-align:right;">
-50.61538
+<td style="text-align:center;">
+50.62
 </td>
-<td style="text-align:right;">
-54.12500
+<td style="text-align:center;">
+54.12
 </td>
-<td style="text-align:right;">
-3.509615
+<td style="text-align:center;">
+3.51
 </td>
 </tr>
 </tbody>
 </table>
 </td>
 <td>
-<table style="width:100px">
+<table style="width:400px">
 <thead>
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:right;">
-medias_todo_pob
+<th style="text-align:center;">
+Media población
 </th>
-<th style="text-align:right;">
-media_sup
+<th style="text-align:center;">
+Media población supervivencia
 </th>
-<th style="text-align:right;">
-media_sup_mues
+<th style="text-align:center;">
+Media muestra supervivencia
 </th>
-<th style="text-align:right;">
-dif
+<th style="text-align:center;">
+Diferencia
 </th>
 </tr>
 </thead>
@@ -1984,16 +2039,16 @@ dif
 <td style="text-align:left;">
 p=0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 55.06
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.4
 </td>
 </tr>
@@ -2001,16 +2056,16 @@ p=0
 <td style="text-align:left;">
 p=.25
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 55.06
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.4
 </td>
 </tr>
@@ -2018,16 +2073,16 @@ p=.25
 <td style="text-align:left;">
 p=.50
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 55.06
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.4
 </td>
 </tr>
@@ -2035,16 +2090,16 @@ p=.50
 <td style="text-align:left;">
 p=.75
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 52.66
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 55.06
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.4
 </td>
 </tr>
@@ -2054,6 +2109,7 @@ p=.75
 </tr>
 </tbody>
 </table>
+<p>De esta manera, podemos concluir que estimar la media mediante la función de supervivencia empírica es un mejor estimador porque presenta un menor error.</p>
 </div>
     </section>
   </div>

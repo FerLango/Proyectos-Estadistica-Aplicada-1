@@ -340,7 +340,10 @@ Veamos como se ven los primeros 20 registro de nuestra tabla:
 
 ```{r}
 head(pacientes_pob, 20) %>%
-    kable()
+    kable(col.names = c("Persona","Tiempo","p=0","p=.25",
+                        "p=.50","p=.75"),
+          align = "c",
+          caption = "Población")
 ```
 
 ### Medias
@@ -369,7 +372,9 @@ rm(temp,i)
 names(medias_com_pob) <- c("p=0","p=.25","p=.50", "p=.75")
 
 medias_com_pob %>%
-    kable()
+    kable(col.names = "Media",
+          align = "c",
+          caption = "Media población registro completo")
 ```
 
 #### Toda la población
@@ -386,7 +391,9 @@ rm(temp)
 names(medias_todo_pob) <- c("p=0","p=.25","p=.50", "p=.75")
 
 medias_todo_pob %>%
-    kable()
+    kable(col.names = "Media",
+          align = "c",
+          caption = "Media población cualquier registro")
 ```
 
 Lo cual tiene completo sentido que no cambie porque no estamos tomando en cuenta a aquellos que dejaron de contestar.
@@ -501,7 +508,10 @@ Veamos los primeros $20$ registros:
 
 ```{r}
 head(pacientes_mues,20) %>%
-    kable()
+    kable(col.names = c("Persona","Tiempo","p=0","p=.25",
+                        "p=.50","p=.75"),
+          align = "c",
+          caption = "Muestra")
 ```
 
 A continuación vamos a poner a prueba nuestros estimadores con nuestra muestra respecto a la población.
@@ -535,7 +545,11 @@ medias_com_comp <-
     mutate(dif = abs(medias_com_pob-medias_com_mues))
 
 medias_com_comp %>%
-    kable()
+    kable(col.names = c("Media población", "Media muestra",
+                        "Diferencia"),
+          align = "c",
+          digits = 2,
+          caption = "Comparación medias registro completo")
 ```
 
 Notemos que mientras una mayor cantidad de cuidadores dejan de contestar entonces nuestro estimador presenta un mayor error.
@@ -648,7 +662,12 @@ medias_sup_comp <-
     mutate(dif = abs(medias_todo_pob-media_sup_mues))
 
 medias_sup_comp %>%
-    kable()
+    kable(col.names = c("Media población", 
+                        "Media población supervivencia",
+                        "Media muestra supervivencia",
+                        "Diferencia"),
+          align = "c",
+          caption = "Comparación medias función supervivencia")
 ```
 
 # Conclusión
@@ -656,8 +675,23 @@ medias_sup_comp %>%
 A continuación veremos la comparación entre nuestros dos estimadores:
 
 ```{r}
-kable(list(medias_com_comp, medias_sup_comp),
-      table.attr = "style='width:400px'")
+knitr::kables(
+    list(kable(medias_com_comp, 
+               table.attr = "style='width:400px'",
+               col.names = c("Media población", 
+                             "Media muestra",
+                             "Diferencia"),
+               digits = 2,
+               align = "c"),
+         kable(medias_sup_comp,
+               table.attr = "style='width:400px'",
+               col.names = c("Media población", 
+                             "Media población supervivencia",
+                             "Media muestra supervivencia",
+                             "Diferencia"),
+               digits = 2,
+               align = "c")),
+    caption = "Comparación entre estimadores")
 ```
 
 De esta manera, podemos concluir que estimar la media mediante la función de supervivencia empírica es un mejor estimador porque presenta un menor error.
