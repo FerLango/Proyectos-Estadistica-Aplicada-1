@@ -415,10 +415,11 @@ sup <-
     add_row(tiempo=0,cum=1, type="cerrado", match=0) %>%
     arrange(desc(type))
 
-sup %>%
+sup_plot <-    
+    sup %>%
     ggplot(aes(x=tiempo, y=cum)) +
-    geom_line(aes(group = match)) +
-    geom_point(aes(color=type, pch = type), 
+    geom_line(aes(group = match), size = .5) +
+    geom_point(aes(color=type, pch = type), size = 1, 
                pch = c(rep(19,ceiling(nrow(sup)/2)),
                        rep(1,floor(nrow(sup)/2)))) +
     labs(title = "Función de supervivencia empírica",
@@ -430,7 +431,8 @@ sup %>%
                            seq(0,max(pacientes_pob$tiempo)+5,5)) +
     scale_y_continuous(breaks = seq(0,1,.1))
 
-ggplotly(tooltip = c("tiempo", "cum"))
+ggplotly(sup_plot,tooltip = c("tiempo", "cum"), width = 800,
+         dynamicTicks = FALSE)
 ```
 
 
