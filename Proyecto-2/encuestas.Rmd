@@ -390,8 +390,7 @@ medias_todo_pob %>%
 ### Función de supervivencia empírica
 
 ```{r}
-temp <- NULL
-temp <- pacientes_pob %>%
+sup <- pacientes_pob %>%
         select(tiempo) %>%
         arrange(tiempo) %>%
         group_by(tiempo) %>%
@@ -399,18 +398,14 @@ temp <- pacientes_pob %>%
         mutate(p = n/N) %>%
         mutate(cum = 1 - cumsum(p), abi = NULL)
 
-time1 <- c(0,temp$tiempo)
-prob1 <- c(1,1,temp$cum[1:length(temp$cum)-1])
-
-temp <- temp %>% 
-    add_column(abi = c(1,temp$cum[1:length(temp$cum)-1])) %>%
+sup <- sup %>% 
+    add_column(abi = c(1,sup$cum[1:length(sup$cum)-1])) %>%
     add_row(tiempo=0,cum=1) %>%
     arrange(tiempo)
-
-temp %>%
+sup %>%
     ggplot() +
-    geom_point(aes(x=tiempo, y=cum),pch=19, color="blue",size=10) +
-    geom_point(aes(x=tiempo, y=abi),pch=1, color="red",size=10)
+    geom_point(aes(x=tiempo, y=cum),pch=19, color="blue",size=2) +
+    geom_point(aes(x=tiempo, y=abi),pch=1, color="red",size=2)
 ```
 
 
