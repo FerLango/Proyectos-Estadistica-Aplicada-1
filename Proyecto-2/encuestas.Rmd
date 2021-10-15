@@ -649,7 +649,7 @@ for (i in seq(3,length(temp_sup_mues$tiempo),2)) {
     }
 }  
 
-rm(temp_sup_mues)
+rm(temp_sup_mues,i)
 ```
 
 De esta manera, la media obtenida directamente de nuestra función de supervivencia para la muestra es de **`r media_sup_mues`**.
