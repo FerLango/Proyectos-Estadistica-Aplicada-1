@@ -129,7 +129,8 @@ $$
 \text{Sesgo}_{\mu} 
     & = \mathbf{E}(\hat{\mu}) - \mu \\
     & = \mathbf{E}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) - \mu \\
-    & = \frac{1}{n} \sum_{i=1}^{\ell} \mathbf{E}(t_{i}) - \mu \\
+    & = \frac{1}{n} \sum_{i=1}^{\ell} 
+        \mathbf{E}(\mathbb{I}_S(t_{i})) - \mu \\
     & = \frac{1}{n} \sum_{i=1}^{\ell} \mu - \mu \\
     & = \frac{1}{n}\ell\mu - \mu \\
     & = \frac{\ell}{n}\mu - \mu \\
@@ -146,11 +147,14 @@ Para determinar la varianza de $\hat{\mu}$ utilizamos la siguiente formula y sup
 $$
 \begin{split}
 \text{Var}({\hat{\mu}}) 
-    & = \text{Var}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) \\
-    & = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{\ell} t_{i}) \\
-    & = \frac{1}{n^2}(\sum_{i=1}^{\ell} \text{Var}(t_{i}) + 
+    & = \text{Var}(\frac{1}{n}\sum_{i=1}^{\ell} 
+        \mathbb{I}(t_{i})) \\
+    & = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{\ell} 
+        \mathbb{I}(t_{i})) \\
+    & = \frac{1}{n^2}(\sum_{i=1}^{\ell} 
+        \text{Var}(\mathbb{I}(t_{i})) + 
         \sum_{i=1}^{\ell} \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}
-        \text{Cov}(t_{i}, t_{j})) \\
+        \text{Cov}(\mathbb{I}(t_{i}), \mathbb{I}(t_{i})) \\
     & = \frac{1}{n^2}(\ell\sigma^2 +  \sum_{i=1}^{\ell}                               \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}
         (\pi_{i,j}-\pi_{i}\pi_{j})) \\
      & = \frac{1}{n^2}(\ell\sigma^2 +  \sum_{i=1}^{\ell}                               \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}\Delta_{i,j})
@@ -162,13 +166,19 @@ Si suponemos que nuestras $t_{i}$ son independientes, entonces $Cov(t_{i}, t_{j}
 $$
 \begin{split}
 \text{Var}({\hat{\mu}}) 
-    & = \text{Var}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) \\
-    & = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{\ell} t_{i}) \\
-    & = \frac{1}{n^2}(\sum_{i=1}^{\ell} \text{Var}(t_{i}) + 
-        \sum_{i=1}^{\ell} \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}
-        \text{Cov}(t_{i}, t_{j})) \\
-    & = \frac{1}{n^2}(\sum_{i=1}^{\ell} \text{Var}(t_{i}) + 0) \\
-    & = \frac{1}{n^2}\sum_{i=1}^{\ell} \text{Var}(t_{i}) \\
+    & = \text{Var}(\frac{1}{n}\sum_{i=1}^{\ell} 
+        \mathbb{I}(t_{i})) \\
+    & = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{\ell} 
+        \mathbb{I}(t_{i})) \\
+    & = \frac{1}{n^2}(\sum_{i=1}^{\ell} 
+        \text{Var}(\mathbb{I}(t_{i})) + 
+        \sum_{i=1}^{\ell} \sum\limits_{\substack{j=1 
+        \\ j\ne i}}^{\ell}
+        \text{Cov}(\mathbb{I}(t_{i}), \mathbb{I}(t_{i})) \\
+    & = \frac{1}{n^2}(\sum_{i=1}^{\ell} 
+        \text{Var}(\mathbb{I}(t_{i})) + 0) \\
+    & = \frac{1}{n^2}\sum_{i=1}^{\ell} 
+        \text{Var}(\mathbb{I}(t_{i})) \\
     & = \frac{\ell\sigma^2}{n^2}
 \end{split}
 $$
