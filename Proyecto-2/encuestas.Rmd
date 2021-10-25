@@ -96,11 +96,13 @@ Construir los estimadores para $\mu$ y determina cuál es el mejor usando como c
 
 ## Tiempo de sobrevida
 
-Cuando tomamos una muestra de la población, esta es de tal manera que incluye a aquellas personas que dejaron de contestar pero en realidad no tenemos conocimiento si se encuentran vivos: 
+Cuando tomamos una muestra de la población (mediante muestreo aleatorio simple sin reemplazo), esta es de tal manera que incluye a aquellas personas que dejaron de contestar pero en realidad no tenemos conocimiento si se encuentran vivos: 
 
 $$
 S = \{(x_{1}, t_{1}),(x_{2}, t_{2}),...,(x_{\ell}, t_{\ell}), (x_{\ell+1}, \nu_{\ell+1}), (x_{\ell+2}, \nu_{\ell+2}), ... , (x_{n}, \nu_{n}) \}
 $$
+
+Las $t_i \space \forall i = 1,2,...,\ell$ representan el tiempo de fallecimiento, mientras que las $\nu_j \space \forall j=\ell+1,\ell+2,...,n$ representan el último momento en el que se tuvo contacto con el cuidador.
 
 El tiempo de sobrevida de los pacientes está definido como sigue:
 
@@ -155,6 +157,22 @@ $$
 \end{split}
 $$
 
+Si suponemos que nuestras $t_{i}$ son independientes, entonces $Cov(t_{i}, t_{j})=0 \space \forall t_i,t_j$. Así que la varianza del estimador tendría la siguiente forma:
+
+$$
+\begin{split}
+\text{Var}({\hat{\mu}}) 
+    & = \text{Var}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) \\
+    & = \frac{1}{n^2}\text{Var}(\sum_{i=1}^{\ell} t_{i}) \\
+    & = \frac{1}{n^2}(\sum_{i=1}^{\ell} \text{Var}(t_{i}) + 
+        \sum_{i=1}^{\ell} \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}
+        \text{Cov}(t_{i}, t_{j})) \\
+    & = \frac{1}{n^2}(\sum_{i=1}^{\ell} \text{Var}(t_{i}) + 0) \\
+    & = \frac{1}{n^2}\sum_{i=1}^{\ell} \text{Var}(t_{i}) \\
+    & = \frac{\ell\sigma^2}{n^2}
+\end{split}
+$$
+
 ### Error cuadrático medio (MSE)
 
 Recordemos que el error cuadrático medio está definido como sigue:
@@ -165,6 +183,18 @@ $$
     & = \mathbf{E}[(\hat{\mu}-\mu)^2] \\
     & = \text{Var}(\hat{\mu}) + (\text{Sesgo}_{\mu}(\hat{\mu}))^2 \\
     & = \frac{1}{n^2}(\ell\sigma^2 +  \sum_{i=1}^{\ell}                               \sum\limits_{\substack{j=1 \\ j\ne i}}^{\ell}\Delta_{i,j}) +
+        (\mu(\frac{\ell}{n}-1))^2
+\end{split}
+$$
+
+Si nuevamente tomamos en cuenta que las $t_i$ son independientes, entonces:
+
+$$
+\begin{split}
+\text{MSE}(\hat{\mu},\mu) 
+    & = \mathbf{E}[(\hat{\mu}-\mu)^2] \\
+    & = \text{Var}(\hat{\mu}) + (\text{Sesgo}_{\mu}(\hat{\mu}))^2 \\
+    & = \frac{\ell\sigma^2}{n^2} +
         (\mu(\frac{\ell}{n}-1))^2
 \end{split}
 $$
