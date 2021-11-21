@@ -54,7 +54,7 @@ coords <- lookup_coords(address = "Mexico City",
 A continuación vamos a obtener una muestra de los tweets generados en la Ciudad de México:
 
 ```{r}
-t <- 30 
+t <- 60
 if (file.exists("stream_tweets.json")) {
   file.remove("stream_tweets.json")
 }
@@ -99,12 +99,6 @@ N_hat <- 1/(1-(1-.01)^(1/length(unique(tweets$text))))
 ```
 
 De esta manera podemos concluir que nuestro universo contiene alrededor de `r toString(round(N_hat,2))` tweets durante el tiempo que se tomó la muestra.
-
-### Sesgo
-
-Para estimar el sesgo de nuestro estimador vamos a utilizar 
-
-### Varianza
 
 ### Intervalos de confianza
 
@@ -159,10 +153,6 @@ media_carac <- (100/N_hat) * caracteres
 
 Así, nuestro estimador nos indica que en promedio cada tweet contiene `r toString(round(media_carac,2))` caracteres.
 
-### Sesgo
-
-### Varianza
-
 ### Intervalos de confianza
 
 Vamos a establecer los intervalos de confianza mediante bootstrap con una confianza del 80% y sobre 1000 iteraciones.
@@ -216,10 +206,6 @@ media_cant <-  cantidad / length(unique(tweets$user$id_str))
 Así, la cantidad promedio de tweets de la población en `r t` segundos o `r toString(round(t/60/60/24,5))` días son `r toString(round(media_cant,4))` tweets. 
 
 Resultaría imposible en la realidad suponer este flujo constante a lo largo del día. Como no tenemos información acerca de la actividad de los usuarios en el día, entonces no podemos determinar la cantidad de tweets promedio por día de un usuario. 
-
-### Sesgo
-
-### Varianza
 
 ### Intervalos de confianza
 
