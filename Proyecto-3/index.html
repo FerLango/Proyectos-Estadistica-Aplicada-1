@@ -193,7 +193,7 @@ a.sourceLine {
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tweets <span class="ot">&lt;-</span> <span class="fu">stream_tweets</span>(<span class="at">geocode =</span> coords, <span class="at">timeout =</span> t, <span class="at">parse =</span> T)</span></code></pre></div>
 <p>Cabe recalcar que estamos utilizando la versión más actualizada del paquete <em>rtweet</em> en <a href="https://github.com/ropensci/rtweet">github</a> porque la actual versión listada en CRAN presenta un error al escribir y leer el archivo json generado.</p>
-<p>Durante los 30 segundos se recabaron un total de 1058 que representa aproximadamente el 1% de los tweets que ocurrieron durante ese tiempo dados como una muestra aleatoria. Esta muestra corresponde a los tweets entre la fecha Sun Nov 21 06:23:03 +0000 2021 y Sun Nov 21 06:23:32 +0000 2021</p>
+<p>Durante los 30 segundos se recabaron un total de 1105 que representa aproximadamente el 1% de los tweets que ocurrieron durante ese tiempo dados como una muestra aleatoria. Esta muestra corresponde a los tweets entre la fecha Sun Nov 21 07:24:29 +0000 2021 y Sun Nov 21 07:24:59 +0000 2021</p>
 <p>Además vamos a utilizar el paquete <em>tidyverse</em> para la limpieza y manejo de los datos.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 </div>
@@ -216,9 +216,9 @@ a.sourceLine {
         &amp; \Leftrightarrow \quad \hat{N} = \frac{1}{1-\sqrt[n]{1 - \pi_k}}
 \end{split}
 \]</span></p>
-<p>Sabemos que nuestra <span class="math inline">\(\pi_k \approx 1\% = .01\)</span> por definición en la función que utilizamos para extraer los tweets. Además, la muestra que extrajimos tiene una cantidad de <span class="math inline">\(n=\)</span> 1058. Teniendo estos datos podemos calcular nuestro estimador de N:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>N_hat <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="fl">-.01</span>)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">nrow</span>(tweets)))</span></code></pre></div>
-<p>De esta manera podemos concluir que nuestro universo contiene alrededor de 105270.61 tweets durante el tiempo que se tomó la muestra.</p>
+<p>Sabemos que nuestra <span class="math inline">\(\pi_k \approx 1\% = .01\)</span> por definición en la función que utilizamos para extraer los tweets. Además, la muestra que extrajimos tiene una cantidad de 1094 tweets distintos. Teniendo estos datos podemos calcular nuestro estimador de N:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>N_hat <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="fl">-.01</span>)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(tweets<span class="sc">$</span>text))))</span></code></pre></div>
+<p>De esta manera podemos concluir que nuestro universo contiene alrededor de 108852.58 tweets durante el tiempo que se tomó la muestra.</p>
 <div id="sesgo" class="section level3" number="2.1.1">
 <h3><span class="header-section-number">2.1.1</span> Sesgo</h3>
 <p>Para estimar el sesgo de nuestro estimador vamos a utilizar</p>
@@ -228,6 +228,18 @@ a.sourceLine {
 </div>
 <div id="intervalos-de-confianza" class="section level3" number="2.1.3">
 <h3><span class="header-section-number">2.1.3</span> Intervalos de confianza</h3>
+<p>Vamos a establecer los intervalos de confianza mediante bootstrap con una confianza del 80% y sobre 1000 iteraciones.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>confianza <span class="ot">&lt;-</span> <span class="dv">80</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> (<span class="dv">100</span><span class="sc">-</span>confianza)<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>N_hats <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, m)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    muestra_bootstrap <span class="ot">&lt;-</span> <span class="fu">sample</span>(tweets<span class="sc">$</span>text, <span class="fu">length</span>(tweets<span class="sc">$</span>text), <span class="at">replace =</span> T)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    N_hats[i] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="fl">-.01</span>)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(<span class="fu">unique</span>(muestra_bootstrap))))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>ic_bajo_bootstrap_1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(N_hats, alfa<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>ic_alto_bootstrap_1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(N_hats, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>)</span></code></pre></div>
+<p>De esta manera, nuestro intervalo de confianza bootstrap está dado por [67560.43, 70346.41].</p>
 </div>
 </div>
 <div id="cuál-es-el-tamaño-de-un-tweet-promedio-en-la-ciudad-méxico" class="section level2" number="2.2">
@@ -245,14 +257,14 @@ a.sourceLine {
 \end{split}
 \]</span></p>
 <p>A continuación vamos a calcular la cantidad de caracteres en cada tweet:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>caracteres <span class="ot">&lt;-</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    tweets <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(text) <span class="sc">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(nchar) <span class="sc">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>()</span></code></pre></div>
-<p>En total tenemos en la muestra 85477 caracteres o un promedio de 80.7911153 caracteres y a continuación vamos a calcular la media de caracteres en la población.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>media_carac <span class="ot">&lt;-</span> (<span class="dv">100</span><span class="sc">/</span>N_hat) <span class="sc">*</span> caracteres</span></code></pre></div>
-<p>Así, nuestro estimador nos indica que en promedio cada tweet contiene 81.2 caracteres.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>caracteres <span class="ot">&lt;-</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    tweets <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(text) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(nchar) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>()</span></code></pre></div>
+<p>En total tenemos en la muestra 87116 caracteres o un promedio de 78.838009 caracteres y a continuación vamos a calcular la media de caracteres en la población.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>media_carac <span class="ot">&lt;-</span> (<span class="dv">100</span><span class="sc">/</span>N_hat) <span class="sc">*</span> caracteres</span></code></pre></div>
+<p>Así, nuestro estimador nos indica que en promedio cada tweet contiene 80.03 caracteres.</p>
 <div id="sesgo-1" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> Sesgo</h3>
 </div>
@@ -261,13 +273,26 @@ a.sourceLine {
 </div>
 <div id="intervalos-de-confianza-1" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Intervalos de confianza</h3>
+<p>Vamos a establecer los intervalos de confianza mediante bootstrap con una confianza del 80% y sobre 1000 iteraciones.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>confianza <span class="ot">&lt;-</span> <span class="dv">80</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> (<span class="dv">100</span><span class="sc">-</span>confianza)<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>media_caracs <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, m)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) {</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    muestra_bootstrap <span class="ot">&lt;-</span> <span class="fu">sample</span>(tweets<span class="sc">$</span>text, <span class="fu">length</span>(tweets<span class="sc">$</span>text), <span class="at">replace =</span> T)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    carac_temp <span class="ot">&lt;-</span> muestra_bootstrap <span class="sc">%&gt;%</span> <span class="fu">sapply</span>(nchar) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    media_caracs[i] <span class="ot">&lt;-</span> (<span class="dv">100</span><span class="sc">/</span>N_hat) <span class="sc">*</span> carac_temp</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>ic_bajo_bootstrap_2 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(media_caracs, alfa<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>ic_alto_bootstrap_2 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(media_caracs, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>)</span></code></pre></div>
+<p>De esta manera, nuestro intervalo de confianza bootstrap está dado por [78.34, 81.7].</p>
 </div>
 </div>
 <div id="cuántos-tweets-promedio-hace-un-usuario-en-la-ciudad-de-méxico-al-día" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> ¿Cuántos tweets promedio hace un usuario en la Ciudad de México al día?</h2>
 <p>Para poder calcular el promedio de tweets por día de un usuario debemos hacer el supuesto de que este flujo se mantiene constante y no solamente para el rango de tiempo del que obtenemos la muestra.</p>
 <p>Inicialmente vamos a calcular la cantidad de tweets que publicaron en total los usuarios en la muestra:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cantidad <span class="ot">&lt;-</span> <span class="fu">nrow</span>(tweets)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cantidad <span class="ot">&lt;-</span> <span class="fu">nrow</span>(tweets)</span></code></pre></div>
 <p>Proponemos el siguiente estimador para calcular la cantidad promedio de tweets por usuario en 30 segundos o 0.00035 días.</p>
 <p><span class="math display">\[
 \begin{split}
@@ -280,9 +305,9 @@ a.sourceLine {
                &amp; = \frac{100}{\hat{N}} \sum_{k\in S} {y_{k}} \\
 \end{split}
 \]</span></p>
-<p>De esta manera, calculamos la cantidad promedio de tweets de la población:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>media_cant <span class="ot">&lt;-</span> (<span class="dv">100</span><span class="sc">/</span>N_hat) <span class="sc">*</span> cantidad</span></code></pre></div>
-<p>Así, la cantidad promedio de tweets de la población en 30 segundos o 0.00035 días son 1.005 tweets.</p>
+<p>De esta manera, calculamos la cantidad promedio de tweets de la población pero tomando solo en cuenta a los usuarios únicos por su id:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>media_cant <span class="ot">&lt;-</span>  cantidad <span class="sc">/</span> <span class="fu">length</span>(<span class="fu">unique</span>(tweets<span class="sc">$</span>user<span class="sc">$</span>id_str))</span></code></pre></div>
+<p>Así, la cantidad promedio de tweets de la población en 30 segundos o 0.00035 días son 1.0055 tweets.</p>
 <p>Resultaría imposible en la realidad suponer este flujo constante a lo largo del día. Como no tenemos información acerca de la actividad de los usuarios en el día, entonces no podemos determinar la cantidad de tweets promedio por día de un usuario.</p>
 <div id="sesgo-2" class="section level3" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Sesgo</h3>
@@ -292,6 +317,19 @@ a.sourceLine {
 </div>
 <div id="intervalos-de-confianza-2" class="section level3" number="2.3.3">
 <h3><span class="header-section-number">2.3.3</span> Intervalos de confianza</h3>
+<p>Vamos a establecer los intervalos de confianza mediante bootstrap con una confianza del 80% y sobre 1000 iteraciones.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>confianza <span class="ot">&lt;-</span> <span class="dv">80</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> (<span class="dv">100</span><span class="sc">-</span>confianza)<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>media_cants <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, m)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) {</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    muestra_bootstrap <span class="ot">&lt;-</span> <span class="fu">sample</span>(tweets<span class="sc">$</span>user<span class="sc">$</span>id_str, <span class="fu">nrow</span>(tweets), <span class="at">replace =</span> T)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    media_cants[i] <span class="ot">&lt;-</span> <span class="fu">length</span>(muestra_bootstrap)<span class="sc">/</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">length</span>(<span class="fu">unique</span>(muestra_bootstrap))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>ic_bajo_bootstrap_3 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(media_cants, alfa<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>ic_alto_bootstrap_3 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(media_cants, <span class="dv">1</span><span class="sc">-</span>alfa<span class="sc">/</span><span class="dv">2</span>)</span></code></pre></div>
+<p>De esta manera, nuestro intervalo de confianza bootstrap está dado por [1.56, 1.62].</p>
 </div>
 </div>
 </div>

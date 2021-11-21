@@ -92,10 +92,10 @@ $$
 \end{split}
 $$
 
-Sabemos que nuestra $\pi_k \approx 1\% = .01$ por definición en la función que utilizamos para extraer los tweets. Además, la muestra que extrajimos tiene una cantidad de $n=$ `r nrow(tweets)`. Teniendo estos datos podemos calcular nuestro estimador de N:
+Sabemos que nuestra $\pi_k \approx 1\% = .01$ por definición en la función que utilizamos para extraer los tweets. Además, la muestra que extrajimos tiene una cantidad de `r length(unique(tweets$text))` tweets distintos. Teniendo estos datos podemos calcular nuestro estimador de N:
 
 ```{r}
-N_hat <- 1/(1-(1-.01)^(1/nrow(tweets)))
+N_hat <- 1/(1-(1-.01)^(1/length(unique(tweets$text))))
 ```
 
 De esta manera podemos concluir que nuestro universo contiene alrededor de `r toString(round(N_hat,2))` tweets durante el tiempo que se tomó la muestra.
@@ -107,6 +107,23 @@ Para estimar el sesgo de nuestro estimador vamos a utilizar
 ### Varianza
 
 ### Intervalos de confianza
+
+Vamos a establecer los intervalos de confianza mediante bootstrap con una confianza del 80% y sobre 1000 iteraciones.
+
+```{r}
+m <- 1000
+confianza <- 80
+alfa <- (100-confianza)/100
+N_hats <- rep(NA, m)
+for (i in 1:m) {
+    muestra_bootstrap <- sample(tweets$text, length(tweets$text), replace = T)
+    N_hats[i] <- 1/(1-(1-.01)^(1/length(unique(muestra_bootstrap))))
+}
+ic_bajo_bootstrap_1 <- quantile(N_hats, alfa/2)
+ic_alto_bootstrap_1 <- quantile(N_hats, 1-alfa/2)
+```
+
+De esta manera, nuestro intervalo de confianza bootstrap está dado por [`r c(toString(round(ic_bajo_bootstrap_1,2)), toString(round(ic_alto_bootstrap_1,2)))`].
 
 ## ¿Cuál es el tamaño de un tweet promedio en la Ciudad México?
 
@@ -148,6 +165,24 @@ Así, nuestro estimador nos indica que en promedio cada tweet contiene `r toStri
 
 ### Intervalos de confianza
 
+Vamos a establecer los intervalos de confianza mediante bootstrap con una confianza del 80% y sobre 1000 iteraciones.
+
+```{r}
+m <- 1000
+confianza <- 80
+alfa <- (100-confianza)/100
+media_caracs <- rep(NA, m)
+for (i in 1:m) {
+    muestra_bootstrap <- sample(tweets$text, length(tweets$text), replace = T)
+    carac_temp <- muestra_bootstrap %>% sapply(nchar) %>% sum()
+    media_caracs[i] <- (100/N_hat) * carac_temp
+}
+ic_bajo_bootstrap_2 <- quantile(media_caracs, alfa/2)
+ic_alto_bootstrap_2 <- quantile(media_caracs, 1-alfa/2)
+```
+
+De esta manera, nuestro intervalo de confianza bootstrap está dado por [`r c(toString(round(ic_bajo_bootstrap_2,2)), toString(round(ic_alto_bootstrap_2,2)))`].
+
 ## ¿Cuántos tweets promedio hace un usuario en la Ciudad de México al día?
 
 Para poder calcular el promedio de tweets por día de un usuario debemos hacer el supuesto de que este flujo se mantiene constante y no solamente para el rango de tiempo del que obtenemos la muestra.
@@ -172,10 +207,10 @@ $$
 \end{split}
 $$
 
-De esta manera, calculamos la cantidad promedio de tweets de la población:
+De esta manera, calculamos la cantidad promedio de tweets de la población pero tomando solo en cuenta a los usuarios únicos por su id:
 
 ```{r}
-media_cant <- (100/N_hat) * cantidad
+media_cant <-  cantidad / length(unique(tweets$user$id_str))
 ```
 
 Así, la cantidad promedio de tweets de la población en `r t` segundos o `r toString(round(t/60/60/24,5))` días son `r toString(round(media_cant,4))` tweets. 
@@ -188,6 +223,23 @@ Resultaría imposible en la realidad suponer este flujo constante a lo largo del
 
 ### Intervalos de confianza
 
+Vamos a establecer los intervalos de confianza mediante bootstrap con una confianza del 80% y sobre 1000 iteraciones.
+
+```{r}
+m <- 1000
+confianza <- 80
+alfa <- (100-confianza)/100
+media_cants <- rep(NA, m)
+for (i in 1:m) {
+    muestra_bootstrap <- sample(tweets$user$id_str, nrow(tweets), replace = T)
+    media_cants[i] <- length(muestra_bootstrap)/
+                      length(unique(muestra_bootstrap))
+}
+ic_bajo_bootstrap_3 <- quantile(media_cants, alfa/2)
+ic_alto_bootstrap_3 <- quantile(media_cants, 1-alfa/2)
+```
+
+De esta manera, nuestro intervalo de confianza bootstrap está dado por [`r c(toString(round(ic_bajo_bootstrap_3,2)), toString(round(ic_alto_bootstrap_3,2)))`].
 
 
 
