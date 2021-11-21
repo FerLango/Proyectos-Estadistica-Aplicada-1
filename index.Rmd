@@ -32,4 +32,5 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
 
 # [Encuestas censuradas](https://ferlango.github.io/Proyectos-Estadistica-Aplicada-1/Proyecto-2)
 
+# [Redes sociales](https://ferlango.github.io/Proyectos-Estadistica-Aplicada-1/Proyecto-3)
 

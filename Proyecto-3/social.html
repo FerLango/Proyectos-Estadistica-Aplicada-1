@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Fernando Lango - 181055" />
+
+
+<title>Estructura de Twitter</title>
+
+<script src="social_files/header-attrs-2.11/header-attrs.js"></script>
+<link rel="shortcut icon" href="icono.ico">
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+/* A workaround for https://github.com/jgm/pandoc/issues/4278 */
+a.sourceLine {
+  pointer-events: auto;
+}
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<link rel="stylesheet" href="social_files/style.css" type="text/css" />
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<header>
+<div class="inner">
+<h1 class="title toc-ignore">Estructura de Twitter</h1>
+<h2 class="subtitle">Estadística Aplicada 1 - Proyecto 3</h2>
+<h3 class="author">Fernando Lango - 181055</h3>
+<h3 class="date">20/11/2021</h3>
+</div>
+</header>
+
+
+<div id="TOC" class="toc">
+<div class="inner">
+<h2 id="toc-title" class="toc-title">Contenido</h2>
+<ul>
+<li><a href="#obtención-de-la-muestra"><span class="toc-section-number">1</span> Obtención de la muestra</a></li>
+<li><a href="#preguntas"><span class="toc-section-number">2</span> Preguntas</a>
+<ul>
+<li><a href="#cuál-es-la-cantidad-de-tweets-totales-que-hay-en-la-ciudad-méxico"><span class="toc-section-number">2.1</span> ¿Cuál es la cantidad de tweets totales que hay en la Ciudad México?</a>
+<ul>
+<li><a href="#sesgo"><span class="toc-section-number">2.1.1</span> Sesgo</a></li>
+<li><a href="#varianza"><span class="toc-section-number">2.1.2</span> Varianza</a></li>
+<li><a href="#intervalos-de-confianza"><span class="toc-section-number">2.1.3</span> Intervalos de confianza</a></li>
+</ul></li>
+<li><a href="#cuál-es-el-tamaño-de-un-tweet-promedio-en-la-ciudad-méxico"><span class="toc-section-number">2.2</span> ¿Cuál es el tamaño de un tweet promedio en la Ciudad México?</a>
+<ul>
+<li><a href="#sesgo-1"><span class="toc-section-number">2.2.1</span> Sesgo</a></li>
+<li><a href="#varianza-1"><span class="toc-section-number">2.2.2</span> Varianza</a></li>
+<li><a href="#intervalos-de-confianza-1"><span class="toc-section-number">2.2.3</span> Intervalos de confianza</a></li>
+</ul></li>
+<li><a href="#cuántos-tweets-promedio-hace-un-usuario-en-la-ciudad-de-méxico-al-día"><span class="toc-section-number">2.3</span> ¿Cuántos tweets promedio hace un usuario en la Ciudad de México al día?</a>
+<ul>
+<li><a href="#sesgo-2"><span class="toc-section-number">2.3.1</span> Sesgo</a></li>
+<li><a href="#varianza-2"><span class="toc-section-number">2.3.2</span> Varianza</a></li>
+<li><a href="#intervalos-de-confianza-2"><span class="toc-section-number">2.3.3</span> Intervalos de confianza</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="content-wrapper">
+  <div class="inner clearfix">
+    <section id="main-content">
+<p>Para el presente proyecto vamos a realizar un muestreo sobre la red social <a href="https://twitter.com/home">Twitter</a> para determinar su estructura y contestar las siguientes preguntas:</p>
+<ul>
+<li>¿Cuál es el tamaño de un tweet en la Ciudad México?</li>
+<li>¿Cuál es la cantidad de tweets totales que hay en la Ciudad México?</li>
+<li>¿Cuántos tweets promedio hace un usuario en la Ciudad de México al día?</li>
+</ul>
+<div id="obtención-de-la-muestra" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Obtención de la muestra</h1>
+<p>Para poder responder estas preguntas, antes debemos recolectar algo de información en Twitter con el uso del paquete <em>rtweet</em> y delimitando la geolocalización a la Ciudad de México con la función <em>lookup_coords</em> del mismo paquete.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rtweet)</span></code></pre></div>
+<p>Para delimitar la ubicación a la Ciudad de México usaremos la API de de Google Maps que se encuentra loclizada en el ambiente de R:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">lookup_coords</span>(<span class="at">address =</span> <span class="st">&quot;Mexico City&quot;</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">components =</span> <span class="st">&quot;country:Mexico&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">apikey =</span> <span class="fu">Sys.getenv</span>(<span class="st">&quot;maps.apikey&quot;</span>))</span></code></pre></div>
+<p>A continuación vamos a obtener una muestra de los tweets generados en la Ciudad de México:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="dv">30</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tweets <span class="ot">&lt;-</span> <span class="fu">stream_tweets</span>(<span class="at">geocode =</span> coords, <span class="at">timeout =</span> t, <span class="at">parse =</span> T)</span></code></pre></div>
+<p>Cabe recalcar que estamos utilizando la versión más actualizada del paquete <em>rtweet</em> en <a href="https://github.com/ropensci/rtweet">github</a> porque la actual versión listada en CRAN presenta un error al escribir y leer el archivo json generado.</p>
+<p>Durante los 30 segundos se recabaron un total de 16348 que representa aproximadamente el 1% de los tweets que ocurrieron durante ese tiempo dados como una muestra aleatoria. Esta muestra corresponde a los tweets entre la fecha Sat Nov 20 21:30:15 +0000 2021 y Sun Nov 21 01:07:27 +0000 2021</p>
+<p>Además vamos a utilizar el paquete <em>tidyverse</em> para la limpieza y manejo de los datos.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+</div>
+<div id="preguntas" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Preguntas</h1>
+<div id="cuál-es-la-cantidad-de-tweets-totales-que-hay-en-la-ciudad-méxico" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> ¿Cuál es la cantidad de tweets totales que hay en la Ciudad México?</h2>
+<p>Para hacer calcular la cantidad de tweets que hay en la Ciudad de México vamos a utilizar las <span class="math inline">\(\pi_k\)</span> para muestreo aleatorio simple con reemplazo sabiendo que estos tweets representan alrededor del 1% del universo. De esta manera vamos a hacer el estimador de <span class="math inline">\(N\)</span> dado por <span class="math inline">\(\hat{N}\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+\pi_k = 1 - \left[\frac{\hat{N}-1}{\hat{N}}\right]^n &amp;\Leftrightarrow  
+    \quad 1 - \pi_k = \left[\frac{\hat{N}-1}{\hat{N}}\right]^n \\
+        &amp; \Leftrightarrow \quad \sqrt[n]{1 - \pi_k} = 
+            \frac{\hat{N}-1}{\hat{N}} \\
+        &amp; \Leftrightarrow \quad \hat{N}(\sqrt[n]{1 - \pi_k}) =
+            \hat{N}-1 \\
+        &amp; \Leftrightarrow \quad \hat{N} - \hat{N}(\sqrt[n]{1 - \pi_k})
+            = 1 \\
+        &amp; \Leftrightarrow \quad \hat{N}(1-\sqrt[n]{1 - \pi_k}) = 1 \\
+        &amp; \Leftrightarrow \quad \hat{N} = \frac{1}{1-\sqrt[n]{1 - \pi_k}}
+\end{split}
+\]</span></p>
+<p>Sabemos que nuestra <span class="math inline">\(\pi_k \approx 1\% = .01\)</span> por definición en la función que utilizamos para extraer los tweets. Además, la muestra que extrajimos tiene una cantidad de <span class="math inline">\(n=\)</span> 16348. Teniendo estos datos podemos calcular nuestro estimador de N:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>N_hat <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="fl">-.01</span>)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">nrow</span>(tweets)))</span></code></pre></div>
+<p>De esta manera podemos concluir que nuestro universo contiene alrededor de 1626612.81 tweets durante el tiempo que se tomó la muestra.</p>
+<div id="sesgo" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Sesgo</h3>
+</div>
+<div id="varianza" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Varianza</h3>
+</div>
+<div id="intervalos-de-confianza" class="section level3" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Intervalos de confianza</h3>
+</div>
+</div>
+<div id="cuál-es-el-tamaño-de-un-tweet-promedio-en-la-ciudad-méxico" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> ¿Cuál es el tamaño de un tweet promedio en la Ciudad México?</h2>
+<p>Para lograr esta tarea vamos a estimar el promedio de caracteres que tienen los tweets en la Ciudad de México mediante el estimador de <strong>Horvitz-Thompson (HT)</strong> y utilizando nuestra estimación anterior:</p>
+<p><span class="math display">\[
+\begin{split}
+\hat{\mu}(x)_S &amp; = \frac{\hat{\tau_{s}}}{\hat{N}} \\ 
+               &amp; = \frac{1}{\hat{N}} \sum_{k=1}^{\hat{N}} \frac{x_{k}}{\pi_{k}}
+                   \mathbb{I}_S(x_{k}) \\
+               &amp; = \frac{1}{\hat{N}} \sum_{k\in S} \frac{x_{k}}{\pi_{k}} \\
+               &amp; = \frac{1}{\hat{N}} \sum_{k\in S} \frac{x_{k}}{.01} \\
+               &amp; = \frac{1}{.01\hat{N}} \sum_{k\in S} {x_{k}} \\
+               &amp; = \frac{100}{\hat{N}} \sum_{k\in S} {x_{k}} \\
+\end{split}
+\]</span></p>
+<p>A continuación vamos a calcular la cantidad de caracteres en cada tweet:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>caracteres <span class="ot">&lt;-</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    tweets <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(text) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(nchar) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>()</span></code></pre></div>
+<p>En total tenemos en la muestra 1281322 caracteres o un promedio de 78.3779056 caracteres y a continuación vamos a calcular la media de caracteres en la población.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>media_carac <span class="ot">&lt;-</span> (<span class="dv">100</span><span class="sc">/</span>N_hat) <span class="sc">*</span> caracteres</span></code></pre></div>
+<p>Así, nuestro estimador nos indica que en promedio cada tweet contiene 78.77 caracteres.</p>
+<div id="sesgo-1" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Sesgo</h3>
+</div>
+<div id="varianza-1" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Varianza</h3>
+</div>
+<div id="intervalos-de-confianza-1" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Intervalos de confianza</h3>
+</div>
+</div>
+<div id="cuántos-tweets-promedio-hace-un-usuario-en-la-ciudad-de-méxico-al-día" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> ¿Cuántos tweets promedio hace un usuario en la Ciudad de México al día?</h2>
+<p>Para poder calcular el promedio de tweets por día de un usuario debemos hacer el supuesto de que este flujo se mantiene constante y no solamente para el rango de tiempo del que obtenemos la muestra.</p>
+<p>Inicialmente vamos a calcular la cantidad de tweets que publicaron en total los usuarios en la muestra:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cantidad <span class="ot">&lt;-</span> <span class="fu">nrow</span>(tweets)</span></code></pre></div>
+<p>Proponemos el siguiente estimador para calcular la cantidad promedio de tweets por usuario en 30 segundos o 0.00035 días.</p>
+<p><span class="math display">\[
+\begin{split}
+\hat{\mu}(y)_S &amp; = \frac{\hat{\tau_{s}}}{\hat{N}} \\ 
+               &amp; = \frac{1}{\hat{N}} \sum_{k=1}^{\hat{N}} \frac{y_{k}}{\pi_{k}}
+                   \mathbb{I}_S(x_{k}) \\
+               &amp; = \frac{1}{\hat{N}} \sum_{k\in S} \frac{y_{k}}{\pi_{k}} \\
+               &amp; = \frac{1}{\hat{N}} \sum_{k\in S} \frac{y_{k}}{.01} \\
+               &amp; = \frac{1}{.01\hat{N}} \sum_{k\in S} {y_{k}} \\
+               &amp; = \frac{100}{\hat{N}} \sum_{k\in S} {y_{k}} \\
+\end{split}
+\]</span></p>
+<p>De esta manera, calculamos la cantidad promedio de tweets de la población:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>media_cant <span class="ot">&lt;-</span> (<span class="dv">100</span><span class="sc">/</span>N_hat) <span class="sc">*</span> cantidad</span></code></pre></div>
+<p>Así, la cantidad promedio de tweets de la población en 30 segundos o 0.00035 días son 1.005 tweets.</p>
+<p>Resultaría imposible en la realidad suponer este flujo constante a lo largo del día. Como no tenemos información acerca de la actividad de los usuarios en el día, entonces no podemos determinar la cantidad de tweets promedio por día de un usuario.</p>
+<div id="sesgo-2" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Sesgo</h3>
+</div>
+<div id="varianza-2" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Varianza</h3>
+</div>
+<div id="intervalos-de-confianza-2" class="section level3" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Intervalos de confianza</h3>
+</div>
+</div>
+</div>
+    </section>
+  </div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

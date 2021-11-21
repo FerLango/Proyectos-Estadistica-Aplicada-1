@@ -1,0 +1,212 @@
+---
+title: "Estructura de Twitter"
+subtitle: "Estadística Aplicada 1 - Proyecto 3"
+author: "Fernando Lango - 181055"
+email: "flangoba@itam.mx"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+name: "Proyecto 1"
+toc-title: Contenido  
+indent: True
+#bibliography: citations.bib
+#csl: apa.csl 
+#nocite: '@*'
+link-citations: True
+output: 
+  prettydoc::html_pretty:
+    theme: architect
+    toc: True
+    highlight: github
+    number_sections: True
+    fig_caption: True
+    self_contained: false
+    pandoc_args: [ "--output=index.html"]
+    includes:
+      in_header: "icono.html"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, 
+                      message = FALSE, fig.align = "center")
+```
+
+Para el presente proyecto vamos a realizar un muestreo sobre la red social [Twitter](https://twitter.com/home) para determinar su estructura y contestar las siguientes preguntas:
+
+- ¿Cuál es el tamaño de un tweet en la Ciudad México?
+- ¿Cuál es la cantidad de tweets totales que hay en la Ciudad México?
+- ¿Cuántos tweets promedio hace un usuario en la Ciudad de México al día?
+
+# Obtención de la muestra
+
+Para poder responder estas preguntas, antes debemos recolectar algo de información en Twitter con el uso del paquete *rtweet* y delimitando la geolocalización a la Ciudad de México con la función *lookup_coords* del mismo paquete.
+
+```{r}
+library(rtweet)
+```
+
+Para delimitar la ubicación a la Ciudad de México usaremos la API de de Google Maps que se encuentra loclizada en el ambiente de R:
+
+```{r}
+coords <- lookup_coords(address = "Mexico City",
+                        components = "country:Mexico",
+                        apikey = Sys.getenv("maps.apikey"))
+```
+
+A continuación vamos a obtener una muestra de los tweets generados en la Ciudad de México:
+
+```{r}
+t <- 30 
+if (file.exists("stream_tweets.json")) {
+  file.remove("stream_tweets.json")
+}
+tweets <- stream_tweets(geocode = coords, timeout = t, parse = T)
+```
+
+Cabe recalcar que estamos utilizando la versión más actualizada del paquete *rtweet* en [github](https://github.com/ropensci/rtweet) porque la actual versión listada en CRAN presenta un error al escribir y leer el archivo json generado.
+
+Durante los `r t` segundos se recabaron un total de `r nrow(tweets)` que representa aproximadamente el 1% de los tweets que ocurrieron durante ese tiempo dados como una muestra aleatoria. Esta muestra corresponde a los tweets entre la fecha `r min(tweets$created_at)` y `r max(tweets$created_at)`
+
+Además vamos a utilizar el paquete *tidyverse* para la limpieza y manejo de los datos.
+
+```{r}
+library(tidyverse)
+```
+
+# Preguntas
+
+## ¿Cuál es la cantidad de tweets totales que hay en la Ciudad México?
+
+Para hacer calcular la cantidad de tweets que hay en la Ciudad de México vamos a utilizar las $\pi_k$ para muestreo aleatorio simple con reemplazo sabiendo que estos tweets representan alrededor del 1% del universo. De esta manera vamos a hacer el estimador de $N$ dado por $\hat{N}$.
+
+$$
+\begin{split}
+\pi_k = 1 - \left[\frac{\hat{N}-1}{\hat{N}}\right]^n &\Leftrightarrow  
+    \quad 1 - \pi_k = \left[\frac{\hat{N}-1}{\hat{N}}\right]^n \\
+        & \Leftrightarrow \quad \sqrt[n]{1 - \pi_k} = 
+            \frac{\hat{N}-1}{\hat{N}} \\
+        & \Leftrightarrow \quad \hat{N}(\sqrt[n]{1 - \pi_k}) =
+            \hat{N}-1 \\
+        & \Leftrightarrow \quad \hat{N} - \hat{N}(\sqrt[n]{1 - \pi_k})
+            = 1 \\
+        & \Leftrightarrow \quad \hat{N}(1-\sqrt[n]{1 - \pi_k}) = 1 \\
+        & \Leftrightarrow \quad \hat{N} = \frac{1}{1-\sqrt[n]{1 - \pi_k}}
+\end{split}
+$$
+
+Sabemos que nuestra $\pi_k \approx 1\% = .01$ por definición en la función que utilizamos para extraer los tweets. Además, la muestra que extrajimos tiene una cantidad de $n=$ `r nrow(tweets)`. Teniendo estos datos podemos calcular nuestro estimador de N:
+
+```{r}
+N_hat <- 1/(1-(1-.01)^(1/nrow(tweets)))
+```
+
+De esta manera podemos concluir que nuestro universo contiene alrededor de `r toString(round(N_hat,2))` tweets durante el tiempo que se tomó la muestra.
+
+### Sesgo
+
+Para estimar el sesgo de nuestro estimador vamos a utilizar 
+
+### Varianza
+
+### Intervalos de confianza
+
+## ¿Cuál es el tamaño de un tweet promedio en la Ciudad México?
+
+Para lograr esta tarea vamos a estimar el promedio de caracteres que tienen los tweets en la Ciudad de México mediante el estimador de **Horvitz-Thompson (HT)** y utilizando nuestra estimación anterior:
+
+$$
+\begin{split}
+\hat{\mu}(x)_S & = \frac{\hat{\tau_{s}}}{\hat{N}} \\ 
+               & = \frac{1}{\hat{N}} \sum_{k=1}^{\hat{N}} \frac{x_{k}}{\pi_{k}}
+                   \mathbb{I}_S(x_{k}) \\
+               & = \frac{1}{\hat{N}} \sum_{k\in S} \frac{x_{k}}{\pi_{k}} \\
+               & = \frac{1}{\hat{N}} \sum_{k\in S} \frac{x_{k}}{.01} \\
+               & = \frac{1}{.01\hat{N}} \sum_{k\in S} {x_{k}} \\
+               & = \frac{100}{\hat{N}} \sum_{k\in S} {x_{k}} \\
+\end{split}
+$$
+
+A continuación vamos a calcular la cantidad de caracteres en cada tweet:
+
+```{r}
+caracteres <- 
+    tweets %>%
+    select(text) %>%
+    sapply(nchar) %>%
+    sum()
+```
+
+En total tenemos en la muestra `r caracteres` caracteres o un promedio de `r caracteres/nrow(tweets)` caracteres y a continuación vamos a calcular la media de caracteres en la población.
+
+```{r}
+media_carac <- (100/N_hat) * caracteres
+```
+
+Así, nuestro estimador nos indica que en promedio cada tweet contiene `r toString(round(media_carac,2))` caracteres.
+
+### Sesgo
+
+### Varianza
+
+### Intervalos de confianza
+
+## ¿Cuántos tweets promedio hace un usuario en la Ciudad de México al día?
+
+Para poder calcular el promedio de tweets por día de un usuario debemos hacer el supuesto de que este flujo se mantiene constante y no solamente para el rango de tiempo del que obtenemos la muestra.
+
+Inicialmente vamos a calcular la cantidad de tweets que publicaron en total los usuarios en la muestra: 
+
+```{r}
+cantidad <- nrow(tweets)
+```
+
+Proponemos el siguiente estimador para calcular la cantidad promedio de tweets por usuario en `r t` segundos o `r toString(round(t/60/60/24,5))` días.
+
+$$
+\begin{split}
+\hat{\mu}(y)_S & = \frac{\hat{\tau_{s}}}{\hat{N}} \\ 
+               & = \frac{1}{\hat{N}} \sum_{k=1}^{\hat{N}} \frac{y_{k}}{\pi_{k}}
+                   \mathbb{I}_S(x_{k}) \\
+               & = \frac{1}{\hat{N}} \sum_{k\in S} \frac{y_{k}}{\pi_{k}} \\
+               & = \frac{1}{\hat{N}} \sum_{k\in S} \frac{y_{k}}{.01} \\
+               & = \frac{1}{.01\hat{N}} \sum_{k\in S} {y_{k}} \\
+               & = \frac{100}{\hat{N}} \sum_{k\in S} {y_{k}} \\
+\end{split}
+$$
+
+De esta manera, calculamos la cantidad promedio de tweets de la población:
+
+```{r}
+media_cant <- (100/N_hat) * cantidad
+```
+
+Así, la cantidad promedio de tweets de la población en `r t` segundos o `r toString(round(t/60/60/24,5))` días son `r toString(round(media_cant,4))` tweets. 
+
+Resultaría imposible en la realidad suponer este flujo constante a lo largo del día. Como no tenemos información acerca de la actividad de los usuarios en el día, entonces no podemos determinar la cantidad de tweets promedio por día de un usuario. 
+
+### Sesgo
+
+### Varianza
+
+### Intervalos de confianza
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
