@@ -113,7 +113,14 @@ $$
 Si estimamos el tiempo de sobrevida de los pacientes tomando solamente en cuenta a aquellos de los que se tiene el registro completo, entonces podemos definir el estimador de la siguiente manera:
 
 $$
-\hat{\mu} = \frac{1}{n}\sum_{i=1}^{\ell} t_{i}
+\begin{split}
+\hat{\mu}
+    & = \frac{1}{n}\sum_{i=1}^{N} t_{i} \space 
+        \mathbb{I}_{S(\ell)}(t_i)\\
+    & = \frac{1}{n}\sum_{i=1}^{N} t_{i} \space 
+        \mathbb{I}_{[1,\ell]}(t_i)\\
+    & = \frac{1}{n}\sum_{i=1}^{\ell} t_{i}
+\end{split}
 $$ 
 
 Notemos que el límite superior de la suma llega hasta $\ell$ (aleatorio) que nos indica la cantidad de personas de las que estamos seguros que fallecieron.
@@ -128,9 +135,13 @@ $$
 \begin{split}
 \text{Sesgo}_{\mu} 
     & = \mathbf{E}(\hat{\mu}) - \mu \\
+    & = \mathbf{E}(\frac{1}{n}\sum_{i=1}^{N} t_{i} \space 
+        \mathbb{I}_{S(\ell)}(t_i)) - \mu \\
+    & = \mathbf{E}(\frac{1}{n}\sum_{i=1}^{N} t_{i} \space 
+        \mathbb{I}_{[1,\ell]}(t_i)) - \mu \\
     & = \mathbf{E}(\frac{1}{n}\sum_{i=1}^{\ell} t_{i}) - \mu \\
     & = \frac{1}{n} \sum_{i=1}^{\ell} 
-        \mathbf{E}(\mathbb{I}_S(t_{i})) - \mu \\
+        \mathbf{E}(t_{i}) - \mu \\
     & = \frac{1}{n} \sum_{i=1}^{\ell} \mu - \mu \\
     & = \frac{1}{n}\ell\mu - \mu \\
     & = \frac{\ell}{n}\mu - \mu \\
@@ -142,7 +153,7 @@ Por lo tanto, podemos determinar que el estimador $\hat{\mu}$ es insesgado si y 
 
 ### Varianza
 
-Para determinar la varianza de $\hat{\mu}$ utilizamos la siguiente formula y supondremos independencia sobre el tiempo de sobrevida:
+Para determinar la varianza de $\hat{\mu}$ utilizamos la siguiente formula y supondremos independencia sobre el tiempo de sobrevida de cada uno de los pacientes:
 
 $$
 \begin{split}
