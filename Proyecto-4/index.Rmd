@@ -1,14 +1,27 @@
 ---
-title: "Ciberseguridad en estudiantes de licenciatura"
-subtitle: "Cuestionario"
-author: "Equipo 1: Diego Arellano, Emilio Ramírez, Fernanda Monter,   Fernando Lango"
+title: "Encuesta multietápica"
+subtitle: "Estadística Aplicada 1 - Proyecto 4"
+author: "Fernando Lango - 181055"
+email: "flangoba@itam.mx"
 date: "`r format(Sys.time(), '%d/%m/%Y')`"
+name: "Proyecto 4"
+toc-title: Contenido  
+indent: True
+#bibliography: citations.bib
+#csl: apa.csl 
+#nocite: '@*'
+link-citations: True
 output: 
-    prettydoc::html_pretty:
-        theme: cayman
-        highlight: github
-        number_sections: true
-        toc: true
+  prettydoc::html_pretty:
+    theme: architect
+    toc: True
+    highlight: github
+    number_sections: True
+    fig_caption: True
+    self_contained: false
+    #pandoc_args: [ "--output=index.html"]
+    #includes:
+    #  in_header: "icono.html"
 ---
 
 ```{r setup, include=FALSE}
