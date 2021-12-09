@@ -34,3 +34,5 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
 
 # [Redes sociales](https://ferlango.github.io/Proyectos-Estadistica-Aplicada-1/Proyecto-3)
 
+# [Encuesta multietápica](https://ferlango.github.io/Proyectos-Estadistica-Aplicada-1/Proyecto-4)
+
