@@ -1,0 +1,22 @@
+---
+title: "Encuesta Nacional de Ingresos y Gastos de los Hogares (ENIGH). 2020"
+subtitle: "Estadística Aplicada 1 - Proyecto 4"
+author: "Fernando Lango - 181055"
+email: "flangoba@itam.mx"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+name: "Proyecto 1"
+toc-title: Contenido  
+indent: True
+#bibliography: citations.bib
+#csl: apa.csl 
+#nocite: '@*'
+link-citations: True
+output: pdf_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, 
+                      message = FALSE, fig.align = "center")
+```
+
