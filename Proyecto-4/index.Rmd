@@ -20,8 +20,8 @@ output:
     fig_caption: True
     self_contained: false
     #pandoc_args: [ "--output=index.html"]
-    #includes:
-    #  in_header: "icono.html"
+    includes:
+      in_header: "icono.html"
 ---
 
 ```{r setup, include=FALSE}
