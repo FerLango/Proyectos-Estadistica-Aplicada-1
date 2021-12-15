@@ -202,7 +202,7 @@ $$
 \end{split}
 $$
 
-Haciendo el cálculo obtenemos que nuestra población total estimada de hombres es de `r 126014024/nrow(data_poblacion) * sexo_muestra$n[1]`. 
+Haciendo el cálculo obtenemos que nuestra población total estimada de hombres es de `r format(126014024/nrow(data_poblacion) * sexo_muestra$n[1], scientific = F, big.mark = ',')`. 
 
 Similarmente para las mujeres podemos obtener lo siguiente: 
 
@@ -214,7 +214,7 @@ $$
 \end{split}
 $$
 
-Haciendo el cálculo obtenemos que nuestra población total estimada de mujeres es de `r 126014024/nrow(data_poblacion) * sexo_muestra$n[2]`.
+Haciendo el cálculo obtenemos que nuestra población total estimada de mujeres es de `r format(126014024/nrow(data_poblacion) * sexo_muestra$n[2], scientific = F, big.mark = ',')`.
 
 ```{r}
 sexo <- c("Hombre","Mujer")
