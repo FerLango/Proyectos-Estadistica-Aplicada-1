@@ -36,3 +36,5 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
 
 # [Encuesta multietápica](https://ferlango.github.io/Proyectos-Estadistica-Aplicada-1/Proyecto-4)
 
+# [Perritos callejeros](https://ferlango.github.io/Proyectos-Estadistica-Aplicada-1/Proyecto-5)
+
