@@ -1,0 +1,64 @@
+---
+title: "Estimar el total de perritos callejeros en Guadalajara"
+subtitle: "Estadística Aplicada 1 - Proyecto final"
+author: "Fernando Lango - 181055"
+email: "flangoba@itam.mx"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+name: "Proyecto final"
+toc-title: Contenido  
+indent: True
+bibliography: citations.bib
+csl: apa.csl 
+nocite: '@*'
+link-citations: True
+output: pdf_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, 
+                      message = FALSE, fig.align = "center")
+```
+
+# Diseño de la encuesta
+
+## Objetivo de la encuesta
+
+El objetivo de la presente encuesta es estimar la cantidad de perros que existen en situación de calle dentro de la ciudad de Guadalajara, así como algunas de las características de los canes: sexo, edad, signos de maltrato, enfermedades, embarazos, entre otras.
+
+## Población objetivo
+
+La encuesta está dirigida de manera indirecta a todos los perros en situación de calle dentro de la ciudad de Guadalajara. Podemos definir perros callejeros como aquellos a los que al momento de ser tomados en la muestra no se encuentren en control directo de algún humano dentro de un espacio público.
+
+## Cobertura geográfica
+
+La encuesta está diseñada para mostrar resultados para Guadalajara a partir de la división entre colonias y calles de la ciudad. 
+
+## Marco de la encuesta
+
+El diseño de la muestra se caracteriza por ser probabilístico; en consecuencia, los resultados obtenidos de la encuesta se generalizan a toda la población callejera canina en Guadalajara, a su vez, es bietápico y estratificado, donde las unidades de selección son inicialmente las colonias y posteriormente las calles.
+
+### Unidades Primarias de Muestreo (UPM)
+
+Inicialmente, se construye el conjunto de UPM que cubrirá el territorio de la ciudad de Guadalajara. Las unidades primarias de muestreo están constituidas por colonias con características diferenciadas de acuerdo a su población humana. Estas serán seleccionadas mediante muestreo aleatorio simple sin reemplazo.
+
+De acuerdo con la página de [datos del gobierno de Jalisco](https://datos.jalisco.gob.mx/dataset/informacion-sociodemografica-por-colonia-area-metropolitana-de-guadalajara-jalisco), Guadalajara cuenta con 584 colonias.
+
+![](img/colonias.jpg)
+
+### Estratificación
+
+Una vez que tenemos nuestro conjunto de UPM, estas se agrupan considerando sus características similares, en este caso la cantidad de habitantes humanos en estas colonias. 
+
+![](img/colonias_poblacion.jpg)
+
+### Unidades Secundarias de Muestreo
+
+Finalmente, vamos a seleccionar algunas calles mediante muestreo aleatorio simple sin reemplazo de las colonias que resultaron elegidas anteriormente para realizar nuestro muestreo. 
+
+![](img/calles.jpg)
+
+# Referencias
+
+
+

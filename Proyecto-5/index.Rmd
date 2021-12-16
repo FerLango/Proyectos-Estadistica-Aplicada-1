@@ -1,0 +1,34 @@
+---
+title: "Estimar el total de perritos callejeros en Guadalajara"
+subtitle: "Estadística Aplicada 1 - Proyecto final"
+author: "Fernando Lango - 181055"
+email: "flangoba@itam.mx"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+name: "Proyecto 4"
+toc-title: Contenido  
+indent: True
+#bibliography: citations.bib
+#csl: apa.csl 
+#nocite: '@*'
+link-citations: True
+output: 
+  prettydoc::html_pretty:
+    theme: architect
+    toc: True
+    highlight: github
+    number_sections: True
+    fig_caption: True
+    self_contained: false
+    #pandoc_args: [ "--output=index.html"]
+    includes:
+      in_header: "icono.html"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=FALSE, out.width="100%", out.height="500px"}
+knitr::include_graphics("perritos.pdf")
+```
+
