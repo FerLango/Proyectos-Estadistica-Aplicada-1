@@ -11,7 +11,10 @@ indent: True
 #csl: apa.csl 
 #nocite: '@*'
 link-citations: True
-output: pdf_document
+output: 
+    pdf_document:
+        toc: true
+        number_sections: true
 
 ---
 
@@ -19,6 +22,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, 
                       message = FALSE, fig.align = "center")
 ```
+
+# Introducción
 
 El objetivo del presente proyecto es analizar y presentar algunos de los resultados de la [Encuesta Nacional de Ingresos y Gastos de los Hogares (ENIGH). 2020](https://www.inegi.org.mx/programas/enigh/nc/2020/). 
 
